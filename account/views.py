@@ -1,4 +1,9 @@
-from django.shortcuts import render
+from account.forms import *
+from account.models import *
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, get_object_or_404
 
 def user_register(request):
     if request.method == 'POST':
