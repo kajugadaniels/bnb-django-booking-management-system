@@ -1,11 +1,16 @@
+{% load static %}
+
 <header data-add-bg="bg-dark-1" class="header  js-header" data-x="header" data-x-toggle="is-menu-opened">
     <div data-anim="fade" class="header__container container">
         <div class="row justify-between items-center">
             <div class="col-auto">
                 <div class="d-flex items-center">
-                    <a href="index.html" class="header-logo mr-20" data-x="header-logo" data-x-toggle="is-logo-dark">
-                        <img src="img/general/logo-light.svg" alt="logo icon">
-                        <img src="img/general/logo-dark.svg" alt="logo icon">
+                    <a href="{% url 'base:home' %}" class="header-logo mr-20" data-x="header-logo" data-x-toggle="is-logo-dark">
+                        {% comment %} <img src="{% static 'img/logo/logo.png' %}" alt="logo icon">
+                        <img src="{% static 'img/logo/logo.png' %}" alt="logo icon"> {% endcomment %}
+                        <h3 style="color: white;">
+                            B&B Mountain View
+                        </h3>
                     </a>
                 </div>
             </div>

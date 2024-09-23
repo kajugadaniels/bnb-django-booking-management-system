@@ -1,9 +1,16 @@
+{% load static %}
+
 <footer class="footer -type-2 bg-dark-2 text-white">
     <div class="container">
         <div class="pt-60 pb-60">
             <div class="row y-gap-40 justify-between xl:justify-start">
                 <div class="col-xl-4 col-lg-6">
-                    <img src="img/general/logo-light.svg" alt="image">
+                    {% comment %} <img src="{% static 'img/logo/logo.png' %}" alt="image"> {% endcomment %}
+                    <a href="{% url 'base:home' %}">
+                        <h3>
+                            B&B Mountain View
+                        </h3>
+                    </a>
 
                     <div class="row y-gap-30 justify-between pt-30">
                         <div class="col-sm-6">
