@@ -2,7 +2,12 @@ from home.models import *
 from django.shortcuts import render
 
 def home(request):
-    featuredRooms = Room.objects.order_by('-created_at')[:3]
+    rooms = Room.objects.prefetch_related('images').all()
+
+    featuredRooms = list(rooms)
+    random.shuffle(featuredRooms)
+    featuredRooms = featuredRooms[:4]
+
     highestPriceRoom = Room.objects.order_by('-price')[:3]
 
     context = {

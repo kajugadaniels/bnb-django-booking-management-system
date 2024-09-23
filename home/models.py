@@ -59,8 +59,8 @@ class Room(models.Model):
     def __str__(self):
         return self.name
 
-    # class Meta:
-    #     verbose_name_plural = "Rooms"
+    class Meta:
+        verbose_name_plural = "Rooms"
 
 def room_add_on_image_path(instance, filename):
     base_filename, file_extension = os.path.splitext(filename)
@@ -82,5 +82,5 @@ class RoomImage(models.Model):
     def __str__(self):
         return f"Image for {self.room.name} - {self.created_at}"
 
-    # class Meta:
-    #     verbose_name_plural = "Room Images"
+    class Meta:
+        verbose_name_plural = "Room Images"
