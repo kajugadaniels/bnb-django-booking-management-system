@@ -1,6 +1,7 @@
 import os
 import random
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
@@ -34,7 +35,7 @@ class Room(models.Model):
         blank=True,
     )
     amenities = models.ManyToManyField(Amenity, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
