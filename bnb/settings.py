@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
 
     #Custom apps
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -179,7 +180,7 @@ JAZZMIN_SETTINGS = {
     "related_modal_active": False,
 }
 
-CSRF_TRUSTED_ORIGINS = ['#','https://*.127.0.0.1']
+# CSRF_TRUSTED_ORIGINS = ['', 'https://*.127.0.0.1']
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
