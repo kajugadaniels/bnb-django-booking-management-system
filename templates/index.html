@@ -52,7 +52,7 @@
             <div class="row y-gap-30 pt-40 sm:pt-20">
                 {% for room in featuredRooms %}
                     <div data-anim-child="slide-up delay-3" class="col-lg-3 col-sm-6">
-                        <a href="#" class="cruiseCard -type-1 rounded-4">
+                        <a href="{% url 'base:getRoom' room.slug %}" class="cruiseCard -type-1 rounded-4">
                             <div class="cruiseCard__image">
                                 <div class="cardImage ratio ratio-6:5">
                                     <div class="cardImage__content">
@@ -63,9 +63,9 @@
                                                 </div>
 
                                                 {% for image in room.images.all %}
-                                                <div class="swiper-slide">
-                                                    <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
-                                                </div>
+                                                    <div class="swiper-slide">
+                                                        <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
+                                                    </div>
                                                 {% endfor %}
                                             </div>
                                             <div class="cardImage-slider__pagination js-pagination"></div>
@@ -170,7 +170,7 @@
             <div class="row y-gap-30 pt-40 sm:pt-20">
                 {% for room in highestPriceRoom %}
                     <div data-anim-child="slide-up delay-3" class="col-lg-4 col-sm-6">
-                        <a href="#" class="cruiseCard -type-1 rounded-4">
+                        <a href="{% url 'base:getRoom' room.slug %}" class="cruiseCard -type-1 rounded-4">
                             <div class="cruiseCard__image">
                                 <div class="cardImage ratio ratio-6:5">
                                     <div class="cardImage__content">

@@ -115,7 +115,7 @@
                                                 <div class="text-22 lh-12 fw-600 mt-5">${{ room.price }}</div>
                                                 <div class="text-14 text-light-1 mt-5">$10 taxes and charges</div>
 
-                                                <a href="#" class="button -md -dark-1 bg-blue-1 text-white mt-24">
+                                                <a href="{% url 'base:getRoom' room.slug %}" class="button -md -dark-1 bg-blue-1 text-white mt-24">
                                                     More Details <div class="icon-arrow-top-right ml-15"></div>
                                                 </a>
                                             </div>
