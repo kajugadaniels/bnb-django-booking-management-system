@@ -16,3 +16,12 @@ def home(request):
     }
 
     return render(request, 'index.html', context)
+
+def rooms(request):
+    rooms = Room.objects.prefetch_related('images').order_by('-price').all()
+
+    context = {
+        'rooms': rooms,
+    }
+
+    return render(request, 'rooms/index.html', context)
