@@ -36,10 +36,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
-                        <a href="{% url 'auth:login' %}" class="button px-30 fw-400 text-14 -blue-1 bg-white h-50 text-dark-1">Sign In</a>
-                        <a href="{% url 'auth:register' %}" class="button px-30 fw-400 text-14 border-white -blue-1 h-50 text-white ml-20">Register</a>
-                    </div>
+                    {% if user.is_authenticated %}
+                        <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
+                            <a href="{% url 'auth:logout' %}" class="button px-30 fw-400 text-14 -blue-1 bg-white h-50 text-dark-1">Sign Out</a>
+                        </div>
+                    {% else %}
+                        <div class="d-flex items-center ml-20 is-menu-opened-hide md:d-none">
+                            <a href="{% url 'auth:login' %}" class="button px-30 fw-400 text-14 -blue-1 bg-white h-50 text-dark-1">Sign In</a>
+                            <a href="{% url 'auth:register' %}" class="button px-30 fw-400 text-14 border-white -blue-1 h-50 text-white ml-20">Register</a>
+                        </div>
+                    {% endif %}
                     <div class="d-none xl:d-flex x-gap-20 items-center pl-30 text-white" data-x="header-mobile-icons" data-x-toggle="text-white">
                         <div><a href="#" class="d-flex items-center icon-user text-inherit text-22"></a></div>
                         <div>
