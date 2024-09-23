@@ -3,6 +3,115 @@
 {% block title %} {{ room.name }} {% endblock %}
 {% block content %}
 
-    
+    <br>
+    <br>
+    <br>
+
+    <section class="py-10 d-flex items-center bg-light-2">
+        <div class="container">
+            <div class="row y-gap-10 items-center justify-between">
+                <div class="col-auto">
+                    <div class="row x-gap-10 y-gap-5 items-center text-14 text-light-1">
+                        <div class="col-auto">
+                            <div class="">Home</div>
+                        </div>
+                            <div class="col-auto">
+                            <div class="">></div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="">B&B Mountain View Rooms</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="">></div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="text-dark-1">{{ room.name }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <a href="{% url 'base:rooms' %}" class="text-14 text-blue-1 underline">All Rooms</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pt-40">
+        <div class="container">
+            <div class="row justify-between items-end">
+                <div class="col-auto">
+                    <h1 class="text-26 fw-600">
+                        {{ room.name }}
+                    </h1>
+                    <div class="d-flex x-gap-5 items-center pt-5">
+                        <i class="icon-location-2 text-16 text-light-1"></i>
+                        <div class="text-15 text-light-1">Kigali Rwanda</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pt-40">
+        <div class="container js-pin-container">
+            <div class="row y-gap-30">
+                <div class="col-lg-8">
+                    <div class="cruiseSlider">
+                        <div class="cruiseSlider-slider relative">
+                            <div class="d-flex js-cruise-slider">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="{{ room.image.url }}" alt="{{ room.name }}" class="rounded-4">
+                                    </div>
+                                    {% for image in room.images.all %}
+                                        <div class="swiper-slide">
+                                            <img src="{{ image.image.url }}" alt="image" class="rounded-4">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="cruiseSlider__nav -prev js-prev">
+                                    <button class="button -outline-white size-50 flex-center text-white rounded-full">
+                                        <i class="icon-arrow-left"></i>
+                                    </button>
+                                </div>
+                                <div class="cruiseSlider__nav -next js-next">
+                                    <button class="button -outline-white size-50 flex-center text-white rounded-full">
+                                        <i class="icon-arrow-right"></i>
+                                    </button>
+                                </div>
+                                <div class="absolute h-full col-12 px-20 py-20 d-flex justify-end items-end">
+                                    <a href="{{ room.image.url }}" alt="{{ room.name }}" class="button px-24 py-15 -blue-1 bg-white z-2 js-gallery" data-gallery="gallery2">
+                                        See All Photos
+                                    </a>
+                                    {% for image in room.images.all %}
+                                        <a href="{{ image.image.url }}" class="js-gallery" data-gallery="gallery2"></a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cruiseSlider-slides row x-gap-10 y-gap-10 pt-10 js-cruise-slides">
+                            <div class="col-auto w-max-120">
+                                <div class="cruiseSlider-slides__item h-full rounded-4 -is-active js-item">
+                                    <img src="{{ room.image.url }}" alt="{{ room.name }}" class="h-full object-cover">
+                                </div>
+                            </div>
+                            {% for image in room.images.all %}
+                                <div class="col-auto w-max-120">
+                                    <div class="cruiseSlider-slides__item h-full rounded-4  js-item">
+                                        <img src="{{ image.image.url }}" alt="{{ room.name }}" class="h-full object-cover">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
