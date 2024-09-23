@@ -27,7 +27,7 @@ class Room(models.Model):
     size = models.CharField(max_length=255, null=True, blank=True)
     image = ProcessedImageField(
         upload_to=room_image_path,
-        processors=[ResizeToFill(1340, 894)],
+        # processors=[ResizeToFill(1340, 894)],
         format='JPEG',
         options={'quality': 90},
         null=True,
@@ -70,7 +70,7 @@ class RoomImage(models.Model):
     room = models.ForeignKey(Room, related_name='images', on_delete=models.CASCADE)
     image = ProcessedImageField(
         upload_to=room_add_on_image_path,
-        processors=[ResizeToFill(1340, 894)],
+        # processors=[ResizeToFill(1340, 894)],
         format='JPEG',
         options={'quality': 90},
         null=True,
