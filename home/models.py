@@ -24,7 +24,7 @@ class Room(models.Model):
     description = models.TextField()
     price = models.IntegerField(null=True, blank=True)
     capacity = models.IntegerField()
-    standings = models.IntegerField(null=True, blank=True)
+    size = models.CharField(max_length=255, null=True, blank=True)
     image = ProcessedImageField(
         upload_to=room_image_path,
         processors=[ResizeToFill(1340, 894)],
