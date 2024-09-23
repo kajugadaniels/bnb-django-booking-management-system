@@ -1,3 +1,7 @@
+from home.models import *
 from django.contrib import admin
 
-# Register your models here.
+@admin.register(Amenity)
+class AmenityAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
