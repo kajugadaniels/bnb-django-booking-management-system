@@ -6,8 +6,9 @@ def home(request):
 
     featuredRooms = list(rooms)
     random.shuffle(featuredRooms)
+    featuredRooms = featuredRooms[:4]
 
-    highestPriceRoom = rooms.order_by('-price').first()
+    highestPriceRoom = Room.objects.order_by('-price')[:3]
 
     context = {
         'featuredRooms': featuredRooms,
