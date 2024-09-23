@@ -149,9 +149,9 @@ WHITENOISE_AUTOREFRESH = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Ijambo Ryawe",
-    "site_header": "Ijambo Ryawe",
-    "site_brand": "Ijambo Ryawe",
+    "site_title": "B&B Mountain View",
+    "site_header": "B&B Mountain View",
+    "site_brand": "B&B Mountain View",
     "welcome_sign": "Welcome Admin",
     "show_sidebar": True,
     "navigation_expanded": True,
