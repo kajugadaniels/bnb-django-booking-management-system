@@ -1,0 +1,63 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% block title %} Register {% endblock %}
+{% block content %}
+
+<section class="layout-pt-lg layout-pb-lg bg-blue-2">
+    <div class="container">
+        <div class="row justify-center">
+            <div class="col-xl-6 col-lg-7 col-md-9">
+                <div class="px-50 py-50 sm:px-20 sm:py-20 bg-white shadow-4 rounded-4">
+                    <form action="">
+                        <div class="row y-gap-20">
+                            <div class="col-12">
+                                <h1 class="text-22 fw-500">Create an account</h1>
+                                <p class="mt-10">
+                                    Already have an account? 
+                                    <a href="{% url 'auth:login' %}" class="text-blue-1">Log in</a>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    {{ form.name }}
+                                    <label class="lh-1 text-14 text-light-1">Name</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    {{ form.email }}
+                                    <label class="lh-1 text-14 text-light-1">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    {{ form.phone_number }}
+                                    <label class="lh-1 text-14 text-light-1">Phone Number</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <input type="password" required name="password1">
+                                    <label class="lh-1 text-14 text-light-1">Password</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <input type="password" required name="password2">
+                                    <label class="lh-1 text-14 text-light-1">Confirm Password</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="button py-20 -dark-1 bg-blue-1 text-white" style="width: 100%;">
+                                    Sign In <div class="icon-arrow-top-right ml-15"></div>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

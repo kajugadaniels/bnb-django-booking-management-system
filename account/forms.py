@@ -6,12 +6,11 @@ class UserRegistrationForm(UserCreationForm):
 
     class Meta:
         model = UserAccount
-        fields = ['firstname', 'lastname', 'email', 'phonenumber', 'password1', 'password2']
+        fields = ['name', 'email', 'phone_number', 'password1', 'password2']
         widgets = {
-            'firstname': forms.TextInput(attrs={'required': True, 'placeholder': 'Firstname'}),
-            'lastname': forms.TextInput(attrs={'required': True, 'placeholder': 'Lastname'}),
-            'email': forms.EmailInput(attrs={'required': True, 'placeholder': 'Email'}),
-            'phonenumber': forms.NumberInput(attrs={'required': True, 'placeholder': 'Phone Number'}),
+            'name': forms.TextInput(attrs={'required': True}),
+            'email': forms.EmailInput(attrs={'required': True}),
+            'phone_number': forms.NumberInput(attrs={'required': True}),
         }
 
     def clean_email(self):
@@ -22,8 +21,8 @@ class UserRegistrationForm(UserCreationForm):
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'required': True, 'placeholder': 'Enter your email'})
+        widget=forms.EmailInput(attrs={'required': True})
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'required': True, 'placeholder': 'Enter your password'})
+        widget=forms.PasswordInput(attrs={'required': True})
     )
