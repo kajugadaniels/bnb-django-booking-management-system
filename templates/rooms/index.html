@@ -49,9 +49,9 @@
                                                             </div>
             
                                                             {% for image in room.images.all %}
-                                                            <div class="swiper-slide">
-                                                                <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
-                                                            </div>
+                                                                <div class="swiper-slide">
+                                                                    <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
+                                                                </div>
                                                             {% endfor %}
                                                         </div>
                                                         <div class="cardImage-slider__pagination js-pagination"></div>
@@ -92,18 +92,11 @@
                                                 </div>
                                             </div>
                                             <div class="row x-gap-10 y-gap-10 pt-20">
-                                                <div class="col-auto">
-                                                    <div class="border-light rounded-100 py-5 px-20 text-14 lh-14">Breakfast</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="border-light rounded-100 py-5 px-20 text-14 lh-14">WiFi</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="border-light rounded-100 py-5 px-20 text-14 lh-14">Spa</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <div class="border-light rounded-100 py-5 px-20 text-14 lh-14">Bar</div>
-                                                </div>
+                                                {% for amenity in room.amenities.all %}
+                                                    <div class="col-auto">
+                                                        <div class="border-light rounded-100 py-5 px-20 text-14 lh-14">{{ amenity.name }}</div>
+                                                    </div>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                         <div class="col-md-auto text-right md:text-left">
@@ -118,12 +111,12 @@
                                             </div>
 
                                             <div class="">
-                                                <div class="text-14 text-light-1 mt-50 md:mt-20">8 nights, 2 adult</div>
-                                                <div class="text-22 lh-12 fw-600 mt-5">US$72</div>
-                                                <div class="text-14 text-light-1 mt-5">+US$828 taxes and charges</div>
+                                                <div class="text-14 text-light-1 mt-50 md:mt-20">{{ room.capacity }} people</div>
+                                                <div class="text-22 lh-12 fw-600 mt-5">${{ room.price }}</div>
+                                                <div class="text-14 text-light-1 mt-5">$10 taxes and charges</div>
 
                                                 <a href="#" class="button -md -dark-1 bg-blue-1 text-white mt-24">
-                                                    See Availability <div class="icon-arrow-top-right ml-15"></div>
+                                                    More Details <div class="icon-arrow-top-right ml-15"></div>
                                                 </a>
                                             </div>
                                         </div>
