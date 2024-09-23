@@ -60,3 +60,26 @@ class Room(models.Model):
 
     class Meta:
         verbose_name_plural = "Rooms"
+
+def room_add_on_image_path(instance, filename):
+    base_filename, file_extension = os.path.splitext(filename)
+    random_number = random.randint(1000, 9999)
+    return f'rooms/add_on/{random_number}_{instance.created_at}{file_extension}'
+
+class RoomImage(models.Model):
+    room = models.ForeignKey(Room, related_name='images', on_delete=models.CASCADE)
+    image = ProcessedImageField(
+        upload_to=room_add_on_image_path,
+        processors=[ResizeToFill(1340, 894)],
+        format='JPEG',
+        options={'quality': 90},
+        null=True,
+        blank=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.room.name} - {self.created_at}"
+
+    class Meta:
+        verbose_name_plural = "Room Images"
