@@ -150,6 +150,8 @@ WHITENOISE_AUTOREFRESH = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = "account.UserAccount"
+
 JAZZMIN_SETTINGS = {
     "site_title": "B&B Mountain View",
     "site_header": "B&B Mountain View",
