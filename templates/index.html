@@ -1,5 +1,6 @@
 {% extends 'layouts/app.html' %}
 {% load static %}
+{% load humanize %}
 {% block title %} Home {% endblock %}
 {% block content %}
 
@@ -117,7 +118,7 @@
                                     <div class="col-auto">
                                         <div class="text-14 text-light-1">
                                             Price
-                                            <span class="text-16 fw-500 text-dark-1">${{ room.price }}</span>
+                                            <span class="text-16 fw-500 text-dark-1">${{ room.price|intcomma }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -235,7 +236,7 @@
                                     <div class="col-auto">
                                         <div class="text-14 text-light-1">
                                             Price
-                                            <span class="text-16 fw-500 text-dark-1">${{ room.price }}</span>
+                                            <span class="text-16 fw-500 text-dark-1">${{ room.price|intcomma }}</span>
                                         </div>
                                     </div>
                                 </div>
