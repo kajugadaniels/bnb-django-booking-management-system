@@ -143,11 +143,11 @@
                                 <div class="d-flex items-center justify-end">
                                     <div class="text-14 lh-14 text-right">
                                         <div class="fw-600">Exceptional</div>
-                                        3,014 reviews
+                                        {{ total_reviews }} reviews
                                     </div>
                     
                                     <div class="flex-center size-40 rounded-4 bg-blue-1 text-1 fw-600 text-white ml-20">
-                                        4.8
+                                        {{ overall_rating|floatformat:1 }}
                                     </div>
                                 </div>
                             </div>
