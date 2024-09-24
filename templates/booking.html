@@ -1,9 +1,216 @@
 {% extends 'layouts/app.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} Booking {% endblock %}
+{% block title %} {{ Booking }} {% endblock %}
 {% block content %}
 
-    Booking
+    <br>
+    <br>
+    <br>
+
+    <section class="pt-40 layout-pb-md">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="py-15 px-20 rounded-4 text-15 bg-blue-1-05">
+                        <h2 class="text-22 fw-500 mt-40 md:mt-24">Let us know who you are</h2>
+                        <div class="row x-gap-20 y-gap-20 pt-20">
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Phone Number</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <textarea required rows="6"></textarea>
+                                    <label class="lh-1 text-16 text-light-1">Special Requests</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-40">
+                            <h3 class="text-22 fw-500 mb-20">How do you want to pay?</h3>
+                            <div class="row y-gap-20 x-gap-20">
+                                <div class="col-auto">
+                                    <button class="button -dark-1 bg-blue-1 text-white px-20 py-15">Credit/Debit Card</button>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="button -blue-1 bg-light-2 px-20 py-15">Digital Payment</button>
+                                </div>
+                            </div>
+                            <div class="row x-gap-20 y-gap-20 pt-20">
+                                <div class="col-12">
+                                    <div class="form-input ">
+                                        <input type="text" required>
+                                        <label class="lh-1 text-16 text-light-1">Select payment method *</label>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-md-6">
+                                    <div class="form-input ">
+                                        <input type="text" required>
+                                        <label class="lh-1 text-16 text-light-1">Card holder name *</label>
+                                    </div>
+                                    <div class="form-input mt-20">
+                                        <input type="text" required>
+                                        <label class="lh-1 text-16 text-light-1">Credit/debit card number *</label>
+                                    </div>
+                                    <div class="row x-gap-20 y-gap-20 pt-20">
+                                        <div class="col-md-6">
+                                            <div class="form-input ">
+                                                <input type="text" required>
+                                                <label class="lh-1 text-16 text-light-1">Expiry date *</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-input ">
+                                                <input type="text" required>
+                                                <label class="lh-1 text-16 text-light-1">CVC/CVV *</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="img/booking-pages/card.png" alt="image" class="h-full">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full h-1 bg-border mt-40 mb-40"></div>
+                        <div class="row y-gap-20 items-center justify-between">
+                            <div class="col-auto">
+                                <a href="#" class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
+                                    Book Now <div class="icon-arrow-top-right ml-15"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-4">
+                    <div class="ml-80 lg:ml-40 md:ml-0">
+                        <div class="px-30 py-30 border-light rounded-4">
+                            <div class="text-20 fw-500 mb-30">Your booking details</div>
+                            <div class="row x-gap-15 y-gap-20">
+                                <div class="col-auto">
+                                    <img src="{{ room.image.url }}" alt="image" class="size-140 rounded-4 object-cover">
+                                </div>
+                                <div class="col">
+                                    <div class="lh-17 fw-500">
+                                        <a href="{% url 'base:getRoom' room.slug %}">
+                                            {{ room.name }}
+                                        </a>
+                                    </div>
+                                    <div class="text-14 lh-15 mt-5">
+                                        KK 35 Avenue, Kigali, Rwanda
+                                    </div>
+                                    <div class="row x-gap-10 y-gap-10 items-center pt-10">
+                                        <div class="col-auto">
+                                            <div class="d-flex items-center">
+                                                <div class="size-30 flex-center bg-blue-1 rounded-4">
+                                                    <div class="text-12 fw-600 text-white">
+                                                        {{ overall_rating|floatformat:1 }}
+                                                    </div>
+                                                </div>
+                                                <div class="text-14 ml-10">
+                                                    {{ total_reviews }} reviews
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="text-14 fw-500 ml-10">
+                                                <a href="{% url 'base:getRoom' room.slug %}">
+                                                    See all reviews
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top-light mt-30 mb-20"></div>
+                            <div class="row y-gap-20 justify-between">
+                                <div class="col-auto">
+                                    <div class="text-15">Check-in</div>
+                                    <div class="fw-500">Thu 21 Apr 2022</div>
+                                    <div class="text-15 text-light-1">15:00 – 23:00</div>
+                                </div>
+                                <div class="col-auto md:d-none">
+                                    <div class="h-full w-1 bg-border"></div>
+                                </div>
+                                <div class="col-auto text-right md:text-left">
+                                    <div class="text-15">Check-out</div>
+                                    <div class="fw-500">Sat 30 Apr 2022</div>
+                                    <div class="text-15 text-light-1">01:00 – 11:00</div>
+                                </div>
+                            </div>
+                            <div class="border-top-light mt-30 mb-20"></div>
+                            <div class="">
+                                <div class="text-15">Total length of stay:</div>
+                                <div class="fw-500">9 days</div>
+                            </div>
+                        </div>
+                        <div class="px-30 py-30 border-light rounded-4 mt-30">
+                            <div class="text-20 fw-500 mb-20">Your price summary</div>
+                            <div class="row y-gap-5 justify-between">
+                                <div class="col-auto">
+                                    <div class="text-15">{{ room.name }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15">{{ room.price }}</div>
+                                </div>
+                            </div>
+                            <div class="row y-gap-5 justify-between pt-5">
+                                <div class="col-auto">
+                                    <div class="text-15">Taxes and fees</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15">$10.47</div>
+                                </div>
+                            </div>
+                            <div class="row y-gap-5 justify-between pt-5">
+                                <div class="col-auto">
+                                    <div class="text-15">Booking fees</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15">FREE</div>
+                                </div>
+                            </div>
+                            <div class="px-20 py-20 bg-blue-2 rounded-4 mt-20">
+                                <div class="row y-gap-5 justify-between">
+                                    <div class="col-auto">
+                                        <div class="text-18 lh-13 fw-500">Price</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-18 lh-13 fw-500">{{ room.price|intcomma }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-30 py-30 border-light rounded-4 mt-30">
+                            <div class="text-20 fw-500 mb-20">Your payment schedule</div>
+                            <div class="row y-gap-5 justify-between">
+                                <div class="col-auto">
+                                    <div class="text-15">Before you stay you'll pay</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15">${{ room.price|intcomma }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
