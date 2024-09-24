@@ -33,7 +33,6 @@ def rooms(request):
 def getRoom(request, slug):
     room = get_object_or_404(Room, slug=slug)
     reviews = RoomReview.objects.filter(room=room).order_by('-created_at')
-
     total_reviews = reviews.count()
 
     avg_location = reviews.aggregate(Avg('location'))['location__avg'] or 0
@@ -47,6 +46,7 @@ def getRoom(request, slug):
     overall_rating = (avg_location + avg_staff + avg_cleanliness + avg_value_for_money + avg_comfort + avg_facilities + avg_free_wifi) / 7
 
     if request.method == 'POST':
+        form = BookingForm(request.POST)
         check_in_date = request.POST.get('check_in_date')
         check_out_date = request.POST.get('check_out_date')
 
@@ -80,8 +80,21 @@ def getRoom(request, slug):
             messages.error(request, "These dates are already booked. Please choose different dates.")
             return redirect('base:getRoom', slug=room.slug)
 
-        # If everything is okay, redirect to booking page with query parameters
-        return redirect(f'/room/{slug}/booking?room_id={room.id}&check_in_date={check_in_date}&check_out_date={check_out_date}')
+        # If the form is valid, create the booking
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.room = room
+            booking.checkInDate = check_in_date
+            booking.checkOutDate = check_out_date
+            booking.status = 'pending'  # Set status to pending
+            booking.payment_status = 'pending'  # Set payment status to pending
+            booking.save()
+
+            # Redirect to the booking confirmation page
+            return redirect('base:booking_success', booking_id=booking.id)  # Adjust redirect to your success page
+
+    else:
+        form = BookingForm()
 
     context = {
         'room': room,
@@ -95,6 +108,7 @@ def getRoom(request, slug):
         'avg_comfort': avg_comfort,
         'avg_facilities': avg_facilities,
         'avg_free_wifi': avg_free_wifi,
+        'form': form,
     }
 
     return render(request, 'rooms/show.html', context)
