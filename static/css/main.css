@@ -9393,7 +9393,7 @@ div[data-slider] > input[type=range]::-ms-tooltip {
 }
 
 .bg-dark-3 {
-  background-color: var(--color-dark-3) !important;
+  background-color: #051036 !important;
 }
 
 .bg-dark-4 {
