@@ -80,8 +80,8 @@ def getRoom(request, slug):
             messages.error(request, "These dates are already booked. Please choose different dates.")
             return redirect('base:getRoom', slug=room.slug)
 
-        # If everything is okay, redirect to booking page
-        return redirect('base:booking', room_id=room.id, check_in_date=check_in_date, check_out_date=check_out_date)
+        # If everything is okay, redirect to booking page with query parameters
+        return redirect(f'/room/{slug}/booking?room_id={room.id}&check_in_date={check_in_date}&check_out_date={check_out_date}')
 
     context = {
         'room': room,
@@ -99,7 +99,7 @@ def getRoom(request, slug):
 
     return render(request, 'rooms/show.html', context)
 
-def booking(request):
+def booking(request, slug):
     room_id = request.GET.get('room_id')
     check_in_date = request.GET.get('check_in_date')
     check_out_date = request.GET.get('check_out_date')
