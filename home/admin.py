@@ -31,3 +31,9 @@ class RoomReviewAdmin(admin.ModelAdmin):
     search_fields = ['name', 'email', 'room__name']
     ordering = ['created_at']
     readonly_fields = ['created_at']
+
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ('room', 'name', 'email', 'phone', 'checkInDate', 'checkOutDate', 'status', 'payment_status')
+    list_filter = ('status', 'payment_status', 'checkInDate', 'checkOutDate')
+    search_fields = ('name', 'email', 'phone', 'transactionId')
