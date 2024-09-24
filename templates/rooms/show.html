@@ -211,9 +211,9 @@
                 <div class="col-lg-3">
                     <div class="flex-center rounded-4 min-h-250 bg-blue-1-05">
                         <div class="text-center">
-                            <div class="text-60 md:text-50 fw-600 text-blue-1">4.8</div>
+                            <div class="text-60 md:text-50 fw-600 text-blue-1">{{ overall_rating|floatformat:1 }}</div>
                             <div class="fw-500 lh-1">Exceptional</div>
-                            <div class="text-14 text-light-1 lh-1 mt-5">3,014 reviews</div>
+                            <div class="text-14 text-light-1 lh-1 mt-5">{{ total_reviews }} reviews</div>
                         </div>
                     </div>
                 </div>
@@ -224,12 +224,11 @@
                             <div class="">
                                 <div class="d-flex items-center justify-between">
                                     <div class="text-15 fw-500">Location</div>
-                                    <div class="text-15 text-light-1">9.4</div>
+                                    <div class="text-15 text-light-1">{{ avg_location|floatformat:1 }}</div>
                                 </div>
-    
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
-                                    <div class="progressBar__bar bg-dark-1" style="width: 90%"></div>
+                                    <div class="progressBar__bar bg-dark-1" style="width: {{ avg_location|floatformat:1 }}0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -237,12 +236,11 @@
                             <div class="">
                                 <div class="d-flex items-center justify-between">
                                     <div class="text-15 fw-500">Staff</div>
-                                    <div class="text-15 text-light-1">9.4</div>
+                                    <div class="text-15 text-light-1">{{ avg_staff|floatformat:1 }}</div>
                                 </div>
-    
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
-                                    <div class="progressBar__bar bg-dark-1" style="width: 90%"></div>
+                                    <div class="progressBar__bar bg-dark-1" style="width: {{ avg_staff|floatformat:1 }}0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -250,12 +248,12 @@
                             <div class="">
                                 <div class="d-flex items-center justify-between">
                                     <div class="text-15 fw-500">Cleanliness</div>
-                                    <div class="text-15 text-light-1">9.4</div>
+                                    <div class="text-15 text-light-1">{{ avg_cleanliness|floatformat:1 }}</div>
                                 </div>
     
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
-                                    <div class="progressBar__bar bg-dark-1" style="width: 90%"></div>
+                                    <div class="progressBar__bar bg-dark-1" style="width: {{ avg_cleanliness|floatformat:1 }}0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -263,12 +261,12 @@
                             <div class="">
                                 <div class="d-flex items-center justify-between">
                                     <div class="text-15 fw-500">Value for money</div>
-                                    <div class="text-15 text-light-1">9.4</div>
+                                    <div class="text-15 text-light-1">{{ avg_value_for_money|floatformat:1 }}</div>
                                 </div>
     
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
-                                    <div class="progressBar__bar bg-dark-1" style="width: 90%"></div>
+                                    <div class="progressBar__bar bg-dark-1" style="width: {{ avg_value_for_money|floatformat:1 }}0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -276,12 +274,12 @@
                             <div class="">
                                 <div class="d-flex items-center justify-between">
                                     <div class="text-15 fw-500">Comfort</div>
-                                    <div class="text-15 text-light-1">9.4</div>
+                                    <div class="text-15 text-light-1">{{ avg_comfort|floatformat:1 }}</div>
                                 </div>
     
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
-                                    <div class="progressBar__bar bg-dark-1" style="width: 90%"></div>
+                                    <div class="progressBar__bar bg-dark-1" style="width: {{ avg_comfort|floatformat:1 }}0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -289,12 +287,12 @@
                             <div class="">
                                 <div class="d-flex items-center justify-between">
                                     <div class="text-15 fw-500">Facilities</div>
-                                    <div class="text-15 text-light-1">9.4</div>
+                                    <div class="text-15 text-light-1">{{ avg_facilities|floatformat:1 }}</div>
                                 </div>
     
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
-                                    <div class="progressBar__bar bg-dark-1" style="width: 90%"></div>
+                                    <div class="progressBar__bar bg-dark-1" style="width: {{ avg_facilities|floatformat:1 }}0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -302,12 +300,12 @@
                             <div class="">
                                 <div class="d-flex items-center justify-between">
                                     <div class="text-15 fw-500">Free WiFi</div>
-                                    <div class="text-15 text-light-1">9.4</div>
+                                    <div class="text-15 text-light-1">{{ avg_free_wifi|floatformat:1 }}</div>
                                 </div>
     
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
-                                    <div class="progressBar__bar bg-dark-1" style="width: 90%"></div>
+                                    <div class="progressBar__bar bg-dark-1" style="width: {{ avg_free_wifi|floatformat:1 }}0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -324,22 +322,24 @@
     <section class="pt-40">
         <div class="container">
             <div class="row y-gap-60">
-                <div class="col-lg-6">
-                    <div class="row x-gap-20 y-gap-20 items-center">
-                        <div class="col-auto">
-                            <img src="https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg" alt="image" style="width: 60px;">
+                {% for review in reviews %}
+                    <div class="col-lg-6">
+                        <div class="row x-gap-20 y-gap-20 items-center">
+                            <div class="col-auto">
+                                <img src="https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg" alt="image" style="width: 60px;">
+                            </div>
+                            <div class="col-auto">
+                                <div class="fw-500 lh-15">{{ review.name }}</div>
+                                <div class="text-14 text-light-1 lh-15">{{ review.created_at|date:"F Y" }}</div>
+                            </div>
                         </div>
-                        <div class="col-auto">
-                            <div class="fw-500 lh-15">Tonko</div>
-                            <div class="text-14 text-light-1 lh-15">March 2022</div>
-                        </div>
+
+                        <h5 class="fw-500 text-blue-1 mt-20">{{ review.overall_rating }} Superb</h5>
+                        <p class="text-15 text-dark-1 mt-10">
+                            {{ review.comment }}
+                        </p>
                     </div>
-    
-                    <h5 class="fw-500 text-blue-1 mt-20">9.2 Superb</h5>
-                    <p class="text-15 text-dark-1 mt-10">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    </p>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
