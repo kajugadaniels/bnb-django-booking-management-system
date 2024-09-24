@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/vendors.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>B&B Mountain View | {% block title %} Home {% endblock %}</title>
 </head>
 <body>
@@ -21,6 +22,20 @@
 
         {% include 'inc/footer.html' %}
     </main>
+
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                Swal.fire({
+                    icon: "{% if message.tags == 'error' %}error{% else %}success{% endif %}",
+                    title: "{{ message }}",
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000
+                });
+            {% endfor %}
+        </script>
+    {% endif %}
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>
     <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
