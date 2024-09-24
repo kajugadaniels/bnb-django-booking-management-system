@@ -100,9 +100,16 @@ def getRoom(request, slug):
     return render(request, 'rooms/show.html', context)
 
 def booking(request):
+    room_id = request.GET.get('room_id')
+    check_in_date = request.GET.get('check_in_date')
+    check_out_date = request.GET.get('check_out_date')
+
+    room = get_object_or_404(Room, id=room_id)
 
     context = {
-        # 
+        'room': room,
+        'check_in_date': check_in_date,
+        'check_out_date': check_out_date,
     }
 
     return render(request, 'booking.html', context)
