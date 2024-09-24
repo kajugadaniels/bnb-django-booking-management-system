@@ -105,3 +105,30 @@ class RoomReview(models.Model):
 
     class Meta:
         verbose_name_plural = "Room Reviews"
+
+class Booking(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('cancelled', 'Cancelled'),
+    )
+
+    PAYMENT_STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
+        ('failed', 'Failed'),
+    )
+
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='bookings')
+    checkInDate = models.DateField(null=True, blank=True)
+    checkOutDate = models.DateField(null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)
+    special_request = models.TextField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, null=True, blank=True)
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, null=True, blank=True)
+    transactionId = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"Booking for {self.room} by {self.name}"
