@@ -36,7 +36,7 @@ def getRoom(request, slug):
             review = form.save(commit=False)
             review.room = room
             review.save()
-            return redirect('home:getRoom', slug=room.slug)
+            return redirect('base:getRoom', slug=room.slug)
     else:
         form = RoomReviewForm()
 
