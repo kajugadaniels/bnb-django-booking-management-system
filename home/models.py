@@ -84,3 +84,21 @@ class RoomImage(models.Model):
 
     class Meta:
         verbose_name_plural = "Room Images"
+
+class RoomReview(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    comment = models.TextField(null=True, blank=True)
+    location = models.IntegerField(default=5, null=True, blank=True)
+    staff = models.IntegerField(default=5, null=True, blank=True)
+    cleanliness = models.IntegerField(default=5, null=True, blank=True)
+    value_for_money = models.IntegerField(default=5, null=True, blank=True)
+    comfort = models.IntegerField(default=5, null=True, blank=True)
+    facilities = models.IntegerField(default=5, null=True, blank=True)
+    free_wifi = models.IntegerField(default=5, null=True, blank=True)
+    status = models.BooleanField(default=5, null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        verbose_name_plural = "Room Reviews"
