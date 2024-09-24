@@ -19,34 +19,34 @@
                             <div class="row x-gap-20 y-gap-20 pt-20">
                                 <div class="col-12">
                                     <div class="form-input ">
-                                        <input type="text" required>
+                                        {{ form.name }}
                                         <label class="lh-1 text-16 text-light-1">Full Name</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-input ">
-                                        <input type="text" required>
+                                        {{ form.email }}
                                         <label class="lh-1 text-16 text-light-1">Email</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-input ">
-                                        <input type="text" required>
+                                        {{ form.phone }}
                                         <label class="lh-1 text-16 text-light-1">Phone Number</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-input ">
-                                        <textarea required rows="6"></textarea>
+                                        {{ form.special_request }}
                                         <label class="lh-1 text-16 text-light-1">Special Requests</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row y-gap-20 items-center justify-between">
                                 <div class="col-auto">
-                                    <a href="#" class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
-                                        Book Now <div class="icon-arrow-top-right ml-15"></div>
-                                    </a>
+                                    <button class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
+                                        Continue to Checkout <div class="icon-arrow-top-right ml-15"></div>
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -162,6 +162,9 @@
                                     <div class="text-15">${{ room.price|intcomma }}</div>
                                 </div>
                             </div>
+                            <button class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
+                                Pay Now <div class="icon-arrow-top-right ml-15"></div>
+                            </button>
                         </div>
                     </div>
                 </div>
