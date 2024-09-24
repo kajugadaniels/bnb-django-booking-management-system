@@ -104,6 +104,11 @@ def booking(request, slug):
     check_in_date = request.GET.get('check_in_date')
     check_out_date = request.GET.get('check_out_date')
 
+    # Convert string dates to datetime objects
+    if check_in_date and check_out_date:
+        check_in_date = datetime.strptime(check_in_date, '%Y-%m-%d')
+        check_out_date = datetime.strptime(check_out_date, '%Y-%m-%d')
+
     room = get_object_or_404(Room, id=room_id)
     reviews = RoomReview.objects.filter(room=room).order_by('-created_at')
 
@@ -119,12 +124,29 @@ def booking(request, slug):
 
     overall_rating = (avg_location + avg_staff + avg_cleanliness + avg_value_for_money + avg_comfort + avg_facilities + avg_free_wifi) / 7
 
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.room = room
+            booking.checkInDate = check_in_date
+            booking.checkOutDate = check_out_date
+            booking.save()
+            # Redirect to a success page or another view
+            return redirect('base:booking_success')
+
+    else:
+        form = BookingForm()
+
     context = {
         'room': room,
         'check_in_date': check_in_date,
         'check_out_date': check_out_date,
         'total_reviews': total_reviews,
         'overall_rating': overall_rating,
+        'form': form,
+        # Calculate total length of stay in days
+        'total_length_of_stay': (check_out_date - check_in_date).days if check_in_date and check_out_date else None,
     }
 
     return render(request, 'booking.html', context)
