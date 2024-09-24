@@ -152,31 +152,30 @@
                                 </div>
                             </div>
                     
-                            <div class="row y-gap-20 pt-30">
-                                <div class="col-12">
-                                    <div class="searchMenu-date px-20 py-10 border-light rounded-4 -right js-form-dd js-calendar js-calendar-el">
-                                        <div data-x-dd-click="searchMenu-date">
-                                            <h4 class="text-15 fw-500 ls-2 lh-16">Departure Month</h4>
-                                            <div class="capitalize text-15 text-light-1 ls-2 lh-16">
-                                                <span class="js-first-date">Wed 2 Mar</span>
-                                                -
-                                                <span class="js-last-date">Fri 11 Apr</span>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="row y-gap-20 pt-30">
+                                    <div class="col-12">
+                                        <div class="px-20 py-10 border-light rounded-4">
+                                            <h4 class="text-15 fw-500 ls-2 lh-16">Select Dates</h4>
+                                            <div>
+                                                <label for="check-in-date">Check-in Date:</label>
+                                                <input type="date" id="check-in-date" name="check_in_date" class="form-control" required>
                                             </div>
-                                        </div>
-                                        <div class="searchMenu-date__field shadow-2" data-x-dd="searchMenu-date" data-x-dd-toggle="-is-active">
-                                            <div class="bg-white px-30 py-30 rounded-4">
-                                                <div class="elCalendar js-calendar-el-calendar"></div>
+                                            <div>
+                                                <label for="check-out-date">Check-out Date:</label>
+                                                <input type="date" id="check-out-date" name="check_out_date" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
+                            
+                                    <div class="col-12">
+                                        <button type="submit" class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
+                                            Book Now
+                                        </button>
+                                    </div>
                                 </div>
-                    
-                                <div class="col-12">
-                                    <button class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
-                                        Book Now
-                                    </button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -422,5 +421,17 @@
     </section>
 
     <div class="layout-pt-md"></div>
+
+    <script>
+        // Disable past dates for the check-in date input
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('check-in-date').setAttribute('min', today);
+    
+        // Ensure that check-out date is after check-in date
+        document.getElementById('check-in-date').addEventListener('change', function() {
+            const checkInDate = this.value;
+            document.getElementById('check-out-date').setAttribute('min', checkInDate);
+        });
+    </script>
 
 {% endblock %}
