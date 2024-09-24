@@ -99,9 +99,14 @@ def getRoom(request, slug):
 
     return render(request, 'rooms/show.html', context)
 
-def booking(request, slug):
-    room = get_object_or_404(Room, slug=slug)
+def booking(request):
+    room_id = request.GET.get('room_id')
+    check_in_date = request.GET.get('check_in_date')
+    check_out_date = request.GET.get('check_out_date')
+
+    room = get_object_or_404(Room, id=room_id)
     reviews = RoomReview.objects.filter(room=room).order_by('-created_at')
+
     total_reviews = reviews.count()
 
     avg_location = reviews.aggregate(Avg('location'))['location__avg'] or 0
@@ -112,40 +117,14 @@ def booking(request, slug):
     avg_facilities = reviews.aggregate(Avg('facilities'))['facilities__avg'] or 0
     avg_free_wifi = reviews.aggregate(Avg('free_wifi'))['free_wifi__avg'] or 0
 
-    overall_rating = (avg_location + avg_staff + avg_cleanliness + avg_value_for_money +
-                      avg_comfort + avg_facilities + avg_free_wifi) / 7
-
-    # Initialize form with None or prefilled if booking was successful
-    form = BookingForm()
-    success = False
-    booking_id = request.GET.get('booking_id')
-
-    # Check if a booking has been made and populate the form if booking_id exists
-    if booking_id:
-        booking = get_object_or_404(Booking, id=booking_id)
-        form = BookingForm(instance=booking)
-        success = True
-
-    if request.method == 'POST':
-        form = BookingForm(request.POST)
-        if form.is_valid():
-            booking = form.save(commit=False)
-            booking.room = room
-            booking.checkInDate = request.POST.get('checkInDate')
-            booking.checkOutDate = request.POST.get('checkOutDate')
-            booking.save()
-
-            # Redirect back to the same page with the booking_id in the query parameters
-            return redirect(f"{request.path}?booking_id={booking.id}")
+    overall_rating = (avg_location + avg_staff + avg_cleanliness + avg_value_for_money + avg_comfort + avg_facilities + avg_free_wifi) / 7
 
     context = {
         'room': room,
-        'reviews': reviews,
+        'check_in_date': check_in_date,
+        'check_out_date': check_out_date,
         'total_reviews': total_reviews,
         'overall_rating': overall_rating,
-        'form': form,
-        'success': success,  # Pass success flag to show success message
-        'total_length_of_stay': (form.cleaned_data['checkOutDate'] - form.cleaned_data['checkInDate']).days if form.is_valid() else None,
     }
 
     return render(request, 'booking.html', context)

@@ -153,6 +153,24 @@
                                 {% csrf_token %}
                                 <div class="row y-gap-20 pt-30">
                                     <div class="col-12">
+                                        <div class="form-input ">
+                                            {{ form.name }}
+                                            <label class="lh-1 text-16 text-light-1">Full Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-input ">
+                                            {{ form.email }}
+                                            <label class="lh-1 text-16 text-light-1">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-input ">
+                                            {{ form.phone }}
+                                            <label class="lh-1 text-16 text-light-1">Phone Number</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
                                         <div class="px-20 py-10 border-light rounded-4">
                                             <h4 class="text-15 fw-500 ls-2 lh-16">Select Dates</h4>
                                             <div>

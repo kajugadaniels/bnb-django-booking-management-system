@@ -30,9 +30,8 @@ class RoomReviewForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['name', 'email', 'phone', 'special_request']
+        fields = ['name', 'email', 'phone']
 
     name = forms.CharField(max_length=100)
     email = forms.EmailField()
     phone = forms.CharField(max_length=15)
-    special_request = forms.CharField(widget=forms.Textarea, required=False)

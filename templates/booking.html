@@ -14,47 +14,39 @@
                 <div class="col-xl-7 col-lg-8">
                     <div class="py-15 px-20 rounded-4 text-15 bg-blue-1-05">
                         <h2 class="text-22 fw-500 mt-40 md:mt-24">Let us know who you are</h2>
-                        {% if success %}
-                            <div class="alert alert-success">
-                                Your booking was successful! Please proceed to payment below.
-                            </div>
-                        {% endif %}
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="row x-gap-20 y-gap-20 pt-20">
-                                <div class="col-12">
-                                    <div class="form-input">
-                                        {{ form.name }}
-                                        <label class="lh-1 text-16 text-light-1">Full Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-input">
-                                        {{ form.email }}
-                                        <label class="lh-1 text-16 text-light-1">Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-input">
-                                        {{ form.phone }}
-                                        <label class="lh-1 text-16 text-light-1">Phone Number</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-input">
-                                        {{ form.special_request }}
-                                        <label class="lh-1 text-16 text-light-1">Special Requests</label>
-                                    </div>
+                        <div class="row x-gap-20 y-gap-20 pt-20">
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Full Name</label>
                                 </div>
                             </div>
-                            <div class="row y-gap-20 items-center justify-between">
-                                <div class="col-auto">
-                                    <button type="submit" class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
-                                        Continue to Checkout <div class="icon-arrow-top-right ml-15"></div>
-                                    </button>
+                            <div class="col-md-6">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Email</label>
                                 </div>
                             </div>
-                        </form>
+                            <div class="col-md-6">
+                                <div class="form-input ">
+                                    <input type="text" required>
+                                    <label class="lh-1 text-16 text-light-1">Phone Number</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <textarea required rows="6"></textarea>
+                                    <label class="lh-1 text-16 text-light-1">Special Requests</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row y-gap-20 items-center justify-between">
+                            <div class="col-auto">
+                                <a href="#" class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
+                                    Book Now <div class="icon-arrow-top-right ml-15"></div>
+                                </a>
+                            </div>
+                        </div>
                         <div class="w-full h-1 bg-border mt-40 mb-40"></div>
                     </div>
                 </div>
@@ -117,7 +109,7 @@
                             <div class="border-top-light mt-30 mb-20"></div>
                             <div class="">
                                 <div class="text-15">Total length of stay:</div>
-                                <div class="fw-500">{{ total_length_of_stay }} days</div>
+                                <div class="fw-500">9 days</div>
                             </div>
                         </div>
                         <div class="px-30 py-30 border-light rounded-4 mt-30">
@@ -152,27 +144,22 @@
                                         <div class="text-18 lh-13 fw-500">Price</div>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="text-18 lh-13 fw-500">{{ room.price|intcomma }}</div>
+                                        <div class="text-18 lh-13 fw-500">${{ room.price|intcomma }}</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {% if form.name.value and form.email.value and form.phone.value %}
-                            <div class="px-30 py-30 border-light rounded-4 mt-30">
-                                <div class="text-20 fw-500 mb-20">Your payment schedule</div>
-                                <div class="row y-gap-5 justify-between">
-                                    <div class="col-auto">
-                                        <div class="text-15">Before you stay you'll pay</div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="text-15">${{ room.price|intcomma }}</div>
-                                    </div>
+                        <div class="px-30 py-30 border-light rounded-4 mt-30">
+                            <div class="text-20 fw-500 mb-20">Your payment schedule</div>
+                            <div class="row y-gap-5 justify-between">
+                                <div class="col-auto">
+                                    <div class="text-15">Before you stay you'll pay</div>
                                 </div>
-                                <button class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
-                                    Pay Now <div class="icon-arrow-top-right ml-15"></div>
-                                </button>
+                                <div class="col-auto">
+                                    <div class="text-15">${{ room.price|intcomma }}</div>
+                                </div>
                             </div>
-                        {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
