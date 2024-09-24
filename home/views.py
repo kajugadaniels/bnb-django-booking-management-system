@@ -1,5 +1,6 @@
 from home.forms import *
 from home.models import *
+from datetime import datetime
 from django.db.models import Avg
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
@@ -45,17 +46,42 @@ def getRoom(request, slug):
 
     overall_rating = (avg_location + avg_staff + avg_cleanliness + avg_value_for_money + avg_comfort + avg_facilities + avg_free_wifi) / 7
 
-    # Handle the review form submission
     if request.method == 'POST':
-        form = RoomReviewForm(request.POST)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.room = room  # Associate the review with the room
-            review.save()
-            messages.success(request, 'Your review has been submitted successfully!')
-            return redirect('base:getRoom', slug=room.slug)  # Adjust the URL name as needed
-    else:
-        form = RoomReviewForm()
+        check_in_date = request.POST.get('check_in_date')
+        check_out_date = request.POST.get('check_out_date')
+
+        # Convert strings to date objects
+        try:
+            check_in_date = datetime.strptime(check_in_date, '%Y-%m-%d').date()
+            check_out_date = datetime.strptime(check_out_date, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, "Invalid date format. Please select valid dates.")
+            return redirect('base:getRoom', slug=room.slug)
+
+        today = datetime.today().date()
+
+        # Validate the dates
+        if check_in_date < today:
+            messages.error(request, "Check-in date cannot be in the past.")
+            return redirect('base:getRoom', slug=room.slug)
+
+        if check_out_date <= check_in_date:
+            messages.error(request, "Check-out date must be after the check-in date.")
+            return redirect('base:getRoom', slug=room.slug)
+
+        # Check if the room is already booked for the selected dates
+        existing_booking = Booking.objects.filter(
+            room=room,
+            checkInDate__lte=check_out_date,
+            checkOutDate__gte=check_in_date
+        ).exists()
+
+        if existing_booking:
+            messages.error(request, "These dates are already booked. Please choose different dates.")
+            return redirect('base:getRoom', slug=room.slug)
+
+        # If everything is okay, redirect to booking page
+        return redirect('base:booking', room_id=room.id, check_in_date=check_in_date, check_out_date=check_out_date)
 
     context = {
         'room': room,
@@ -69,7 +95,6 @@ def getRoom(request, slug):
         'avg_comfort': avg_comfort,
         'avg_facilities': avg_facilities,
         'avg_free_wifi': avg_free_wifi,
-        'form': form,
     }
 
     return render(request, 'rooms/show.html', context)
