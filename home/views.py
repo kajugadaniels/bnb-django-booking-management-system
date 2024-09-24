@@ -132,8 +132,7 @@ def booking(request, slug):
             booking.checkInDate = check_in_date
             booking.checkOutDate = check_out_date
             booking.save()
-            # Redirect to a success page or another view
-            return redirect('base:booking_success')
+            return redirect('base:bookingSuccess')
 
     else:
         form = BookingForm()
@@ -145,7 +144,6 @@ def booking(request, slug):
         'total_reviews': total_reviews,
         'overall_rating': overall_rating,
         'form': form,
-        # Calculate total length of stay in days
         'total_length_of_stay': (check_out_date - check_in_date).days if check_in_date and check_out_date else None,
     }
 
