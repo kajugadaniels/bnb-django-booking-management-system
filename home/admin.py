@@ -23,3 +23,11 @@ class RoomAdmin(admin.ModelAdmin):
 class RoomImageAdmin(admin.ModelAdmin):
     list_display = ('room', 'created_at')
     search_fields = ('room__name',)
+
+@admin.register(RoomReview)
+class RoomReviewAdmin(admin.ModelAdmin):
+    list_display = ['room', 'name', 'email', 'location', 'staff', 'cleanliness', 'value_for_money', 'comfort', 'facilities', 'free_wifi', 'status', 'created_at']
+    list_filter = ['room', 'status', 'created_at']
+    search_fields = ['name', 'email', 'room__name']
+    ordering = ['created_at']
+    readonly_fields = ['created_at']
