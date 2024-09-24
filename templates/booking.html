@@ -41,16 +41,28 @@
                                 <div class="col-auto">
                                     <div class="text-15">Before you stay you'll pay</div>
                                 </div>
-                                <div class="col-auto">
-                                    <div class="text-15">${{ room.price|intcomma }}</div>
-                                </div>
-                                <div class="row y-gap-20 items-center justify-between">
+                                <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+                                    {% csrf_token %}
                                     <div class="col-auto">
-                                        <a href="#" class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
-                                            Pay Now <div class="icon-arrow-top-right ml-15"></div>
-                                        </a>
+                                        <div class="text-15">${{ room.price|intcomma }}</div>
                                     </div>
-                                </div>
+                                    <input type="hidden" name="public_key" value="FLWPUBK_TEST-02b9b5fc6406bd4a41c3ff141cc45e93-X" />
+                                    <input type="hidden" name="customer[email]" value="{{ booking.email }}" />
+                                    <input type="hidden" name="customer[name]" value="{{ booking.name }}" />
+                                    <input type="hidden" name="tx_ref" value="txref-{{ booking.id }}" />
+                                    <input type="hidden" name="amount" value="{{ room.price }}" />
+                                    <input type="hidden" name="currency" value="USD" />
+                                    <input type="hidden" name="redirect_url" value="USD" />
+                                    <input type="hidden" name="meta[source]" value="docs-html-test" />
+                                    <br>
+                                    <div class="row y-gap-20 items-center justify-between">
+                                        <div class="col-auto">
+                                            <button class="button h-60 px-24 -dark-1 bg-blue-1 text-white" type="submit" id="start-payment-button">
+                                                Pay with Flutterwave <div class="icon-arrow-top-right ml-15"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,29 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} {{ Booking }} {% endblock %}
+{% block content %}
+
+    <br>
+    <br>
+    <br>
+
+    <section class="pt-40 layout-pb-md">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="row x-gap-20 y-gap-20 pt-20">
+                        <div class="d-flex flex-column items-center mt-60 lg:md-40 sm:mt-24">
+                            <div class="size-80 flex-center rounded-full bg-dark-3">
+                                <i class="icon-check text-30 text-white"></i>
+                            </div>
+                            <div class="text-30 lh-1 fw-600 mt-20">Payment submitted successfully!</div>
+                            <div class="text-15 text-light-1 mt-10">Booking details has been sent your</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
