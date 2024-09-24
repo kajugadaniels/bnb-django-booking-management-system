@@ -146,3 +146,11 @@ def booking(request, booking_id):
     }
 
     return render(request, 'booking.html', context)
+
+def paymentSuccess(request, booking_id):
+
+    context = {
+        # 
+    }
+
+    return render(request, 'success.html', context)

@@ -52,7 +52,7 @@
                                     <input type="hidden" name="tx_ref" value="txref-{{ booking.id }}" />
                                     <input type="hidden" name="amount" value="{{ room.price }}" />
                                     <input type="hidden" name="currency" value="USD" />
-                                    <input type="hidden" name="redirect_url" value="USD" />
+                                    <input type="hidden" name="redirect_url" value="https://bnbmv.up.railway.app/success/{{ booking.id }}?/success_id={{ booking.success_id }}&booking_price={{ booking.price }}" />
                                     <input type="hidden" name="meta[source]" value="docs-html-test" />
                                     <br>
                                     <div class="row y-gap-20 items-center justify-between">
