@@ -73,3 +73,11 @@ def getRoom(request, slug):
     }
 
     return render(request, 'rooms/show.html', context)
+
+def booking(request):
+
+    context = {
+        # 
+    }
+
+    return render(request, 'booking.html', context)
