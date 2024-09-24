@@ -26,3 +26,13 @@ class RoomReviewForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'required': 'true'}),
             'comment': forms.Textarea(attrs={'rows': 4, 'required': 'true'}),
         }
+
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['name', 'email', 'phone', 'special_request']
+
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    phone = forms.CharField(max_length=15)
+    special_request = forms.CharField(widget=forms.Textarea, required=False)
