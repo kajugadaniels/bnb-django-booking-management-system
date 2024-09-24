@@ -4,7 +4,7 @@ from home.models import *
 class RoomReviewForm(forms.ModelForm):
     class Meta:
         model = RoomReview
-        fields = ['location', 'staff', 'cleanliness', 'value_for_money', 'comfort', 'facilities', 'free_wifi', 'text', 'email', 'comment']
+        fields = ['location', 'staff', 'cleanliness', 'value_for_money', 'comfort', 'facilities', 'free_wifi', 'name', 'email', 'comment']
 
         widgets = {
             'location': forms.NumberInput(attrs={'min': 1, 'max': 5}),
@@ -14,7 +14,7 @@ class RoomReviewForm(forms.ModelForm):
             'comfort': forms.NumberInput(attrs={'min': 1, 'max': 5}),
             'facilities': forms.NumberInput(attrs={'min': 1, 'max': 5}),
             'free_wifi': forms.NumberInput(attrs={'min': 1, 'max': 5}),
-            'text': forms.TextInput(attrs={'placeholder': 'Your name'}),
+            'name': forms.TextInput(attrs={'placeholder': 'Your name'}),
             'email': forms.EmailInput(attrs={'placeholder': 'Your email'}),
             'comment': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Write your comment'}),
         }

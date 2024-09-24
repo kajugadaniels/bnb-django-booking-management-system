@@ -97,8 +97,11 @@ class RoomReview(models.Model):
     comfort = models.IntegerField(default=5, null=True, blank=True)
     facilities = models.IntegerField(default=5, null=True, blank=True)
     free_wifi = models.IntegerField(default=5, null=True, blank=True)
-    status = models.BooleanField(default=5, null=True, blank=True)
+    status = models.BooleanField(default=1, null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Review by {self.name} for {self.room.name}"
 
     class Meta:
         verbose_name_plural = "Room Reviews"
