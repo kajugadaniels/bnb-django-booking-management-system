@@ -17,37 +17,42 @@
                         <div class="row x-gap-20 y-gap-20 pt-20">
                             <div class="col-12">
                                 <div class="form-input ">
-                                    <input type="text" required>
+                                    <input type="text" value="{{ booking.name }}" readonly>
                                     <label class="lh-1 text-16 text-light-1">Full Name</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-input ">
-                                    <input type="text" required>
+                                    <input type="text" value="{{ booking.email }}" readonly>
                                     <label class="lh-1 text-16 text-light-1">Email</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-input ">
-                                    <input type="text" required>
+                                    <input type="text" value="{{ booking.phone }}" readonly>
                                     <label class="lh-1 text-16 text-light-1">Phone Number</label>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-input ">
-                                    <textarea required rows="6"></textarea>
-                                    <label class="lh-1 text-16 text-light-1">Special Requests</label>
+                        </div>
+                        <div class="w-full h-1 bg-border mt-40 mb-40"></div>
+                        <div class="px-30 py-30 border-light rounded-4 mt-30">
+                            <div class="text-20 fw-500 mb-20">Your payment schedule</div>
+                            <div class="row y-gap-5 justify-between">
+                                <div class="col-auto">
+                                    <div class="text-15">Before you stay you'll pay</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15">${{ room.price|intcomma }}</div>
+                                </div>
+                                <div class="row y-gap-20 items-center justify-between">
+                                    <div class="col-auto">
+                                        <a href="#" class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
+                                            Pay Now <div class="icon-arrow-top-right ml-15"></div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row y-gap-20 items-center justify-between">
-                            <div class="col-auto">
-                                <a href="#" class="button h-60 px-24 -dark-1 bg-blue-1 text-white">
-                                    Book Now <div class="icon-arrow-top-right ml-15"></div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="w-full h-1 bg-border mt-40 mb-40"></div>
                     </div>
                 </div>
                 <div class="col-xl-5 col-lg-4">
@@ -109,7 +114,7 @@
                             <div class="border-top-light mt-30 mb-20"></div>
                             <div class="">
                                 <div class="text-15">Total length of stay:</div>
-                                <div class="fw-500">9 days</div>
+                                <div class="fw-500">{{ length_of_stay }} days</div>
                             </div>
                         </div>
                         <div class="px-30 py-30 border-light rounded-4 mt-30">
@@ -146,17 +151,6 @@
                                     <div class="col-auto">
                                         <div class="text-18 lh-13 fw-500">${{ room.price|intcomma }}</div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-30 py-30 border-light rounded-4 mt-30">
-                            <div class="text-20 fw-500 mb-20">Your payment schedule</div>
-                            <div class="row y-gap-5 justify-between">
-                                <div class="col-auto">
-                                    <div class="text-15">Before you stay you'll pay</div>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="text-15">${{ room.price|intcomma }}</div>
                                 </div>
                             </div>
                         </div>
