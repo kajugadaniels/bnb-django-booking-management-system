@@ -15,9 +15,12 @@ def home(request):
 
     highestPriceRoom = Room.objects.order_by('-price')[:3]
 
+    settings = Setting.objects.first()
+
     context = {
         'featuredRooms': featuredRooms,
         'highestPriceRoom': highestPriceRoom,
+        'settings': settings
     }
 
     return render(request, 'index.html', context)
@@ -31,12 +34,14 @@ def about(request):
     # Calculate the average rating
     average_rating = testimonies.aggregate(Avg('rating'))['rating__avg'] or 0
     average_rating = round(average_rating, 2)
+    settings = Setting.objects.first()
 
     context = {
         'team': team,
         'testimonies': testimonies,
         'happy_people_count': happy_people_count,
         'average_rating': average_rating,
+        'settings': settings
     }
 
     return render(request, 'about.html', context)
@@ -116,6 +121,8 @@ def getRoom(request, slug):
     else:
         form = BookingForm()
 
+    settings = Setting.objects.first()
+
     context = {
         'room': room,
         'reviews': reviews,
@@ -129,6 +136,7 @@ def getRoom(request, slug):
         'avg_facilities': avg_facilities,
         'avg_free_wifi': avg_free_wifi,
         'form': form,
+        'settings': settings
     }
 
     return render(request, 'rooms/show.html', context)
@@ -155,6 +163,8 @@ def booking(request, booking_id):
 
     overall_rating = (avg_location + avg_staff + avg_cleanliness + avg_value_for_money + avg_comfort + avg_facilities + avg_free_wifi) / 7
 
+    settings = Setting.objects.first()
+
     context = {
         'room': room,
         'booking': booking,
@@ -163,14 +173,16 @@ def booking(request, booking_id):
         'check_in_date': booking.checkInDate,
         'check_out_date': booking.checkOutDate,
         'length_of_stay': length_of_stay,
+        'settings': settings
     }
 
     return render(request, 'booking.html', context)
 
 def paymentSuccess(request, booking_id):
+    settings = Setting.objects.first()
 
     context = {
-        # 
+        'settings': settings
     }
 
     return render(request, 'success.html', context)
@@ -198,8 +210,11 @@ def contact(request):
     else:
         form = ContactForm()
 
+    settings = Setting.objects.first()
+
     context = {
         'form': form,
+        'settings': settings
     }
 
     return render(request, 'contact.html', context)
