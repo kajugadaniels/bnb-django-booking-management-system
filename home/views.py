@@ -12,9 +12,7 @@ def home(request):
     featuredRooms = list(rooms)
     random.shuffle(featuredRooms)
     featuredRooms = featuredRooms[:4]
-
     highestPriceRoom = Room.objects.order_by('-price')[:3]
-
     settings = Setting.objects.first()
 
     context = {
@@ -48,9 +46,11 @@ def about(request):
 
 def rooms(request):
     rooms = Room.objects.prefetch_related('images').order_by('-created_at').all()
+    rooms_count = rooms.count()
 
     context = {
         'rooms': rooms,
+        'rooms_count': rooms_count
     }
 
     return render(request, 'rooms/index.html', context)
