@@ -173,3 +173,11 @@ def paymentSuccess(request, booking_id):
     }
 
     return render(request, 'success.html', context)
+
+def contact(request):
+
+    context = {
+        # 
+    }
+
+    return render(request, 'contact.html', context)
