@@ -3,6 +3,7 @@ from home.models import *
 from datetime import datetime
 from django.db.models import Avg
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 
 def home(request):
@@ -175,9 +176,30 @@ def paymentSuccess(request, booking_id):
     return render(request, 'success.html', context)
 
 def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            contact_message = form.save()
+
+            # Send an email
+            send_mail(
+                subject=f"New Contact Form Submission: {contact_message.subject}",
+                message=f"Message from {contact_message.name} ({contact_message.email}):\n\n{contact_message.message}",
+                from_email={contact_message.email},
+                recipient_list=['kajugadaniels@gmail.com'],  # replace with the recipient's email
+            )
+
+            # Show a success message
+            messages.success(request, 'Your message has been sent successfully!')
+            return redirect('base:contact')
+        else:
+            messages.error(request, 'There was an error submitting your message. Please try again.')
+    else:
+        form = ContactForm()
 
     context = {
-        # 
+        'form': form,
     }
 
     return render(request, 'contact.html', context)

@@ -57,34 +57,34 @@
                             {% csrf_token %}
                             <div class="row y-gap-20 pt-20">
                                 <div class="col-12">
-                                    <div class="form-input ">
-                                        <input type="text" required>
+                                    <div class="form-input">
+                                        {{ form.name }}
                                         <label class="lh-1 text-16 text-light-1">Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-input ">
-                                        <input type="text" required>
+                                    <div class="form-input">
+                                        {{ form.email }}
                                         <label class="lh-1 text-16 text-light-1">Email</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-input ">
-                                        <input type="text" required>
+                                    <div class="form-input">
+                                        {{ form.subject }}
                                         <label class="lh-1 text-16 text-light-1">Subject</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-input ">
-                                        <textarea required rows="4"></textarea>
-                                        <label class="lh-1 text-16 text-light-1">Your Messages</label>
+                                    <div class="form-input">
+                                        {{ form.message }}
+                                        <label class="lh-1 text-16 text-light-1">Your Message</label>
                                     </div>
                                 </div>
                                 <div class="col-auto">
-                                    <a href="#" class="button px-24 h-50 -dark-1 bg-blue-1 text-white">
-                                        Send a Messsage 
+                                    <button type="submit" class="button px-24 h-50 -dark-1 bg-blue-1 text-white">
+                                        Send a Message
                                         <div class="icon-arrow-top-right ml-15"></div>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </form>
