@@ -207,3 +207,25 @@ class Contact(models.Model):
 
     def __str__(self):
         return f'Message from {self.name} - {self.subject}'
+
+class Setting(models.Model):
+    contact_number = models.CharField(max_length=20, null=True, blank=True)
+    website = models.URLField(max_length=255, null=True, blank=True)
+    instagram = models.URLField(max_length=255, null=True, blank=True)
+    twitter = models.URLField(max_length=255, null=True, blank=True)
+    facebook = models.URLField(max_length=255, null=True, blank=True)
+    whatsapp_number = models.CharField(max_length=20, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # Ensure only one instance of settings can exist
+        if not self.pk and Setting.objects.exists():
+            raise ValueError("You can only create one instance of the settings.")
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return "Website Settings"
+
+    class Meta:
+        verbose_name = "Setting"
+        verbose_name_plural = "Settings"
