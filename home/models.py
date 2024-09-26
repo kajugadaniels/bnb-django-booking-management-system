@@ -132,3 +132,32 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking for {self.room} by {self.name}"
+
+
+
+def team_image_path(instance, filename):
+    base_filename, file_extension = os.path.splitext(filename)
+    return f'team/member_{slugify(instance.name)}_{instance.created_at}{file_extension}'
+
+class Team(models.Model):
+    name = models.CharField(max_length=255)
+    position = models.CharField(max_length=255)
+    image = ProcessedImageField(
+        upload_to=team_image_path,
+        processors=[ResizeToFill(234, 300)],
+        format='JPEG',
+        options={'quality': 90},
+        null=True,
+        blank=True,
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Team Members"
