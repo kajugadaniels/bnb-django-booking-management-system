@@ -180,6 +180,9 @@ def booking(request, booking_id):
 
 def paymentSuccess(request, booking_id):
     settings = Setting.objects.first()
+    booking = Booking.objects.get_object_or_404(id=booking_id)
+    booking.payment_status = True
+    booking.save()
 
     context = {
         'settings': settings

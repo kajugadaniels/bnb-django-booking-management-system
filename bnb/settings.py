@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'ckeditor',
     'ckeditor_uploader',
+    'corsheaders',
 
     #Custom apps
     'home',
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'bnb.urls'
@@ -184,7 +186,8 @@ JAZZMIN_SETTINGS = {
     "related_modal_active": False,
 }
 
-CSRF_TRUSTED_ORIGINS = ['https://bnbmv.up.railway.app', 'https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://bnbmv.up.railway.app', 'https://*.127.0.0.1', '"https://checkout-v3-ui-prod.f4b-flutterwave.com",']
+CORS_ALLOW_CREDENTIALS = True
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"

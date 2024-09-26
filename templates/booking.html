@@ -41,7 +41,16 @@
                                 <div class="col-auto">
                                     <div class="text-15">Before you stay you'll pay</div>
                                 </div>
-                                <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+                                <form>
+                                    <div class="row y-gap-20 items-center justify-between">
+                                        <div class="col-auto">
+                                            <button class="button h-60 px-24 -dark-1 bg-blue-1 text-white" type="button" onclick="makePayment()">
+                                                Pay with Flutterwave <div class="icon-arrow-top-right ml-15"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                {% comment %} <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
                                     {% csrf_token %}
                                     <div class="col-auto">
                                         <div class="text-15">${{ room.price|intcomma }}</div>
@@ -62,7 +71,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                </form>
+                                </form> {% endcomment %}
                             </div>
                         </div>
                     </div>
@@ -171,5 +180,34 @@
             </div>
         </div>
     </section>
+
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+
+    <script>
+        function makePayment() {
+            FlutterwaveCheckout({
+                public_key: "FLWPUBK_TEST-2c56ccd77ee3634eaff746b2e451cf2b-X",
+                tx_ref: "titanic-{{ booking.id }}",
+                amount: {{ room.price }},
+                currency: "USD",
+                payment_options: "card, mobilemoneyghana, banktransfer, ussd",
+                redirect_url: "https://bnbmv.up.railway.app/success/{{ booking.id }}",
+                meta: {
+                    consumer_id: 23,
+                    consumer_mac: "92a3-912ba-1192a",
+                },
+                customer: {
+                    email: "{{ booking.email }}",
+                    phone_number: "{{ booking.phone }}",
+                    name: "{{ booking.name }}",
+                },
+                customizations: {
+                    title: "The Titanic Store",
+                    description: "Payment for an awesome cruise",
+                    logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+                }
+            });
+        }
+    </script>
 
 {% endblock %}
