@@ -180,12 +180,16 @@ def booking(request, booking_id):
 
 def paymentSuccess(request, booking_id):
     settings = Setting.objects.first()
-    booking = Booking.objects.get_object_or_404(id=booking_id)
-    booking.payment_status = True
+    # Use get_object_or_404 to retrieve the booking by id
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    # Update the payment status to 'paid'
+    booking.payment_status = 'paid'
     booking.save()
 
     context = {
-        'settings': settings
+        'settings': settings,
+        'booking': booking
     }
 
     return render(request, 'success.html', context)
