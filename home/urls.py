@@ -16,5 +16,5 @@ urlpatterns = [
     path('not-found/', notFound, name="notFound"),
     
     # Catch-all pattern for 404 errors
-    re_path(r'^.*$', notFound, name='notFound'),
+    # re_path(r'^.*$', notFound, name='notFound'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
