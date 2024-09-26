@@ -22,7 +22,13 @@ def home(request):
     return render(request, 'index.html', context)
 
 def about(request):
-    return render(request, 'about.html')
+    team = Team.objects.all()
+
+    context = {
+        'team': team,
+    }
+
+    return render(request, 'about.html', context)
 
 def rooms(request):
     rooms = Room.objects.prefetch_related('images').order_by('-created_at').all()
