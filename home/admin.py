@@ -43,3 +43,11 @@ class TeamAdmin(admin.ModelAdmin):
     list_display = ('name', 'position', 'created_at', 'updated_at')
     search_fields = ('name', 'position')
     list_filter = ('created_at', 'updated_at')
+
+@admin.register(Testimony)
+class TestimonyAdmin(admin.ModelAdmin):
+    list_display = ['name', 'position', 'rating']
+    list_filter = ['status', 'created_at']
+    search_fields = ['name', 'position', 'rating']
+    ordering = ['created_at']
+    readonly_fields = ['created_at']
