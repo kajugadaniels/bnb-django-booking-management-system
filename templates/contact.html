@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="text-14 text-light-1">KK 35 Avenue, Kigali, Rwanda</a>
+                    <a href="#" class="text-14 text-light-1">{{ settings.address }}</a>
                 </div>
             </div>
         </div>
@@ -101,22 +101,22 @@
                 </div>
                 <div class="col-lg-3">
                     <div class="text-14 text-light-1">Address</div>
-                    <div class="text-18 fw-500 mt-10">KK 35 Avenue, Kigali, Rwanda</div>
+                    <div class="text-18 fw-500 mt-10">{{ settings.address }}</div>
                 </div>
                 <div class="col-auto">
                     <div class="text-14 text-light-1">Toll Free Customer Care</div>
-                    <div class="text-18 fw-500 mt-10">+(1) 123 456 7890</div>
+                    <div class="text-18 fw-500 mt-10">{{ settings.contact_number }}</div>
                 </div>
                 <div class="col-auto">
                     <div class="text-14 text-light-1">Need live support?</div>
-                    <div class="text-18 fw-500 mt-10">hi@gotrip.com</div>
+                    <div class="text-18 fw-500 mt-10">{{ settings.email }}</div>
                 </div>
                 <div class="col-auto">
                     <div class="text-14 text-light-1">Follow us on social media</div>
                     <div class="d-flex x-gap-20 items-center mt-10">
-                        <a href="https://m.facebook.com/61559799568040" target="_blank"><i class="icon-facebook text-14"></i></a>
-                        <a href="https://x.com/bnbmountainview/" target="_blank"><i class="icon-twitter text-14"></i></a>
-                        <a href="https://www.instagram.com/bnbmountainview/" target="_blank"><i class="icon-instagram text-14"></i></a>
+                        <a href="{{ settings.facebook }}" target="_blank"><i class="icon-facebook text-14"></i></a>
+                        <a href="{{ settings.twitter }}" target="_blank"><i class="icon-twitter text-14"></i></a>
+                        <a href="{{ settings.instagram }}" target="_blank"><i class="icon-instagram text-14"></i></a>
                     </div>
                 </div>
             </div>

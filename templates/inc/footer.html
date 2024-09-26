@@ -15,12 +15,12 @@
                     <div class="row y-gap-30 justify-between pt-30">
                         <div class="col-sm-6">
                             <div class="text-14">Toll Free Customer Care</div>
-                            <a href="#" class="text-18 fw-500 mt-5">+250 788 888 888</a>
+                            <a href="tel:{{ settings.contact_number }}" class="text-18 fw-500 mt-5">{{ settings.contact_number }}</a>
                         </div>
 
                         <div class="col-sm-5">
                             <div class="text-14">Need live support?</div>
-                            <a href="#" class="text-18 fw-500 mt-5">info@bnbmountainview.com</a>
+                            <a href="mail:{{ settings.email }}" class="text-18 fw-500 mt-5">{{ settings.email }}</a>
                         </div>
                     </div>
 
@@ -28,10 +28,10 @@
                         <h5 class="text-16 fw-500 mb-10">Follow us on social media</h5>
 
                         <div class="d-flex x-gap-20 items-center">
-                            <a href="#"><i class="icon-facebook text-14"></i></a>
-                            <a href="#"><i class="icon-twitter text-14"></i></a>
-                            <a href="#"><i class="icon-instagram text-14"></i></a>
-                            <a href="#"><i class="icon-linkedin text-14"></i></a>
+                            <a href="{{ settings.facebook }}"><i class="icon-facebook text-14"></i></a>
+                            <a href="{{ settings.twitter }}"><i class="icon-twitter text-14"></i></a>
+                            <a href="{{ settings.instagram }}"><i class="icon-instagram text-14"></i></a>
+                            <a href="{{ settings.whatsapp_number }}"><i class="icon-whatsapp text-14"></i></a>
                         </div>
                     </div>
                 </div>
