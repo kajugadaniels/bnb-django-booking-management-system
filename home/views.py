@@ -183,12 +183,12 @@ def contact(request):
             contact_message = form.save()
 
             # Send an email
-            send_mail(
-                subject=f"New Contact Form Submission: {contact_message.subject}",
-                message=f"Message from {contact_message.name} ({contact_message.email}):\n\n{contact_message.message}",
-                from_email={contact_message.email},
-                recipient_list=['kajugadaniels@gmail.com'],  # replace with the recipient's email
-            )
+            # send_mail(
+            #     subject=f"New Contact Form Submission: {contact_message.subject}",
+            #     message=f"Message from {contact_message.name} ({contact_message.email}):\n\n{contact_message.message}",
+            #     from_email={contact_message.email},
+            #     recipient_list=['kajugadaniels@gmail.com'],  # replace with the recipient's email
+            # )
 
             # Show a success message
             messages.success(request, 'Your message has been sent successfully!')
