@@ -53,38 +53,41 @@
                         <div class="text-22 fw-500">
                             Send a message
                         </div>
-                        <div class="row y-gap-20 pt-20">
-                            <div class="col-12">
-                                <div class="form-input ">
-                                    <input type="text" required>
-                                    <label class="lh-1 text-16 text-light-1">Full Name</label>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row y-gap-20 pt-20">
+                                <div class="col-12">
+                                    <div class="form-input ">
+                                        <input type="text" required>
+                                        <label class="lh-1 text-16 text-light-1">Full Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-input ">
+                                        <input type="text" required>
+                                        <label class="lh-1 text-16 text-light-1">Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-input ">
+                                        <input type="text" required>
+                                        <label class="lh-1 text-16 text-light-1">Subject</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-input ">
+                                        <textarea required rows="4"></textarea>
+                                        <label class="lh-1 text-16 text-light-1">Your Messages</label>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="#" class="button px-24 h-50 -dark-1 bg-blue-1 text-white">
+                                        Send a Messsage 
+                                        <div class="icon-arrow-top-right ml-15"></div>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="form-input ">
-                                    <input type="text" required>
-                                    <label class="lh-1 text-16 text-light-1">Email</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-input ">
-                                    <input type="text" required>
-                                    <label class="lh-1 text-16 text-light-1">Subject</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-input ">
-                                    <textarea required rows="4"></textarea>
-                                    <label class="lh-1 text-16 text-light-1">Your Messages</label>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <a href="#" class="button px-24 h-50 -dark-1 bg-blue-1 text-white">
-                                    Send a Messsage 
-                                    <div class="icon-arrow-top-right ml-15"></div>
-                                </a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
