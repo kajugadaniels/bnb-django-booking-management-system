@@ -23,9 +23,19 @@ def home(request):
 
 def about(request):
     team = Team.objects.all()
+    testimonies = Testimony.objects.filter(status=True)
+
+    happy_people_count = testimonies.count()
+
+    # Calculate the average rating
+    average_rating = testimonies.aggregate(Avg('rating'))['rating__avg'] or 0
+    average_rating = round(average_rating, 2)
 
     context = {
         'team': team,
+        'testimonies': testimonies,
+        'happy_people_count': happy_people_count,
+        'average_rating': average_rating,
     }
 
     return render(request, 'about.html', context)
