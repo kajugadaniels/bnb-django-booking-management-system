@@ -51,3 +51,13 @@ class TestimonyAdmin(admin.ModelAdmin):
     search_fields = ['name', 'position', 'rating']
     ordering = ['created_at']
     readonly_fields = ['created_at']
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'subject', 'created_at')
+    search_fields = ('name', 'email', 'subject')
+    list_filter = ('created_at',)
+    ordering = ('-created_at',)
+
+    # Optional: Make the fields read-only except for the message field if needed
+    readonly_fields = ('name', 'email', 'subject', 'message', 'created_at')
