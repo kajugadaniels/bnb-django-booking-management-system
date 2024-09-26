@@ -176,7 +176,7 @@ class Testimony(models.Model):
     name = models.CharField(max_length=255)
     position = models.CharField(max_length=255)
     message = models.CharField(max_length=255)
-    rating = models.CharField(max_length=255, choices=STAR_CHOICES)
+    rating = models.IntegerField(choices=STAR_CHOICES)
     image = ProcessedImageField(
         upload_to=testimony_image_path,
         processors=[ResizeToFill(300, 300)],
