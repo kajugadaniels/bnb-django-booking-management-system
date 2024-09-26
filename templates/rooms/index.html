@@ -4,13 +4,24 @@
 {% block title %} Rooms {% endblock %}
 {% block content %}
 
+    <br>
+    <br>
+    <br>
+
     <section class="layout-pt-md layout-pb-lg">
         <div class="container">
-            <div class="row y-gap-30">
-                <div class="col-xl-3">
-                    {% include 'inc/sidebar.html' %}
+            <div class="row justify-center text-center">
+                <div class="col-auto">
+                    <div class="sectionTitle -md">
+                        <h2 class="sectionTitle__title">Our Rooms</h2>
+                    </div>
                 </div>
-                <div class="col-xl-9">
+            </div>
+            <div class="row y-gap-30">
+                {% comment %} <div class="col-xl-3">
+                    {% include 'inc/sidebar.html' %}
+                </div> {% endcomment %}
+                <div class="col-xl-12">
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">
                             {% comment %} <div class="text-18"><span class="fw-500">20 rooms</span> in Kigali</div> {% endcomment %}
