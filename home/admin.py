@@ -61,3 +61,11 @@ class ContactAdmin(admin.ModelAdmin):
 
     # Optional: Make the fields read-only except for the message field if needed
     readonly_fields = ('name', 'email', 'subject', 'message', 'created_at')
+
+@admin.register(Setting)
+class SettingAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        # Allow adding only if there is no existing Setting instance
+        return not Setting.objects.exists()
+
+    list_display = ('email', 'contact_number', 'website', 'instagram', 'twitter', 'facebook', 'whatsapp_number', 'address')
