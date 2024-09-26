@@ -1,7 +1,7 @@
 {% extends 'layouts/app.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %} {{ Booking }} {% endblock %}
+{% block title %} {{ room.name }} {% endblock %}
 {% block content %}
 
     <br>
@@ -42,6 +42,12 @@
                                     <div class="text-15">Before you stay you'll pay</div>
                                 </div>
                                 <form>
+                                    <select id="currency" onchange="updateCurrency()">
+                                        <option value="USD">USD</option>
+                                        <option value="KES">KES (Kenya)</option>
+                                        <option value="GHS">GHS (Ghana)</option>
+                                        <option value="NGN">NGN (Nigeria)</option>
+                                    </select>
                                     <div class="row y-gap-20 items-center justify-between">
                                         <div class="col-auto">
                                             <button class="button h-60 px-24 -dark-1 bg-blue-1 text-white" type="button" onclick="makePayment()">
@@ -184,13 +190,19 @@
     <script src="https://checkout.flutterwave.com/v3.js"></script>
 
     <script>
+        let selectedCurrency = "USD";
+    
+        function updateCurrency() {
+            selectedCurrency = document.getElementById("currency").value;
+        }
+    
         function makePayment() {
             FlutterwaveCheckout({
                 public_key: "FLWPUBK_TEST-2c56ccd77ee3634eaff746b2e451cf2b-X",
-                tx_ref: "titanic-{{ booking.id }}",
+                tx_ref: "bnb-mountain-view-{{ booking.id }}",
                 amount: 50,
-                currency: "USD",
-                payment_options: "card, mobilemoneyghana, banktransfer, ussd",
+                currency: selectedCurrency,
+                payment_options: "card, banktransfer, ussd, mobilemoneyghana, mobilemoneyrwanda, mobilemoneyuganda, mpesa",
                 redirect_url: "https://bnbmv.up.railway.app/success/{{ booking.id }}",
                 meta: {
                     consumer_id: 23,
@@ -202,9 +214,9 @@
                     name: "{{ booking.name }}",
                 },
                 customizations: {
-                    title: "The Titanic Store",
-                    description: "Payment for an awesome cruise",
-                    logo: "https://www.logolynx.com/images/logolynx/22/2239ca38f5505fbfce7e55bbc0604386.jpeg",
+                    title: "B&B Mountain View",
+                    description: "Payment Successful",
+                    logo: "https://pbs.twimg.com/profile_images/1783433787445039104/6hInZLmp_400x400.jpg",
                 }
             });
         }
