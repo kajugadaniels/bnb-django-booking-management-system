@@ -209,13 +209,14 @@ class Contact(models.Model):
         return f'Message from {self.name} - {self.subject}'
 
 class Setting(models.Model):
-    email = models.CharField(max_length=20, null=True, blank=True)
-    contact_number = models.CharField(max_length=20, null=True, blank=True)
+    email = models.CharField(max_length=255, null=True, blank=True)
+    second_email = models.CharField(max_length=255, null=True, blank=True)
+    contact_number = models.CharField(max_length=255, null=True, blank=True)
     website = models.URLField(max_length=255, null=True, blank=True)
     instagram = models.URLField(max_length=255, null=True, blank=True)
     twitter = models.URLField(max_length=255, null=True, blank=True)
     facebook = models.URLField(max_length=255, null=True, blank=True)
-    whatsapp_number = models.CharField(max_length=20, null=True, blank=True)
+    whatsapp_number = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
 
     def save(self, *args, **kwargs):
