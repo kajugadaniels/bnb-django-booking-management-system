@@ -1,0 +1,32 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} 404 Not Found {% endblock %}
+{% block content %}
+
+    <br>
+    <br>
+    <br>
+
+    <section class="layout-pt-lg layout-pb-lg">
+            <div class="container">
+                <div class="row y-gap-30 justify-between items-center">
+                    <div class="col-lg-6">
+                        <img src="https://creativelayers.net/themes/gotrip-html/img/general/404.svg" alt="image">
+                    </div>
+        
+                    <div class="col-lg-5">
+                        <div class="no-page">
+                            <div class="no-page__title">40<span class="text-blue-1">4</span></div>
+                            <h2 class="text-30 fw-600">Oops! It looks like you're lost.</h2>
+                            <div class="pr-30 mt-5">The page you're looking for isn't available. Try to search again or use the go to.</div>
+                            <div class="d-inline-block mt-40 md:mt-20">
+                                <a href="{% url 'base:home' %}" class="button -md -dark-1 bg-blue-1 text-white">Go back to homepage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+{% endblock %}

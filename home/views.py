@@ -225,3 +225,12 @@ def contact(request):
     }
 
     return render(request, 'contact.html', context)
+
+def notFound(request):
+    settings = Setting.objects.first()
+
+    context = {
+        'settings': settings,
+    }
+
+    return render(request, '404.html', context)
