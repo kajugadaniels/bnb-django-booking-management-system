@@ -37,3 +37,9 @@ class BookingAdmin(admin.ModelAdmin):
     list_display = ('room', 'name', 'email', 'phone', 'checkInDate', 'checkOutDate', 'status', 'payment_status')
     list_filter = ('status', 'payment_status', 'checkInDate', 'checkOutDate')
     search_fields = ('name', 'email', 'phone', 'transactionId')
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ('name', 'position', 'created_at', 'updated_at')
+    search_fields = ('name', 'position')
+    list_filter = ('created_at', 'updated_at')
