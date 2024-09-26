@@ -21,6 +21,9 @@ def home(request):
 
     return render(request, 'index.html', context)
 
+def about(request):
+    return render(request, 'rooms/about.html')
+
 def rooms(request):
     rooms = Room.objects.prefetch_related('images').order_by('-created_at').all()
 

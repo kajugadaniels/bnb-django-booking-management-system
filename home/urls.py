@@ -7,6 +7,7 @@ app_name = 'base'
 
 urlpatterns = [
     path('', home, name="home"),
+    path('about/', about, name="about"),
     path('rooms/', rooms, name="rooms"),
     path('room/<slug>', getRoom, name="getRoom"),
     path('booking/<booking_id>', booking, name="booking"),
