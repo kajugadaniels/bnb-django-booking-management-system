@@ -200,7 +200,7 @@
             FlutterwaveCheckout({
                 public_key: "FLWPUBK_TEST-7ad8b91138affefefb6cb467e6bf89ea-X",
                 tx_ref: "bnb-mountain-view-{{ booking.id }}",
-                amount: 50,
+                amount: {{ booking.price }},
                 currency: selectedCurrency,
                 payment_options: "card, banktransfer, ussd, mobilemoneyghana, mobilemoneyrwanda, mobilemoneyuganda, mpesa",
                 redirect_url: "https://bnbmv.up.railway.app/success/{{ booking.id }}",
