@@ -24,12 +24,15 @@ class Room(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField()
-    price = models.IntegerField(null=True, blank=True)
+    
+    # Separate fields for price in USD and RWF
+    price_usd = models.IntegerField(null=True, blank=True)
+    price_rwf = models.IntegerField(null=True, blank=True)
+    
     capacity = models.IntegerField()
     size = models.CharField(max_length=255, null=True, blank=True)
     image = ProcessedImageField(
         upload_to='room_images/',
-        # processors=[ResizeToFill(1340, 894)],
         format='JPEG',
         options={'quality': 90},
         null=True,
