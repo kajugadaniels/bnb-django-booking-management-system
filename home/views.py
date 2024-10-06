@@ -15,7 +15,13 @@ def home(request):
     
     highestPriceRoom = Room.objects.order_by('-price')[:3]
     
-    # Collect review data for each room
+    # Collect review data for each room in featuredRooms
+    for room in featuredRooms:
+        review_data = room.get_review_data()
+        room.total_reviews = review_data['total_reviews']
+        room.overall_rating = review_data['overall_rating']
+
+    # Collect review data for each room in highestPriceRoom
     for room in highestPriceRoom:
         review_data = room.get_review_data()
         room.total_reviews = review_data['total_reviews']
