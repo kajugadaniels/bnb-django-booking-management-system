@@ -19,32 +19,11 @@
                 </div>
             </div>
             <div class="row y-gap-30">
-                {% comment %} <div class="col-xl-3">
-                    {% include 'inc/sidebar.html' %}
-                </div> {% endcomment %}
                 <div class="col-xl-12">
                     <div class="row y-gap-10 items-center justify-between">
                         <div class="col-auto">
                             <div class="text-18"><span class="fw-500">{{ rooms_count }} rooms</span></div>
                         </div>
-
-                        {% comment %} <div class="col-auto">
-                            <div class="row x-gap-20 y-gap-20">
-                                <div class="col-auto">
-                                    <button class="button -blue-1 h-40 px-20 rounded-100 bg-blue-1-05 text-15 text-blue-1">
-                                        <i class="icon-up-down text-14 mr-10"></i>
-                                        Top picks for your search
-                                    </button>
-                                </div>
-
-                                <div class="col-auto d-none lg:d-block">
-                                    <button data-x-click="filterPopup" class="button -blue-1 h-40 px-20 rounded-100 bg-blue-1-05 text-15 text-blue-1">
-                                        <i class="icon-up-down text-14 mr-10"></i>
-                                        Filter
-                                    </button>
-                                </div>
-                            </div>
-                        </div> {% endcomment %}
                     </div>
                     <div class="mt-30"></div>
                     <div class="row y-gap-30">
@@ -90,14 +69,11 @@
                                             <h3 class="text-18 lh-16 fw-500">
                                                 {{ room.name }}
                                                 <div class="d-inline-block ml-10">
-                                                    <!-- Display full stars based on rating -->
-                                                        {% for star in room.overall_rating|floatformat:0|int|times %}
-                                                        <i class="icon-star text-10 text-yellow-2"></i>
-                                                    {% endfor %}
-                                                    <!-- Display empty stars to complete 5 stars -->
-                                                    {% for empty_star in 5|add:-room.overall_rating|floatformat:0|int|times %}
-                                                        <i class="icon-star text-10 text-light-1"></i>
-                                                    {% endfor %}
+                                                    <i class="icon-star text-10 text-yellow-2"></i>
+                                                    <i class="icon-star text-10 text-yellow-2"></i>
+                                                    <i class="icon-star text-10 text-yellow-2"></i>
+                                                    <i class="icon-star text-10 text-yellow-2"></i>
+                                                    <i class="icon-star text-10 text-yellow-2"></i>
                                                 </div>
                                             </h3>
 
