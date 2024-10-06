@@ -191,12 +191,12 @@ def getRoom(request, slug):
 
 def booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
-    
+
     # Access the room through the booking
     room = booking.room
-    
+
     length_of_stay = (booking.checkOutDate - booking.checkInDate).days
-    
+
     reviews = RoomReview.objects.filter(room=room).order_by('-created_at')
     total_reviews = reviews.count()
 
@@ -211,6 +211,12 @@ def booking(request, booking_id):
 
     overall_rating = (avg_location + avg_staff + avg_cleanliness + avg_value_for_money + avg_comfort + avg_facilities + avg_free_wifi) / 7
 
+    # Get the selected currency from the query params or session (default to RWF)
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+
+    # Store selected currency in the session
+    request.session['currency'] = selected_currency
+
     settings = Setting.objects.first()
 
     context = {
@@ -221,7 +227,8 @@ def booking(request, booking_id):
         'check_in_date': booking.checkInDate,
         'check_out_date': booking.checkOutDate,
         'length_of_stay': length_of_stay,
-        'settings': settings
+        'settings': settings,
+        'selected_currency': selected_currency  # Pass selected currency to the template
     }
 
     return render(request, 'booking.html', context)
