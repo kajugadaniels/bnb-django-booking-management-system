@@ -59,7 +59,6 @@
                                                             <div class="swiper-slide">
                                                                 <img class="col-12" src="{{ room.image.url }}" alt="{{ room.name }}">
                                                             </div>
-            
                                                             {% for image in room.images.all %}
                                                                 <div class="swiper-slide">
                                                                     <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
@@ -69,12 +68,12 @@
                                                         <div class="cardImage-slider__pagination js-pagination"></div>
                                                         <div class="cardImage-slider__nav -prev">
                                                             <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-prev">
-                                                            <i class="icon-chevron-left text-10"></i>
+                                                                <i class="icon-chevron-left text-10"></i>
                                                             </button>
                                                         </div>
                                                         <div class="cardImage-slider__nav -next">
                                                             <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-next">
-                                                            <i class="icon-chevron-right text-10"></i>
+                                                                <i class="icon-chevron-right text-10"></i>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -90,14 +89,16 @@
                                             <h3 class="text-18 lh-16 fw-500">
                                                 {{ room.name }}
                                                 <div class="d-inline-block ml-10">
-                                                    <i class="icon-star text-10 text-yellow-2"></i>
-                                                    <i class="icon-star text-10 text-yellow-2"></i>
-                                                    <i class="icon-star text-10 text-yellow-2"></i>
-                                                    <i class="icon-star text-10 text-yellow-2"></i>
-                                                    <i class="icon-star text-10 text-yellow-2"></i>
+                                                    <!-- Dynamically render stars based on the rating -->
+                                                    {% for star in range(1, room.overall_rating|floatformat:0|int + 1) %}
+                                                        <i class="icon-star text-10 text-yellow-2"></i>
+                                                    {% endfor %}
+                                                    {% for empty_star in range(room.overall_rating|floatformat:0|int + 1, 6) %}
+                                                        <i class="icon-star text-10 text-light-1"></i>
+                                                    {% endfor %}
                                                 </div>
                                             </h3>
-        
+
                                             <div class="row x-gap-10 y-gap-10 items-center pt-10">
                                                 <div class="col-auto">
                                                     <p class="text-14">{{ settings.address }}</p>
@@ -114,11 +115,13 @@
                                         <div class="col-md-auto text-right md:text-left">
                                             <div class="row x-gap-10 y-gap-10 justify-end items-center md:justify-start">
                                                 <div class="col-auto">
-                                                    <div class="text-14 lh-14 fw-500">Exceptional</div>
-                                                    <div class="text-14 lh-14 text-light-1">3,014 reviews</div>
+                                                    <div class="text-14 lh-14 fw-500">Rating</div>
+                                                    <div class="text-14 lh-14 text-light-1">{{ room.total_reviews }} reviews</div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <div class="flex-center text-white fw-600 text-14 size-40 rounded-4 bg-blue-1">4.8</div>
+                                                    <div class="flex-center text-white fw-600 text-14 size-40 rounded-4 bg-blue-1">
+                                                        {{ room.overall_rating|floatformat:1 }}
+                                                    </div>
                                                 </div>
                                             </div>
 
