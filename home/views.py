@@ -59,12 +59,21 @@ def about(request):
     return render(request, 'about.html', context)
 
 def rooms(request):
-    rooms = Room.objects.prefetch_related('images').order_by('-created_at').all()
+    rooms = Room.objects.prefetch_related('images', 'amenities').order_by('-created_at').all()
     rooms_count = rooms.count()
+
+    # Collect review data for each room
+    for room in rooms:
+        review_data = room.get_review_data()
+        room.total_reviews = review_data['total_reviews']
+        room.overall_rating = review_data['overall_rating']
+
+    settings = Setting.objects.first()
 
     context = {
         'rooms': rooms,
-        'rooms_count': rooms_count
+        'rooms_count': rooms_count,
+        'settings': settings
     }
 
     return render(request, 'rooms/index.html', context)
