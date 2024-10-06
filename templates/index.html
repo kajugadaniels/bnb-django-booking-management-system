@@ -69,17 +69,6 @@
                                                     </div>
                                                 {% endfor %}
                                             </div>
-                                            <div class="cardImage-slider__pagination js-pagination"></div>
-                                            <div class="cardImage-slider__nav -prev">
-                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-prev">
-                                                    <i class="icon-chevron-left text-10"></i>
-                                                </button>
-                                            </div>
-                                            <div class="cardImage-slider__nav -next">
-                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-next">
-                                                    <i class="icon-chevron-right text-10"></i>
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="cardImage__wishlist">
@@ -118,7 +107,13 @@
                                     <div class="col-auto">
                                         <div class="text-14 text-light-1">
                                             Price
-                                            <span class="text-16 fw-500 text-dark-1">${{ room.price|intcomma }}</span>
+                                            <span class="text-16 fw-500 text-dark-1">
+                                                {% if selected_currency == 'USD' %}
+                                                    ${{ room.price_usd|intcomma }}
+                                                {% else %}
+                                                    {{ room.price_rwf|intcomma }} RWF
+                                                {% endif %}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -181,21 +176,10 @@
                                                 </div>
 
                                                 {% for image in room.images.all %}
-                                                <div class="swiper-slide">
-                                                    <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
-                                                </div>
+                                                    <div class="swiper-slide">
+                                                        <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
+                                                    </div>
                                                 {% endfor %}
-                                            </div>
-                                            <div class="cardImage-slider__pagination js-pagination"></div>
-                                            <div class="cardImage-slider__nav -prev">
-                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-prev">
-                                                    <i class="icon-chevron-left text-10"></i>
-                                                </button>
-                                            </div>
-                                            <div class="cardImage-slider__nav -next">
-                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2 js-next">
-                                                    <i class="icon-chevron-right text-10"></i>
-                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -235,7 +219,13 @@
                                     <div class="col-auto">
                                         <div class="text-14 text-light-1">
                                             Price
-                                            <span class="text-16 fw-500 text-dark-1">${{ room.price|intcomma }}</span>
+                                            <span class="text-16 fw-500 text-dark-1">
+                                                {% if selected_currency == 'USD' %}
+                                                    ${{ room.price_usd|intcomma }}
+                                                {% else %}
+                                                    {{ room.price_rwf|intcomma }} RWF
+                                                {% endif %}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
