@@ -15,6 +15,12 @@ def home(request):
 
     highestPriceRoom = Room.objects.order_by('-id')[:3]
     
+    # Get the selected currency from the query params or session (default to RWF)
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+
+    # Store selected currency in session
+    request.session['currency'] = selected_currency
+
     # Collect review data for each room in featuredRooms
     for room in featuredRooms:
         review_data = room.get_review_data()
@@ -32,10 +38,12 @@ def home(request):
     context = {
         'featuredRooms': featuredRooms,
         'highestPriceRoom': highestPriceRoom,
-        'settings': settings
+        'settings': settings,
+        'selected_currency': selected_currency,  # Pass selected currency to the template
     }
 
     return render(request, 'index.html', context)
+
 
 def about(request):
     team = Team.objects.all()
