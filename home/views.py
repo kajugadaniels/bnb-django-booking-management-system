@@ -12,8 +12,8 @@ def home(request):
     featuredRooms = list(rooms)
     random.shuffle(featuredRooms)
     featuredRooms = featuredRooms[:4]
-    
-    highestPriceRoom = Room.objects.order_by('-price')[:3]
+
+    highestPriceRoom = Room.objects.order_by('-id')[:3]
     
     # Collect review data for each room in featuredRooms
     for room in featuredRooms:
