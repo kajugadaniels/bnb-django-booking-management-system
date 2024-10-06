@@ -4,157 +4,140 @@
 {% block title %} {{ room.name }} {% endblock %}
 {% block content %}
 
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
 
-<section class="pt-40 layout-pb-md">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-7 col-lg-8">
-                <div class="py-15 px-20 rounded-4 text-15 bg-blue-1-05">
-                    <h2 class="text-22 fw-500 mt-40 md:mt-24">Let us know who you are</h2>
-                    <div class="row x-gap-20 y-gap-20 pt-20">
-                        <div class="col-12">
-                            <div class="form-input ">
-                                <input type="text" value="{{ booking.name }}" readonly>
-                                <label class="lh-1 text-16 text-light-1">Full Name</label>
+    <section class="pt-40 layout-pb-md">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="py-15 px-20 rounded-4 text-15 bg-blue-1-05">
+                        <h2 class="text-22 fw-500 mt-40 md:mt-24">Let us know who you are</h2>
+                        <div class="row x-gap-20 y-gap-20 pt-20">
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <input type="text" value="{{ booking.name }}" readonly>
+                                    <label class="lh-1 text-16 text-light-1">Full Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-input ">
+                                    <input type="text" value="{{ booking.email }}" readonly>
+                                    <label class="lh-1 text-16 text-light-1">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-input ">
+                                    <input type="text" value="{{ booking.phone }}" readonly>
+                                    <label class="lh-1 text-16 text-light-1">Phone Number</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-input ">
-                                <input type="text" value="{{ booking.email }}" readonly>
-                                <label class="lh-1 text-16 text-light-1">Email</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-input ">
-                                <input type="text" value="{{ booking.phone }}" readonly>
-                                <label class="lh-1 text-16 text-light-1">Phone Number</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full h-1 bg-border mt-40 mb-40"></div>
-                    <div class="px-30 py-30 border-light rounded-4 mt-30">
-                        <div class="text-20 fw-500 mb-20">Your payment schedule</div>
-                        
-                        <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
-                            {% csrf_token %}
-                            <input type="hidden" name="public_key" value="FLWPUBK_TEST-7ad8b91138affefefb6cb467e6bf89ea-X" />
-                            <input type="hidden" name="customer[email]" value="{{ booking.email }}" />
-                            <input type="hidden" name="customer[name]" value="{{ booking.name }}" />
-                            <input type="hidden" name="tx_ref" value="txref-{{ booking.id }}" />
-                            
-                            <!-- Display price based on selected currency -->
-                            <input type="hidden" name="amount" value="{% if selected_currency == 'USD' %}{{ room.price_usd }}{% else %}{{ room.price_rwf }}{% endif %}" />
-                            <input type="hidden" name="currency" value="{{ selected_currency }}" />
-                            <input type="hidden" name="redirect_url" value="https://bnbmv.up.railway.app/success/{{ booking.id }}" />
-                            <input type="hidden" name="meta[source]" value="docs-html-test" />
-                            
-                            <br>
+                        <div class="w-full h-1 bg-border mt-40 mb-40"></div>
+                        <div class="px-30 py-30 border-light rounded-4 mt-30">
+                            <div class="text-20 fw-500 mb-20">Your payment schedule</div>
                             <div class="row y-gap-20 items-center justify-between">
                                 <div class="col-auto">
-                                    <button class="button h-60 px-24 -dark-1 bg-blue-1 text-white" type="submit" id="start-payment-button">
-                                        Pay {% if selected_currency == 'USD' %} ${{ room.price_usd|intcomma }} {% else %} {{ room.price_rwf|intcomma }} RWF {% endif %} with Flutterwave
+                                    <button class="button h-60 px-24 -dark-1 bg-blue-1 text-white" type="button" onclick="makePayment()">
+                                        Pay {% if selected_currency == 'USD' %} ${{ room.price_usd|intcomma }} {% else %} {{ room.price_rwf|intcomma }} RWF {% endif %} with Flutterwave 
                                         <div class="icon-arrow-top-right ml-15"></div>
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="col-xl-5 col-lg-4">
-                <div class="ml-80 lg:ml-40 md:ml-0">
-                    <div class="px-30 py-30 border-light rounded-4">
-                        <div class="text-20 fw-500 mb-30">Your booking details</div>
-                        <div class="row x-gap-15 y-gap-20">
-                            <div class="col-auto">
-                                <img src="{{ room.image.url }}" alt="image" class="size-140 rounded-4 object-cover">
-                            </div>
-                            <div class="col">
-                                <div class="lh-17 fw-500">
-                                    <a href="{% url 'base:getRoom' room.slug %}">
-                                        {{ room.name }}
-                                    </a>
+                <div class="col-xl-5 col-lg-4">
+                    <div class="ml-80 lg:ml-40 md:ml-0">
+                        <div class="px-30 py-30 border-light rounded-4">
+                            <div class="text-20 fw-500 mb-30">Your booking details</div>
+                            <div class="row x-gap-15 y-gap-20">
+                                <div class="col-auto">
+                                    <img src="{{ room.image.url }}" alt="image" class="size-140 rounded-4 object-cover">
                                 </div>
-                                <div class="text-14 lh-15 mt-5">
-                                    {{ settings.address }}
-                                </div>
-                                <div class="row x-gap-10 y-gap-10 items-center pt-10">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="size-30 flex-center bg-blue-1 rounded-4">
-                                                <div class="text-12 fw-600 text-white">
-                                                    {{ overall_rating|floatformat:1 }}
+                                <div class="col">
+                                    <div class="lh-17 fw-500">
+                                        <a href="{% url 'base:getRoom' room.slug %}">
+                                            {{ room.name }}
+                                        </a>
+                                    </div>
+                                    <div class="text-14 lh-15 mt-5">
+                                        {{ settings.address }}
+                                    </div>
+                                    <div class="row x-gap-10 y-gap-10 items-center pt-10">
+                                        <div class="col-auto">
+                                            <div class="d-flex items-center">
+                                                <div class="size-30 flex-center bg-blue-1 rounded-4">
+                                                    <div class="text-12 fw-600 text-white">
+                                                        {{ overall_rating|floatformat:1 }}
+                                                    </div>
+                                                </div>
+                                                <div class="text-14 ml-10">
+                                                    {{ total_reviews }} reviews
                                                 </div>
                                             </div>
-                                            <div class="text-14 ml-10">
-                                                {{ total_reviews }} reviews
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="text-14 fw-500 ml-10">
+                                                <a href="{% url 'base:getRoom' room.slug %}">
+                                                    See all reviews
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-auto">
-                                        <div class="text-14 fw-500 ml-10">
-                                            <a href="{% url 'base:getRoom' room.slug %}">
-                                                See all reviews
-                                            </a>
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="border-top-light mt-30 mb-20"></div>
+                            <div class="row y-gap-20 justify-between">
+                                <div class="col-auto">
+                                    <div class="text-15">Check-in</div>
+                                    <div class="fw-500">{{ check_in_date|date:"D d M Y" }}</div>
+                                </div>
+                                <div class="col-auto md:d-none">
+                                    <div class="h-full w-1 bg-border"></div>
+                                </div>
+                                <div class="col-auto text-right md:text-left">
+                                    <div class="text-15">Check-out</div>
+                                    <div class="fw-500">{{ check_out_date|date:"D d M Y" }}</div>
+                                </div>
+                            </div>
+                            <div class="border-top-light mt-30 mb-20"></div>
+                            <div class="">
+                                <div class="text-15">Total length of stay:</div>
+                                <div class="fw-500">{{ length_of_stay }} days</div>
+                            </div>
+                        </div>
+                        <div class="px-30 py-30 border-light rounded-4 mt-30">
+                            <div class="text-20 fw-500 mb-20">Your price summary</div>
+                            <div class="row y-gap-5 justify-between">
+                                <div class="col-auto">
+                                    <div class="text-15">{{ room.name }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="text-15" id="price-display">
+                                        {% if selected_currency == 'USD' %} ${{ room.price_usd|intcomma }} {% else %} {{ room.price_rwf|intcomma }} RWF {% endif %}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="border-top-light mt-30 mb-20"></div>
-                        <div class="row y-gap-20 justify-between">
-                            <div class="col-auto">
-                                <div class="text-15">Check-in</div>
-                                <div class="fw-500">{{ check_in_date|date:"D d M Y" }}</div>
-                            </div>
-                            <div class="col-auto md:d-none">
-                                <div class="h-full w-1 bg-border"></div>
-                            </div>
-                            <div class="col-auto text-right md:text-left">
-                                <div class="text-15">Check-out</div>
-                                <div class="fw-500">{{ check_out_date|date:"D d M Y" }}</div>
-                            </div>
-                        </div>
-                        
-                        <div class="border-top-light mt-30 mb-20"></div>
-                        <div class="">
-                            <div class="text-15">Total length of stay:</div>
-                            <div class="fw-500">{{ length_of_stay }} days</div>
-                        </div>
-                    </div>
-                    
-                    <div class="px-30 py-30 border-light rounded-4 mt-30">
-                        <div class="text-20 fw-500 mb-20">Your price summary</div>
-                        <div class="row y-gap-5 justify-between">
-                            <div class="col-auto">
-                                <div class="text-15">{{ room.name }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <!-- Show price based on selected currency -->
-                                <div class="text-15">{% if selected_currency == 'USD' %} ${{ room.price_usd|intcomma }} {% else %} {{ room.price_rwf|intcomma }} RWF {% endif %}</div>
-                            </div>
-                        </div>
-                        <div class="row y-gap-5 justify-between pt-5">
-                            <div class="col-auto">
-                                <div class="text-15">Booking fees</div>
-                            </div>
-                            <div class="col-auto">
-                                <div class="text-15">FREE</div>
-                            </div>
-                        </div>
-                        <div class="px-20 py-20 bg-blue-2 rounded-4 mt-20">
-                            <div class="row y-gap-5 justify-between">
+                            <div class="row y-gap-5 justify-between pt-5">
                                 <div class="col-auto">
-                                    <div class="text-18 lh-13 fw-500">Price</div>
+                                    <div class="text-15">Booking fees</div>
                                 </div>
                                 <div class="col-auto">
-                                    <!-- Show price based on selected currency -->
-                                    <div class="text-18 lh-13 fw-500">{% if selected_currency == 'USD' %} ${{ room.price_usd|intcomma }} {% else %} {{ room.price_rwf|intcomma }} RWF {% endif %}</div>
+                                    <div class="text-15">FREE</div>
+                                </div>
+                            </div>
+                            <div class="px-20 py-20 bg-blue-2 rounded-4 mt-20">
+                                <div class="row y-gap-5 justify-between">
+                                    <div class="col-auto">
+                                        <div class="text-18 lh-13 fw-500">Price</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-18 lh-13 fw-500" id="final-price">
+                                            {% if selected_currency == 'USD' %} ${{ room.price_usd|intcomma }} {% else %} {{ room.price_rwf|intcomma }} RWF {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -162,42 +145,56 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<script src="https://checkout.flutterwave.com/v3.js"></script>
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
 
-{% comment %} <script>
-    let selectedCurrency = "USD";
+    <script>
+        // Prices for USD and RWF
+        let priceUSD = {{ room.price_usd }};
+        let priceRWF = {{ room.price_rwf }};
+        let selectedCurrency = "{{ selected_currency }}";  // Use the selected currency from the backend
+        let selectedPrice = selectedCurrency === 'USD' ? priceUSD : priceRWF;
 
-    function updateCurrency() {
-        selectedCurrency = document.getElementById("currency").value;
-    }
+        // Function to update the price based on selected currency
+        function changeCurrency() {
+            const currencySelector = document.getElementById("currency-selector");
+            selectedCurrency = currencySelector.value;
+            selectedPrice = selectedCurrency === 'USD' ? priceUSD : priceRWF;
+            
+            // Update the price display with the selected currency
+            document.getElementById("price-display").textContent = selectedCurrency === 'USD' ? `$${selectedPrice.toLocaleString()}` : `${selectedPrice.toLocaleString()} RWF`;
+            document.getElementById("final-price").textContent = selectedCurrency === 'USD' ? `$${selectedPrice.toLocaleString()}` : `${selectedPrice.toLocaleString()} RWF`;
+        }
 
-    function makePayment() {
-        FlutterwaveCheckout({
-            public_key: "FLWPUBK_TEST-7ad8b91138affefefb6cb467e6bf89ea-X",
-            tx_ref: "bnb-mountain-view-{{ booking.id }}",
-            amount: "{{ room.price }}",
-            currency: selectedCurrency,
-            payment_options: "card, banktransfer, ussd, mobilemoneyghana, mobilemoneyrwanda, mobilemoneyuganda, mpesa",
-            redirect_url: "https://bnbmv.up.railway.app/success/{{ booking.id }}",
-            meta: {
-                consumer_id: 23,
-                consumer_mac: "92a3-912ba-1192a",
-            },
-            customer: {
-                email: "{{ booking.email }}",
-                phone_number: "{{ booking.phone }}",
-                name: "{{ booking.name }}",
-            },
-            customizations: {
-                title: "B&B Mountain View",
-                description: "Payment Successful",
-                logo: "https://pbs.twimg.com/profile_images/1783433787445039104/6hInZLmp_400x400.jpg",
-            }
-        });
-    }
-</script> {% endcomment %}
+        // Flutterwave payment function
+        function makePayment() {
+            FlutterwaveCheckout({
+                public_key: "FLWPUBK_TEST-7ad8b91138affefefb6cb467e6bf89ea-X",
+                tx_ref: "bnb-mountain-view-{{ booking.id }}",
+                amount: selectedPrice,  // Use the dynamically selected amount
+                currency: selectedCurrency,  // Use the dynamically selected currency
+                payment_options: "card, banktransfer, ussd, mobilemoneyghana, mobilemoneyrwanda, mobilemoneyuganda, mpesa",
+                redirect_url: "https://bnbmv.up.railway.app/success/{{ booking.id }}",
+                meta: {
+                    consumer_id: 23,
+                    consumer_mac: "92a3-912ba-1192a",
+                },
+                customer: {
+                    email: "{{ booking.email }}",
+                    phone_number: "{{ booking.phone }}",
+                    name: "{{ booking.name }}",
+                },
+                customizations: {
+                    title: "B&B Mountain View",
+                    description: "Payment for Room Booking",
+                    logo: "https://pbs.twimg.com/profile_images/1783433787445039104/6hInZLmp_400x400.jpg",
+                }
+            });
+        }
+
+        // Initialize price display based on default or selected currency
+        changeCurrency();
+    </script>
 
 {% endblock %}
