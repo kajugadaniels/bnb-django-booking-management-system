@@ -93,13 +93,6 @@ def rooms(request):
 
     return render(request, 'rooms/index.html', context)
 
-Here’s how you can update the getRoom function and the rooms/show.html template to support currency switching between USD and RWF.
-
-1. Update the getRoom Function
-We will modify the getRoom function to check for the selected currency (from the query parameters or session) and update the prices accordingly.
-
-python
-Copy code
 def getRoom(request, slug):
     room = get_object_or_404(Room, slug=slug)
     reviews = RoomReview.objects.filter(room=room).order_by('-created_at')
