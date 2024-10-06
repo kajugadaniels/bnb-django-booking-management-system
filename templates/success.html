@@ -19,7 +19,17 @@
                                 <i class="icon-check text-30 text-white"></i>
                             </div>
                             <div class="text-30 lh-1 fw-600 mt-20">Payment submitted successfully!</div>
-                            <div class="text-15 text-light-1 mt-10">Booking details has been sent your</div>
+                            <div class="text-15 text-light-1 mt-10">Booking details have been sent to your email</div>
+                        
+                            <div class="text-15 text-dark-1 mt-10">
+                                Transaction ID: <strong>{{ booking.transactionId }}</strong>
+                            </div>
+                            <div class="text-15 text-dark-1 mt-10">
+                                Payment Amount: <strong>{{ booking.payment_amount }} {{ booking.currency }}</strong>
+                            </div>
+                            <div class="text-15 text-dark-1 mt-10">
+                                Payment Date: <strong>{{ booking.payment_date|date:"F j, Y, g:i a" }}</strong>
+                            </div>
                         </div>
                     </div>
                 </div>
