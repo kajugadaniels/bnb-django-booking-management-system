@@ -137,11 +137,18 @@
                         <div class="px-30 py-30 rounded-4 border-light bg-white w-360 lg:w-full shadow-4">
                             <div class="d-flex justify-between items-center">
                                 <div class="text-14 text-light-1">
-                                    From <span class="text-20 fw-500 text-dark-1 ml-5">${{ room.price|intcomma }}</span>
+                                    From 
+                                    <span class="text-20 fw-500 text-dark-1 ml-5">
+                                        {% if selected_currency == 'USD' %}
+                                            ${{ room.price_usd|intcomma }}
+                                        {% else %}
+                                            {{ room.price_rwf|intcomma }} RWF
+                                        {% endif %}
+                                    </span>
                                 </div>
                                 <div class="d-flex items-center justify-end">
                                     <div class="text-14 lh-14 text-right">
-                                        <div class="fw-600">Exceptional</div>
+                                        <div class="fw-600">Rating</div>
                                         {{ total_reviews }} reviews
                                     </div>
                                     <div class="flex-center size-40 rounded-4 bg-blue-1 text-1 fw-600 text-white ml-20">
@@ -225,7 +232,7 @@
                     <div class="flex-center rounded-4 min-h-250 bg-blue-1-05">
                         <div class="text-center">
                             <div class="text-60 md:text-50 fw-600 text-blue-1">{{ overall_rating|floatformat:1 }}</div>
-                            <div class="fw-500 lh-1">Exceptional</div>
+                            <div class="fw-500 lh-1">Rating</div>
                             <div class="text-14 text-light-1 lh-1 mt-5">{{ total_reviews }} reviews</div>
                         </div>
                     </div>
