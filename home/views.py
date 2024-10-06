@@ -12,7 +12,15 @@ def home(request):
     featuredRooms = list(rooms)
     random.shuffle(featuredRooms)
     featuredRooms = featuredRooms[:4]
+    
     highestPriceRoom = Room.objects.order_by('-price')[:3]
+    
+    # Collect review data for each room
+    for room in highestPriceRoom:
+        review_data = room.get_review_data()
+        room.total_reviews = review_data['total_reviews']
+        room.overall_rating = review_data['overall_rating']
+
     settings = Setting.objects.first()
 
     context = {

@@ -135,11 +135,10 @@
             <div class="section-bg__item -video-left">
                 <div class="row y-gap-30">
                     <div class="col-sm-6">
-                        <img src="https://www.bemytravelmuse.com/wp-content/uploads/2017/04/rwandathingstodo-10-817x1024.jpg" alt="image">
+                        <img src="https://i.pinimg.com/736x/af/5a/00/af5a00fe5c6f00ac52f33741a01e6f57.jpg" alt="image">
                     </div>
-        
                     <div class="col-sm-6">
-                        <img src="https://s.france24.com/media/display/f5dfd014-bde7-11e9-a846-005056bf87d6/w:980/p:16x9/kigali-rwanda-m.jpg" alt="image">
+                        <img src="https://images.pexels.com/photos/1235706/pexels-photo-1235706.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="image">
                     </div>
                 </div>
             </div>
@@ -228,8 +227,8 @@
                                         <div class="d-flex items-center">
                                             <div class="icon-star text-yellow-1 text-10 mr-5"></div>
                                             <div class="text-14 text-light-1">
-                                                <span class="text-15 text-dark-1 fw-500">4.82</span>
-                                                94 reviews
+                                                <span class="text-15 text-dark-1 fw-500">{{ room.overall_rating }}</span>
+                                                {{ room.total_reviews }} reviews
                                             </div>
                                         </div>
                                     </div>
@@ -244,6 +243,7 @@
                         </a>
                     </div>
                 {% endfor %}
+
             </div>
         </div>
     </section>

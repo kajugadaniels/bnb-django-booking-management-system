@@ -1,6 +1,7 @@
 import os
 import random
 from django.db import models
+from django.db.models import Avg
 from django.utils import timezone
 from django.utils.text import slugify
 from imagekit.processors import ResizeToFill
@@ -27,25 +28,21 @@ class Room(models.Model):
     capacity = models.IntegerField()
     size = models.CharField(max_length=255, null=True, blank=True)
     image = ProcessedImageField(
-        upload_to=room_image_path,
+        upload_to='room_images/',
         # processors=[ResizeToFill(1340, 894)],
         format='JPEG',
         options={'quality': 90},
         null=True,
         blank=True,
     )
-    amenities = models.ManyToManyField(Amenity, blank=True)
+    amenities = models.ManyToManyField('Amenity', blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._generate_unique_slug()
         super().save(*args, **kwargs)
-
-    def _name_has_changed(self):
-        if self.id:
-            original = Room.objects.get(id=self.id)
-            return original.name != self.name
-        return False
 
     def _generate_unique_slug(self):
         base_slug = slugify(self.name)
@@ -55,6 +52,41 @@ class Room(models.Model):
             unique_slug = f"{base_slug}-{num}"
             num += 1
         return unique_slug
+
+    # Method to retrieve review data (total reviews and average ratings)
+    def get_review_data(self):
+        reviews = self.roomreview_set.filter(status=True)  # Filter reviews with status=True
+        total_reviews = reviews.count()
+        
+        # Aggregate average ratings
+        avg_ratings = reviews.aggregate(
+            avg_location=Avg('location'),
+            avg_staff=Avg('staff'),
+            avg_cleanliness=Avg('cleanliness'),
+            avg_value_for_money=Avg('value_for_money'),
+            avg_comfort=Avg('comfort'),
+            avg_facilities=Avg('facilities'),
+            avg_free_wifi=Avg('free_wifi')
+        )
+
+        # Calculate overall rating
+        if total_reviews > 0:
+            overall_rating = (
+                avg_ratings['avg_location'] +
+                avg_ratings['avg_staff'] +
+                avg_ratings['avg_cleanliness'] +
+                avg_ratings['avg_value_for_money'] +
+                avg_ratings['avg_comfort'] +
+                avg_ratings['avg_facilities'] +
+                avg_ratings['avg_free_wifi']
+            ) / 7
+        else:
+            overall_rating = 0  # Default to 0 if no reviews
+
+        return {
+            'total_reviews': total_reviews,
+            'overall_rating': round(overall_rating, 2) if overall_rating else 0
+        }
 
     def __str__(self):
         return self.name
