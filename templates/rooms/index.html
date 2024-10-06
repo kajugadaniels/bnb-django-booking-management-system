@@ -1,6 +1,7 @@
 {% extends 'layouts/app.html' %}
 {% load static %}
 {% load humanize %}
+{% load custom_filters %}
 {% block title %} Rooms {% endblock %}
 {% block content %}
 
@@ -89,11 +90,12 @@
                                             <h3 class="text-18 lh-16 fw-500">
                                                 {{ room.name }}
                                                 <div class="d-inline-block ml-10">
-                                                    <!-- Dynamically render stars based on the rating -->
-                                                    {% for star in range(1, room.overall_rating|floatformat:0|int + 1) %}
+                                                    <!-- Display full stars based on rating -->
+                                                        {% for star in room.overall_rating|floatformat:0|int|times %}
                                                         <i class="icon-star text-10 text-yellow-2"></i>
                                                     {% endfor %}
-                                                    {% for empty_star in range(room.overall_rating|floatformat:0|int + 1, 6) %}
+                                                    <!-- Display empty stars to complete 5 stars -->
+                                                    {% for empty_star in 5|add:-room.overall_rating|floatformat:0|int|times %}
                                                         <i class="icon-star text-10 text-light-1"></i>
                                                     {% endfor %}
                                                 </div>

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     #Custom apps
     'home',
     'account',
+    'home.templatetags'
 ]
 
 MIDDLEWARE = [
