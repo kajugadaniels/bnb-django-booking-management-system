@@ -62,6 +62,12 @@ def rooms(request):
     rooms = Room.objects.prefetch_related('images', 'amenities').order_by('-created_at').all()
     rooms_count = rooms.count()
 
+    # Default currency is RWF
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    
+    # Store selected currency in the session
+    request.session['currency'] = selected_currency
+
     # Collect review data for each room
     for room in rooms:
         review_data = room.get_review_data()
@@ -73,7 +79,8 @@ def rooms(request):
     context = {
         'rooms': rooms,
         'rooms_count': rooms_count,
-        'settings': settings
+        'settings': settings,
+        'selected_currency': selected_currency,  # Pass selected currency to the template
     }
 
     return render(request, 'rooms/index.html', context)

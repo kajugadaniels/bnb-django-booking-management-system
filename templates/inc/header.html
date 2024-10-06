@@ -17,20 +17,13 @@
 				</div>
 			</div>
 			<div class="col-auto">
-				<div class="row x-gap-15 items-center jusify-between">
+				<div class="row x-gap-15 items-center justify-between">
 					<div class="col-auto">
-						<div class="row x-gap-20 items-center xxl:d-none">
-							<div class="col-auto">
-								<button class="d-flex items-center text-14 text-white" data-x-click="currency">
-								    <span class="js-currencyMenu-mainTitle">USD</span>
-								</button>
-							</div>
-							<div class="col-auto">
-								<button class="d-flex items-center text-14 text-white" data-x-click="currency">
-								    <span class="js-currencyMenu-mainTitle">RWF</span>
-								</button>
-							</div>
-						</div>
+						<!-- Currency Dropdown -->
+						<select id="currency-selector" class="text-14 text-white" onchange="changeCurrency()" style="background: white; color: #2c1f12;">
+						    <option value="USD" {% if selected_currency == 'USD' %}selected{% endif %}>USD</option>
+						    <option value="RWF" {% if selected_currency == 'RWF' %}selected{% endif %}>RWF</option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -38,7 +31,14 @@
 	</div>
 </section>
 
-<header data-add-bg="bg-dark-1" class="header mt-40 -type-9 js-header" data-x="header" data-x-toggle="is-menu-opened">
+<script>
+    function changeCurrency() {
+        const selectedCurrency = document.getElementById("currency-selector").value;
+        window.location.href = `?currency=${selectedCurrency}`;
+    }
+</script>
+
+<header data-add-bg="bg-dark-1" class="header mt-40 -type-9 js-header" data-x="header" data-x-toggle="is-menu-opened" style="background: #2c1f12 !important;">
 	<div data-anim="fade" class="header__container container">
 		<div class="row justify-between items-center">
 			<div class="col-auto">
