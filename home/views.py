@@ -235,11 +235,21 @@ def booking(request, booking_id):
 
 def paymentSuccess(request, booking_id):
     settings = Setting.objects.first()
-    # Use get_object_or_404 to retrieve the booking by id
+
+    # Retrieve the booking by ID
     booking = get_object_or_404(Booking, id=booking_id)
 
-    # Update the payment status to 'paid'
+    # Assuming you receive transaction details from Flutterwave's response
+    transaction_id = request.GET.get('transaction_id')  # Replace this with the actual way to fetch transactionId
+    payment_amount = request.GET.get('amount')  # Replace with actual amount received
+    currency = request.GET.get('currency')  # Replace with actual currency received
+
+    # Update the booking model with the transaction ID, payment status, amount, currency, and payment date
+    booking.transactionId = transaction_id
     booking.payment_status = 'paid'
+    booking.payment_amount = payment_amount
+    booking.currency = currency
+    booking.payment_date = timezone.now()  # Track when the payment was processed
     booking.save()
 
     context = {
