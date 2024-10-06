@@ -164,6 +164,9 @@ class Booking(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, null=True, blank=True)
     payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, null=True, blank=True)
     transactionId = models.CharField(max_length=100, null=True, blank=True)
+    payment_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)  # Track payment amount
+    currency = models.CharField(max_length=3, null=True, blank=True)  # Track currency used (e.g., USD, RWF)
+    payment_date = models.DateTimeField(null=True, blank=True)  # Track when payment was made
 
     def __str__(self):
         return f"Booking for {self.room} by {self.name}"
