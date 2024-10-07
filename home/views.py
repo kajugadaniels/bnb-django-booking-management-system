@@ -3,6 +3,7 @@ from home.models import *
 from datetime import datetime
 from django.db.models import Avg
 from django.contrib import messages
+from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -239,25 +240,31 @@ def paymentSuccess(request, booking_id):
     # Retrieve the booking by ID
     booking = get_object_or_404(Booking, id=booking_id)
 
-    # Assuming you receive transaction details from Flutterwave's response
-    transaction_id = request.GET.get('transaction_id')  # Replace this with the actual way to fetch transactionId
-    payment_amount = request.GET.get('amount')  # Replace with actual amount received
-    currency = request.GET.get('currency')  # Replace with actual currency received
+    # Extract transaction details from Flutterwave's redirect response
+    transaction_id = request.GET.get('transaction_id')  # Replace with actual query parameter key if different
+    payment_amount = request.GET.get('amount')  # Replace with actual query parameter key if different
+    currency = request.GET.get('currency')  # Replace with actual query parameter key if different
+    payment_status = request.GET.get('status', '').lower()  # Example, check if 'status' is passed in response
 
-    # Update the booking model with the transaction ID, payment status, amount, currency, and payment date
-    booking.transactionId = transaction_id
-    booking.payment_status = 'paid'
-    booking.payment_amount = payment_amount
-    booking.currency = currency
-    booking.payment_date = timezone.now()  # Track when the payment was processed
-    booking.save()
+    # Verify the transaction status and update only if the payment was successful
+    if payment_status == 'successful':
+        booking.transactionId = transaction_id
+        booking.payment_status = 'paid'
+        booking.payment_amount = float(payment_amount) if payment_amount else 0.0
+        booking.currency = currency
+        booking.payment_date = timezone.now()  # Track when the payment was processed
+        booking.save()
 
-    context = {
-        'settings': settings,
-        'booking': booking
-    }
+        # Prepare context with booking details
+        context = {
+            'settings': settings,
+            'booking': booking
+        }
 
-    return render(request, 'success.html', context)
+        return render(request, 'success.html', context)
+    else:
+        # Handle unsuccessful payment cases
+        return HttpResponse("Payment not successful. Please try again or contact support.", status=400)
 
 def contact(request):
     if request.method == 'POST':
