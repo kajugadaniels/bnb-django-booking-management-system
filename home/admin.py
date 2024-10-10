@@ -68,4 +68,4 @@ class SettingAdmin(admin.ModelAdmin):
         # Allow adding only if there is no existing Setting instance
         return not Setting.objects.exists()
 
-    list_display = ('email', 'contact_number', 'website', 'instagram', 'twitter', 'facebook', 'whatsapp_number', 'address')
+    list_display = ('email', 'contact_number', 'whatsapp_number', 'address', 'about_title')

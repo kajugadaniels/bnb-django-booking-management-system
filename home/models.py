@@ -248,8 +248,8 @@ class Contact(models.Model):
 
 def about_image_path(instance, filename):
     base_filename, file_extension = os.path.splitext(filename)
-    random_number = random.randint(1000, 9999)
-    return f'settings/{random_number}_{instance.created_at}{file_extension}'
+    random_number = random.randint(10000, 99999)
+    return f'settings/{random_number}{file_extension}'
 
 class Setting(models.Model):
     email = models.CharField(max_length=255, null=True, blank=True)
