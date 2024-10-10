@@ -171,6 +171,30 @@ class Booking(models.Model):
     def __str__(self):
         return f"Booking for {self.room} by {self.name}"
 
+def blog_image_path(instance, filename):
+    base_filename, file_extension = os.path.splitext(filename)
+    return f'blogs/blog_{slugify(instance.title)}_{instance.created_at}{file_extension}'
+
+class Blog(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True)
+    image = ProcessedImageField(
+        upload_to=blog_image_path,
+        processors=[ResizeToFill(3600, 2026)],
+        format='JPEG',
+        options={'quality': 90},
+    )
+    description = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Blog, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
 def team_image_path(instance, filename):
     base_filename, file_extension = os.path.splitext(filename)
     return f'team/member_{slugify(instance.name)}_{instance.created_at}{file_extension}'
