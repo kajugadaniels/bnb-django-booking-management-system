@@ -22,7 +22,7 @@
     
             {% for blog in blogs %}
                 <div class="col-lg-4 col-sm-6">
-                    <a href="" class="blogCard -type-1 d-block ">
+                    <a href="{% url 'base:getBlog' blog.slug %}" class="blogCard -type-1 d-block ">
                         <div class="blogCard__image">
                             <div class="ratio ratio-4:3 rounded-8">
                             <img class="img-ratio js-lazy" src="#" data-src="{{ blog.image.url }}" alt="image">
