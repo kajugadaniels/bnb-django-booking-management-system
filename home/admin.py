@@ -44,6 +44,12 @@ class TeamAdmin(admin.ModelAdmin):
     search_fields = ('name', 'position')
     list_filter = ('created_at', 'updated_at')
 
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'updated_at')
+    search_fields = ('title', )
+    list_filter = ('created_at', 'updated_at')
+
 @admin.register(Testimony)
 class TestimonyAdmin(admin.ModelAdmin):
     list_display = ['name', 'position', 'rating']
