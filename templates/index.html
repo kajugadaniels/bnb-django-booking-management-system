@@ -137,19 +137,20 @@
         <div class="section-bg__item -right -w-1165 bg-light-2"></div>
             <div class="section-bg__item -video-left">
                 <div class="row y-gap-30">
-                    <div class="col-sm-6">
-                        <img src="https://i.pinimg.com/736x/af/5a/00/af5a00fe5c6f00ac52f33741a01e6f57.jpg" alt="image">
-                    </div>
-                    <div class="col-sm-6">
-                        <img src="https://images.pexels.com/photos/1235706/pexels-photo-1235706.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="image">
+                    <div class="col-sm-11">
+                        <img src="{{ settings.about_image.url }}" alt="image">
                     </div>
                 </div>
             </div>
-            <div class="container lg:mt-30">
+            <div class="container lg:mt-20">
                 <div class="row">
                     <div class="offset-xl-6 col-xl-5 col-lg-6">
-                    <h2 class="text-30 fw-600">B&B a best place to spend you vacation</h2>
-                    <p class="text-dark-1 mt-40 lg:mt-20 sm:mt-15">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                    <h2 class="text-30 fw-600">
+                        {{ settings.about_title }}
+                    </h2>
+                    <p class="text-dark-1 mt-40 lg:mt-20 sm:mt-15">
+                        {{ settings.about_description }}
+                    </p>
                     <div class="d-inline-block mt-40 lg:mt-30 sm:mt-20">
                         <a href="{% url 'base:about' %}" class="button -md -blue-1 bg-yellow-1 text-dark-1">
                             Learn More <div class="icon-arrow-top-right ml-15"></div>
