@@ -270,7 +270,7 @@ class Setting(models.Model):
         blank=True,
     )
     about_title = models.CharField(max_length=255, null=True, blank=True)
-    about_description = models.TextField(max_length=255, null=True, blank=True)
+    about_description = models.TextField(max_length=500, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Ensure only one instance of settings can exist

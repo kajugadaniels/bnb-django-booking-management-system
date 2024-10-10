@@ -4,6 +4,11 @@
 {% block title %} About Us {% endblock %}
 {% block content %}
 
+    <br>
+    <br>
+    <br>
+    <br>
+
     <section class="section-bg layout-pt-lg layout-pb-lg">
         <div class="section-bg__item col-12">
             <img src="https://media.tacdn.com/media/attractions-content--1x-1/12/27/59/4c.jpg" alt="image">
@@ -62,6 +67,22 @@
                             <p class="text-15 mt-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="layout-pt-md">
+        <div class="container">
+            <div class="row y-gap-30 justify-between items-center">
+                <div class="col-lg-5">
+                    <h2 class="text-30 fw-600">{{ settings.about_title }}</h2>
+                    <p class="text-dark-1 mt-60 lg:mt-40 md:mt-20">
+                        {{ settings.about_description }}
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="{{ settings.about_image.url }}" alt="image" class="rounded-4">
                 </div>
             </div>
         </div>
