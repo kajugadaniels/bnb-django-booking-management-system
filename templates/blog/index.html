@@ -20,22 +20,23 @@
                 </div>
             </div>
     
-            <div class="col-lg-4 col-sm-6">
-    
-                <a href="" class="blogCard -type-1 d-block ">
-                    <div class="blogCard__image">
-                        <div class="ratio ratio-4:3 rounded-8">
-                        <img class="img-ratio js-lazy" src="#" data-src="img/blog/grids/1.png" alt="image">
+            {% for blog in blogs %}
+                <div class="col-lg-4 col-sm-6">
+                    <a href="" class="blogCard -type-1 d-block ">
+                        <div class="blogCard__image">
+                            <div class="ratio ratio-4:3 rounded-8">
+                            <img class="img-ratio js-lazy" src="#" data-src="{{ blog.image.url }}" alt="image">
+                            </div>
                         </div>
-                    </div>
-        
-                    <div class="pt-20">
-                        <h4 class="text-dark-1 text-18 fw-500">10 European ski destinations you should visit this winter</h4>
-                        <div class="text-light-1 text-15 lh-14 mt-5">April 06, 2022</div>
-                    </div>
-                </a>
-    
-            </div>
+                        <div class="pt-20">
+                            <h4 class="text-dark-1 text-18 fw-500">
+                                {{ blog.title }}
+                            </h4>
+                            <div class="text-light-1 text-15 lh-14 mt-5">{{ blog.created_at|date }}</div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
     </section>
 
