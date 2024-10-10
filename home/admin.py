@@ -50,6 +50,8 @@ class BookingAdmin(admin.ModelAdmin):
         "room",
         "name",
         "email",
+        "payment_amount",
+        "currency",
         "checkInDate",
         "checkOutDate",
         "status",

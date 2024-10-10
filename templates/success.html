@@ -25,7 +25,7 @@
                                 Transaction ID: <strong>{{ booking.transactionId }}</strong>
                             </div>
                             <div class="text-15 text-dark-1 mt-10">
-                                Payment Amount: <strong>{{ booking.payment_amount }} {{ booking.currency }}</strong>
+                                Payment Amount: <strong>{{ booking.payment_amount|intcomma }} {{ booking.currency }}</strong>
                             </div>
                             <div class="text-15 text-dark-1 mt-10">
                                 Payment Date: <strong>{{ booking.payment_date|date:"F j, Y, g:i a" }}</strong>
