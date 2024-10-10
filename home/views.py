@@ -1,3 +1,4 @@
+import logging
 from home.forms import *
 from home.models import *
 from decimal import Decimal
@@ -248,9 +249,8 @@ def paymentSuccess(request, booking_id):
     payment_status = request.GET.get('status', '').lower()  # Ensure to match Flutterwave's status value
 
     # Optional: Log the received parameters for debugging
-    # import logging
-    # logger = logging.getLogger(__name__)
-    # logger.debug(f"PaymentSuccess received: transaction_id={transaction_id}, amount={payment_amount}, currency={currency}, status={payment_status}")
+    logger = logging.getLogger(__name__)
+    logger.debug(f"PaymentSuccess received: transaction_id={transaction_id}, amount={payment_amount}, currency={currency}, status={payment_status}")
 
     # Verify the transaction status and update only if the payment was successful
     if payment_status == 'successful':
