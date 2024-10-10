@@ -246,6 +246,11 @@ class Contact(models.Model):
     def __str__(self):
         return f'Message from {self.name} - {self.subject}'
 
+def about_image_path(instance, filename):
+    base_filename, file_extension = os.path.splitext(filename)
+    random_number = random.randint(1000, 9999)
+    return f'settings/{random_number}_{instance.created_at}{file_extension}'
+
 class Setting(models.Model):
     email = models.CharField(max_length=255, null=True, blank=True)
     second_email = models.CharField(max_length=255, null=True, blank=True)
@@ -256,6 +261,16 @@ class Setting(models.Model):
     facebook = models.URLField(max_length=255, null=True, blank=True)
     whatsapp_number = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
+    about_image = ProcessedImageField(
+        upload_to=about_image_path,
+        processors=[ResizeToFill(630, 700)],
+        format='JPEG',
+        options={'quality': 90},
+        null=True,
+        blank=True,
+    )
+    about_title = models.CharField(max_length=255, null=True, blank=True)
+    about_description = models.TextField(max_length=255, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Ensure only one instance of settings can exist
