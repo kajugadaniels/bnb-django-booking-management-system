@@ -13,6 +13,7 @@ urlpatterns = [
     path('booking/<booking_id>', booking, name="booking"),
     path('success/<booking_id>', paymentSuccess, name="paymentSuccess"),
     path('blogs/', blogs, name="blogs"),
+    path('blog/<slug>', getBlog, name="getBlog"),
     path('contact/', contact, name="contact"),
     path('not-found/', notFound, name="notFound"),
     
