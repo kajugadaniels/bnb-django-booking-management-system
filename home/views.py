@@ -266,6 +266,17 @@ def paymentSuccess(request, booking_id):
         # Handle unsuccessful payment cases
         return HttpResponse("Payment not successful. Please try again or contact support.", status=400)
 
+def getBlogs(request):
+    blogs = Blog.objects.all().order_by('-created_at')
+    settings = Setting.objects.first()
+
+    context = {
+        'blogs': blogs,
+        'settings': settings
+    }
+
+    return render(request, 'blog/index.html', context)
+
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
