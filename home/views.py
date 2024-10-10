@@ -1,5 +1,6 @@
 from home.forms import *
 from home.models import *
+from decimal import Decimal
 from datetime import datetime
 from django.db.models import Avg
 from django.contrib import messages
@@ -241,18 +242,25 @@ def paymentSuccess(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
     # Extract transaction details from Flutterwave's redirect response
-    transaction_id = request.GET.get('transaction_id')  # Replace with actual query parameter key if different
-    payment_amount = request.GET.get('amount')  # Replace with actual query parameter key if different
-    currency = request.GET.get('currency')  # Replace with actual query parameter key if different
-    payment_status = request.GET.get('status', '').lower()  # Example, check if 'status' is passed in response
+    transaction_id = request.GET.get('transaction_id')  # Adjust if Flutterwave uses a different key
+    payment_amount = request.GET.get('amount')  # Adjust if Flutterwave uses a different key
+    currency = request.GET.get('currency') or request.session.get('currency', 'RWF')  # Get from GET or session
+    payment_status = request.GET.get('status', '').lower()  # Ensure to match Flutterwave's status value
+
+    # Optional: Log the received parameters for debugging
+    # import logging
+    # logger = logging.getLogger(__name__)
+    # logger.debug(f"PaymentSuccess received: transaction_id={transaction_id}, amount={payment_amount}, currency={currency}, status={payment_status}")
 
     # Verify the transaction status and update only if the payment was successful
     if payment_status == 'successful':
         booking.transactionId = transaction_id
         booking.payment_status = 'paid'
-        booking.payment_amount = float(payment_amount) if payment_amount else 0.0
+        booking.payment_amount = Decimal(payment_amount) if payment_amount else Decimal('0.00')
         booking.currency = currency
         booking.payment_date = timezone.now()  # Track when the payment was processed
+        # Optionally update the booking status to 'confirmed'
+        booking.status = 'confirmed'
         booking.save()
 
         # Prepare context with booking details
