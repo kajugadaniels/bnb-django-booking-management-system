@@ -244,21 +244,26 @@ def paymentSuccess(request, booking_id):
 
     # Extract transaction details from Flutterwave's redirect response
     transaction_id = request.GET.get('transaction_id')  # Adjust if Flutterwave uses a different key
-    payment_amount = request.GET.get('amount')  # Adjust if Flutterwave uses a different key
     currency = request.GET.get('currency') or request.session.get('currency', 'RWF')  # Get from GET or session
     payment_status = request.GET.get('status', '').lower()  # Ensure to match Flutterwave's status value
 
-    # Optional: Log the received parameters for debugging
+    # Log the received parameters for debugging
     logger = logging.getLogger(__name__)
-    logger.debug(f"PaymentSuccess received: transaction_id={transaction_id}, amount={payment_amount}, currency={currency}, status={payment_status}")
+    logger.debug(f"PaymentSuccess received: transaction_id={transaction_id}, currency={currency}, status={payment_status}")
 
     # Verify the transaction status and update only if the payment was successful
     if payment_status == 'successful':
         booking.transactionId = transaction_id
         booking.payment_status = 'paid'
-        booking.payment_amount = Decimal(payment_amount) if payment_amount else Decimal('0.00')
         booking.currency = currency
         booking.payment_date = timezone.now()  # Track when the payment was processed
+
+        # Determine payment_amount based on the selected currency
+        if currency == 'USD':
+            booking.payment_amount = Decimal(booking.room.price_usd)
+        else:
+            booking.payment_amount = Decimal(booking.room.price_rwf)
+
         # Optionally update the booking status to 'confirmed'
         booking.status = 'confirmed'
         booking.save()
