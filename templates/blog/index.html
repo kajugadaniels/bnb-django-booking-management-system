@@ -1,0 +1,42 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} Blog {% endblock %}
+{% block content %}
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <section data-anim-wrap class="layout-pt-md layout-pb-lg">
+        <div class="container">
+            <div data-anim-child="slide-up delay-1" class="row justify-center text-center">
+                <div class="col-auto">
+                    <div class="sectionTitle -md">
+                        <h2 class="sectionTitle__title">Travel articles</h2>
+                        <p class=" sectionTitle__text mt-5 sm:mt-0">Lorem ipsum is placeholder text commonly used in site.</p>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-lg-4 col-sm-6">
+    
+                <a href="" class="blogCard -type-1 d-block ">
+                    <div class="blogCard__image">
+                        <div class="ratio ratio-4:3 rounded-8">
+                        <img class="img-ratio js-lazy" src="#" data-src="img/blog/grids/1.png" alt="image">
+                        </div>
+                    </div>
+        
+                    <div class="pt-20">
+                        <h4 class="text-dark-1 text-18 fw-500">10 European ski destinations you should visit this winter</h4>
+                        <div class="text-light-1 text-15 lh-14 mt-5">April 06, 2022</div>
+                    </div>
+                </a>
+    
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
