@@ -1,5 +1,16 @@
+import os
+import csv
 from home.models import *
 from django.contrib import admin
+from django.utils import timezone
+from reportlab.lib import colors
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import inch, cm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import (SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image)
 
 @admin.register(Amenity)
 class AmenityAdmin(admin.ModelAdmin):
@@ -34,9 +45,194 @@ class RoomReviewAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('room', 'name', 'email', 'phone', 'checkInDate', 'checkOutDate', 'status', 'payment_status')
-    list_filter = ('status', 'payment_status', 'checkInDate', 'checkOutDate')
-    search_fields = ('name', 'email', 'phone', 'transactionId')
+    list_display = (
+        "id",
+        "room",
+        "name",
+        "email",
+        "checkInDate",
+        "checkOutDate",
+        "status",
+        "payment_status",
+    )
+    list_filter = ("status", "payment_status", "room")
+    search_fields = ("name", "email", "phone", "transactionId")
+    actions = ["export_as_csv", "export_as_pdf"]
+
+    def export_as_csv(self, request, queryset):
+        """
+        Exports selected bookings as a CSV file.
+        """
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type="text/csv")
+        response[
+            "Content-Disposition"
+        ] = f"attachment; filename=bookings_{timezone.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)  # Write header
+        for obj in queryset:
+            writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected as CSV"
+
+    def export_as_pdf(self, request, queryset):
+        """
+        Exports selected bookings as a professionally styled PDF file.
+        """
+        # Define the HTTP response with PDF headers
+        response = HttpResponse(content_type="application/pdf")
+        response[
+            "Content-Disposition"
+        ] = f"attachment; filename=bookings_{timezone.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+
+        # Register the Jost font
+        font_path_regular = os.path.join(
+            os.path.dirname(__file__), "static", "fonts", "Jost-Regular.ttf"
+        )
+        font_path_bold = os.path.join(
+            os.path.dirname(__file__), "static", "fonts", "Jost-Bold.ttf"
+        )
+
+        if os.path.exists(font_path_regular) and os.path.exists(font_path_bold):
+            pdfmetrics.registerFont(TTFont('Jost-Regular', font_path_regular))
+            pdfmetrics.registerFont(TTFont('Jost-Bold', font_path_bold))
+            default_font = 'Jost-Regular'
+            bold_font = 'Jost-Bold'
+        else:
+            # Fallback to Helvetica if Jost is not found
+            default_font = 'Helvetica'
+            bold_font = 'Helvetica-Bold'
+
+        # Create a PDF document with ReportLab
+        doc = SimpleDocTemplate(
+            response,
+            pagesize=A4,
+            rightMargin=2*cm,
+            leftMargin=2*cm,
+            topMargin=2*cm,
+            bottomMargin=2*cm,
+        )
+        elements = []
+
+        styles = getSampleStyleSheet()
+        styles.add(ParagraphStyle(name='JostTitle', fontName=bold_font, fontSize=20, leading=24, alignment=1, textColor="#48351b"))
+        styles.add(ParagraphStyle(name='JostNormal', fontName=default_font, fontSize=12, leading=15, textColor="#000000"))
+        styles.add(ParagraphStyle(name='JostHeader', fontName=bold_font, fontSize=12, leading=14, textColor="#ffffff"))
+
+        # Company Logo
+        logo_path = os.path.join(
+            os.path.dirname(__file__), "static", "img", "logo.png"
+        )
+        if os.path.exists(logo_path):
+            logo = Image(logo_path, width=2*inch, height=2*inch)
+            elements.append(logo)
+        else:
+            elements.append(Paragraph("Company Logo", styles['JostTitle']))
+
+        # Company Details
+        company_details = """
+        <para align=center>
+        <b>Your Company Name</b><br/>
+        1234 Street Address<br/>
+        City, State, ZIP<br/>
+        Phone: (123) 456-7890<br/>
+        Email: info@yourcompany.com
+        </para>
+        """
+        elements.append(Paragraph(company_details, styles['JostNormal']))
+        elements.append(Spacer(1, 12))
+
+        # Report Title
+        report_title = Paragraph(
+            f"Booking Report", styles['JostTitle']
+        )
+        elements.append(report_title)
+        elements.append(Spacer(1, 12))
+
+        # Report Generation Date
+        report_date = Paragraph(
+            f"Generated on: {timezone.now().strftime('%Y-%m-%d %H:%M:%S')}",
+            styles['JostNormal'],
+        )
+        elements.append(report_date)
+        elements.append(Spacer(1, 24))
+
+        # Table Data Preparation
+        data = [
+            [
+                Paragraph("<b>ID</b>", styles['JostHeader']),
+                Paragraph("<b>Room</b>", styles['JostHeader']),
+                Paragraph("<b>Name</b>", styles['JostHeader']),
+                Paragraph("<b>Email</b>", styles['JostHeader']),
+                Paragraph("<b>Check-In Date</b>", styles['JostHeader']),
+                Paragraph("<b>Check-Out Date</b>", styles['JostHeader']),
+                Paragraph("<b>Status</b>", styles['JostHeader']),
+                Paragraph("<b>Payment Status</b>", styles['JostHeader']),
+            ]
+        ]
+
+        for booking in queryset:
+            data.append(
+                [
+                    str(booking.id),
+                    str(booking.room),
+                    booking.name or "N/A",
+                    booking.email or "N/A",
+                    booking.checkInDate.strftime("%Y-%m-%d") if booking.checkInDate else "N/A",
+                    booking.checkOutDate.strftime("%Y-%m-%d") if booking.checkOutDate else "N/A",
+                    booking.get_status_display(),
+                    booking.get_payment_status_display(),
+                ]
+            )
+
+        # Create the table
+        table = Table(data, repeatRows=1, hAlign='LEFT')
+        table_style = TableStyle(
+            [
+                # Header background
+                ("BACKGROUND", (0, 0), (-1, 0), "#1fb5b4"),
+                # Header text color
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                # Font for header
+                ("FONTNAME", (0, 0), (-1, 0), bold_font),
+                # Font for body
+                ("FONTNAME", (0, 1), (-1, -1), default_font),
+                # Alignment
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                # Grid
+                ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+                # Padding
+                ("LEFTPADDING", (0, 0), (-1, -1), 6),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ]
+        )
+        table.setStyle(table_style)
+
+        # Alternate row colors
+        for i in range(1, len(data)):
+            if i % 2 == 0:
+                bg_color = "#f2f2f2"
+                table_style.add("BACKGROUND", (0, i), (-1, i), bg_color)
+
+        elements.append(table)
+        elements.append(Spacer(1, 24))
+
+        # Footer with Page Numbers (Advanced: requires a custom Page Template)
+        # For simplicity, we'll skip adding footers in this example.
+
+        # Build the PDF
+        doc.build(elements)
+
+        return response
+
+    export_as_pdf.short_description = "Export Selected as PDF"
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
