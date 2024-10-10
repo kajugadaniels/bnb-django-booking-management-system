@@ -122,7 +122,7 @@ class BookingAdmin(admin.ModelAdmin):
         styles = getSampleStyleSheet()
         styles.add(ParagraphStyle(name='JostTitle', fontName=bold_font, fontSize=20, leading=24, alignment=1, textColor="#48351b"))
         styles.add(ParagraphStyle(name='JostNormal', fontName=default_font, fontSize=12, leading=15, textColor="#000000"))
-        styles.add(ParagraphStyle(name='JostHeader', fontName=bold_font, fontSize=12, leading=14, textColor="#ffffff"))
+        styles.add(ParagraphStyle(name='JostHeader', fontName=bold_font, fontSize=12, leading=12, textColor="#ffffff"))
 
         # Company Logo
         logo_path = os.path.join(
@@ -137,11 +137,11 @@ class BookingAdmin(admin.ModelAdmin):
         # Company Details
         company_details = """
         <para align=center>
-        <b>Your Company Name</b><br/>
-        1234 Street Address<br/>
-        City, State, ZIP<br/>
-        Phone: (123) 456-7890<br/>
-        Email: info@yourcompany.com
+        <b>B&B MOUNTAIN VIEW</b><br/>
+        1234567890<br/>
+        Kigali Rwanda<br/>
+        Phone: +250 788 888 888<br/>
+        Email: info@bnb.com
         </para>
         """
         elements.append(Paragraph(company_details, styles['JostNormal']))
