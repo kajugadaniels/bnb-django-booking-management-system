@@ -1,0 +1,101 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} {{ food.name }} {% endblock %}
+{% block content %}
+
+    <br>
+    <br>
+    <br>
+
+    <section class="py-10 d-flex items-center bg-light-2">
+        <div class="container">
+            <div class="row y-gap-10 items-center justify-between">
+                <div class="col-auto">
+                    <div class="row x-gap-10 y-gap-5 items-center text-14 text-light-1">
+                        <div class="col-auto">
+                            <div class="">Home</div>
+                        </div>
+                            <div class="col-auto">
+                            <div class="">></div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="">B&B Mountain View Food</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="">></div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="text-dark-1">{{ food.name }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <a href="{% url 'base:restaurant' %}" class="text-14 text-blue-1 underline">All Food</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="layout-pb-md">
+        <div class="container">
+            <div class="row y-gap-20 pt-40">
+                <div class="col-auto">
+                    <h2 class="">{{ food.name }}</h2>
+                </div>
+                <div class="d-flex">
+                    <div class="col-xl-8">
+                        <p>
+                            {{ food.description }}
+                        </p>
+                    </div>
+                
+                    <div class="col-xl-4">
+                        <div class="relative d-flex ml-35">
+                            <img src="{{ food.image.url }}" alt="{{ food.name }}" class="col-12 rounded-4">
+                            <div class="absolute d-flex justify-center items-end col-12 h-full z-1 px-35 py-20">
+                                <button class="button h-50 px-25 -blue-1 bg-white text-dark-1 text-14 fw-500 col-12">
+                                    Order Food
+                                    {% if selected_currency == 'USD' %}
+                                        ${{ food.price_usd|intcomma }}
+                                    {% else %}
+                                        {{ food.price_rwf|intcomma }} RWF
+                                    {% endif %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pt-40">
+        <div class="container">
+            <div class="row y-gap-20">
+                <div class="col-auto">
+                    <h2 class="text-22 fw-500">Location</h2>
+                </div>
+                <div class="col-12">
+                    <div class="map rounded-4 map-500">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3987.4162130891827!2d30.056825011912657!3d-1.988286936790796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca5be108f7aa5%3A0x2abacadc67af2926!2sB%26B%20MOUNTAIN%20VIEW!5e0!3m2!1sen!2srw!4v1727166050562!5m2!1sen!2srw" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Disable past dates for the check-in date input
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('check-in-date').setAttribute('min', today);
+    
+        // Ensure that check-out date is after check-in date
+        document.getElementById('check-in-date').addEventListener('change', function() {
+            const checkInDate = this.value;
+            document.getElementById('check-out-date').setAttribute('min', checkInDate);
+        });
+    </script>
+
+{% endblock %}

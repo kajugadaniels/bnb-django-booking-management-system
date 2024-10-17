@@ -21,7 +21,7 @@
             <div class="row y-gap-30 pt-40 sm:pt-20">
                 {% for food in restaurant %}
                     <div class="col-lg-3 col-sm-6">
-                        <a href="#" class="cruiseCard -type-1 rounded-4">
+                        <a href="{% url 'base:getFood' food.slug %}" class="cruiseCard -type-1 rounded-4">
                             <div class="cruiseCard__image">
                                 <div class="cardImage ratio ratio-6:5">
                                     <div class="cardImage__content">
