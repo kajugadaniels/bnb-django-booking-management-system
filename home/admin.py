@@ -273,3 +273,11 @@ class SettingAdmin(admin.ModelAdmin):
         return not Setting.objects.exists()
 
     list_display = ('email', 'contact_number', 'whatsapp_number', 'address', 'about_title')
+
+
+@admin.register(Food)
+class FoodAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'price_usd', 'price_rwf', 'created_at', 'updated_at')
+    search_fields = ('name', 'description')
+    list_filter = ('created_at', 'updated_at')
+    prepopulated_fields = {'slug': ('name',)}
