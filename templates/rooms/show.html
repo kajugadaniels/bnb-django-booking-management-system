@@ -190,6 +190,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-input ">
+                                            {{ form.special_request }}
+                                            <label class="lh-1 text-16 text-light-1">Special Request</label>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <button type="submit" class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
                                             Book Now
@@ -226,7 +232,6 @@
                     <h3 class="text-22 fw-500">Guest reviews</h3>
                 </div>
             </div>
-    
             <div class="row y-gap-30 items-center pt-20">
                 <div class="col-lg-3">
                     <div class="flex-center rounded-4 min-h-250 bg-blue-1-05">
@@ -237,7 +242,6 @@
                         </div>
                     </div>
                 </div>
-    
                 <div class="col-lg-9">
                     <div class="row y-gap-30">
                         <div class="col-md-4 col-sm-6">
@@ -270,7 +274,6 @@
                                     <div class="text-15 fw-500">Cleanliness</div>
                                     <div class="text-15 text-light-1">{{ avg_cleanliness|floatformat:1 }}</div>
                                 </div>
-    
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
                                     <div class="progressBar__bar bg-dark-1" style="width: {{ avg_cleanliness|floatformat:1 }}0%"></div>
@@ -283,7 +286,6 @@
                                     <div class="text-15 fw-500">Value for money</div>
                                     <div class="text-15 text-light-1">{{ avg_value_for_money|floatformat:1 }}</div>
                                 </div>
-    
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
                                     <div class="progressBar__bar bg-dark-1" style="width: {{ avg_value_for_money|floatformat:1 }}0%"></div>
@@ -296,7 +298,6 @@
                                     <div class="text-15 fw-500">Comfort</div>
                                     <div class="text-15 text-light-1">{{ avg_comfort|floatformat:1 }}</div>
                                 </div>
-    
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
                                     <div class="progressBar__bar bg-dark-1" style="width: {{ avg_comfort|floatformat:1 }}0%"></div>
@@ -309,7 +310,6 @@
                                     <div class="text-15 fw-500">Facilities</div>
                                     <div class="text-15 text-light-1">{{ avg_facilities|floatformat:1 }}</div>
                                 </div>
-    
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
                                     <div class="progressBar__bar bg-dark-1" style="width: {{ avg_facilities|floatformat:1 }}0%"></div>
@@ -322,7 +322,6 @@
                                     <div class="text-15 fw-500">Free WiFi</div>
                                     <div class="text-15 text-light-1">{{ avg_free_wifi|floatformat:1 }}</div>
                                 </div>
-    
                                 <div class="progressBar mt-10">
                                     <div class="progressBar__bg bg-blue-2"></div>
                                     <div class="progressBar__bar bg-dark-1" style="width: {{ avg_free_wifi|floatformat:1 }}0%"></div>

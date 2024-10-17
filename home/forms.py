@@ -30,11 +30,13 @@ class RoomReviewForm(forms.ModelForm):
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['name', 'email', 'phone']
-
-    name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    phone = forms.CharField(max_length=15)
+        fields = ['name', 'email', 'phone', 'special_request']
+        widgets = {
+            'name': forms.TextInput(),
+            'email': forms.EmailInput(),
+            'phone': forms.NumberInput(),
+            'special_request': forms.Textarea(attrs={'placeholder': 'Enter very detailed special request'}),
+        }
 
 class ContactForm(forms.ModelForm):
     class Meta:
