@@ -325,6 +325,7 @@ class Food(models.Model):
     image = ProcessedImageField(
         upload_to=food_image_path,
         format='JPEG',
+        processors=[ResizeToFill(720, 720)],
         options={'quality': 90},
         null=True,
         blank=True,
