@@ -12,10 +12,10 @@ urlpatterns = [
     path('room/<slug>', getRoom, name="getRoom"),
     path('booking/<booking_id>', booking, name="booking"),
     path('success/<booking_id>', paymentSuccess, name="paymentSuccess"),
-    path('restaurant/', restaurant, name="restaurant"),
     path('blogs/', blogs, name="blogs"),
     path('blog/<slug>', getBlog, name="getBlog"),
     path('contact/', contact, name="contact"),
+    path('restaurant/', restaurant, name="restaurant"),
     path('not-found/', notFound, name="notFound"),
     
     # Catch-all pattern for 404 errors

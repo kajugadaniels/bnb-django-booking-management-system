@@ -42,7 +42,7 @@ def home(request):
         'featuredRooms': featuredRooms,
         'highestPriceRoom': highestPriceRoom,
         'settings': settings,
-        'selected_currency': selected_currency,  # Pass selected currency to the template
+        'selected_currency': selected_currency,
     }
 
     return render(request, 'index.html', context)
@@ -301,15 +301,6 @@ def getBlog(request, slug):
 
     return render(request, 'blogs/show.html', context)
 
-def restaurant(request):
-    settings = Setting.objects.first()
-
-    context = {
-        'settings': settings,
-    }
-
-    return render(request, 'restaurant/index.html', context)
-
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -341,6 +332,20 @@ def contact(request):
     }
 
     return render(request, 'contact.html', context)
+
+def restaurant(request):
+    restaurant = Food.objects.all().order_by('-created_at')
+    settings = Setting.objects.first()
+
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    request.session['currency'] = selected_currency
+
+    context = {
+        'restaurant': restaurant,
+        'settings': settings,
+        'selected_currency': selected_currency,
+    }
+    return render(request, 'restaurant/index.html', context)
 
 def notFound(request):
     settings = Setting.objects.first()
