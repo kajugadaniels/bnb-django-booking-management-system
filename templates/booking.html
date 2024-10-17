@@ -48,7 +48,7 @@
                             <!-- Display price based on selected currency -->
                             <input type="hidden" name="amount" value="{% if selected_currency == 'USD' %}{{ room.price_usd }}{% else %}{{ room.price_rwf }}{% endif %}" />
                             <input type="hidden" name="currency" value="{{ selected_currency }}" />
-                            <input type="hidden" name="redirect_url" value="https://bnbmv.up.railway.app/success/{{ booking.id }}" />
+                            <input type="hidden" name="redirect_url" value="https://bandb-mountain-view.onrender.com/success/{{ booking.id }}" />
                             <input type="hidden" name="meta[source]" value="docs-html-test" />
                             
                             <br>
