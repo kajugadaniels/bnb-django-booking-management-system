@@ -8,27 +8,99 @@
     <br>
     <br>
 
-    <section class="pt-40 layout-pb-md">
+    <section class="layout-pt-lg layout-pb-lg bg-blue-2">
         <div class="container">
-            <div class="row">
-                <div class="col-xl-2 col-lg-2"></div>
-                <div class="col-xl-8 col-lg-8">
-                    <div class="row x-gap-20 y-gap-20 pt-20">
-                        <div class="d-flex flex-column items-center mt-60 lg:md-40 sm:mt-24">
-                            <div class="size-80 flex-center rounded-full bg-dark-3">
-                                <i class="icon-check text-30 text-white"></i>
+            <div class="row justify-center">
+                <div class="col-xl-10 col-lg-11">
+                    <div class="d-flex justify-end">
+                        <button class="button h-50 px-24 -dark-1 bg-blue-1 text-white">
+                            Print
+                            <i class="icon-bed text-20 ml-10"></i>
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-4 mt-50">
+                        <div class="layout-pt-lg layout-pb-lg px-50">
+                            <div class="row justify-between">
+                                <div class="col-auto">
+                                    <img src="{% static 'img/logo.png' %}" alt="logo icon">
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="row justify-between items-center">
+                                        <div class="col-auto">
+                                            <div class="text-26 fw-600">Transaction ID #</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="text-18 fw-500 text-light-1">{{ booking.transactionId }}</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-30 lh-1 fw-600 mt-20">Payment submitted successfully!</div>
-                            <div class="text-15 text-light-1 mt-10">Booking details have been sent to your email</div>
-                        
-                            <div class="text-15 text-dark-1 mt-10">
-                                Transaction ID: <strong>{{ booking.transactionId }}</strong>
+                            <div class="row justify-between pt-50">
+                                <div class="col-auto">
+                                    <div class="text-15 text-light-1">Invoice date:</div>
+                                    <div class="text-15 fw-500 lh-15">{{ booking.payment_date|date:"F j, Y, g:i a" }}</div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="text-15 text-light-1">Due date:</div>
+                                    <div class="text-15 fw-500 lh-15">{{ booking.payment_date|date:"F j, Y, g:i a" }}</div>
+                                </div>
                             </div>
-                            <div class="text-15 text-dark-1 mt-10">
-                                Payment Amount: <strong>{{ booking.payment_amount|intcomma }} {{ booking.currency }}</strong>
+                            <div class="row justify-between pt-50">
+                                <div class="col-auto">
+                                    <div class="text-20 fw-500">Supplier</div>
+                                    <div class="text-15 fw-500 mt-20">B&B MOUNTAIN VIEW</div>
+                                    <div class="text-15 text-light-1 mt-10">{{ settings.address }}</div>
+                                </div>
+                                <div class="col-xl-4">
+                                    <div class="text-20 fw-500">Customer</div>
+                                    <div class="text-15 fw-500 mt-20">{{ booking.name }}</div>
+                                    <div class="text-15 text-light-1 mt-10">{{ booking.email }}</div>
+                                </div>
                             </div>
-                            <div class="text-15 text-dark-1 mt-10">
-                                Payment Date: <strong>{{ booking.payment_date|date:"F j, Y, g:i a" }}</strong>
+                            <div class="row pt-50">
+                                <div class="col-12">
+                                    <table class="table col-12">
+                                        <thead class="bg-blue-1-05 text-blue-1">
+                                            <tr>
+                                                <th>Room</th>
+                                                <th>Price</th>
+                                                <th>VAT (20%)</th>
+                                                <th>Check In Date</th>
+                                                <th>Check Out Date</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ booking.room }}</td>
+                                                <td>{{ booking.payment_amount|intcomma }} {{ booking.currency }}</td>
+                                                <td>0</td>
+                                                <td>{{ booking.checkInDate|date:"F j, Y, g:i a" }}</td>
+                                                <td>{{ booking.checkOutDate|date:"F j, Y, g:i a" }}</td>
+                                                <td>{{ booking.payment_amount|intcomma }} {{ booking.currency }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-18 fw-500">Total Due</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-18 fw-500">{{ booking.payment_amount|intcomma }} {{ booking.currency }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top-light py-50">
+                            <div class="row x-gap-60 y-gap-10 justify-center">
+                                <div class="col-auto">
+                                    <a href="#" class="text-14">{{ settings.email }}</a>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="#" class="text-14">{{ settings.second_email }}</a>
+                                </div>
+                                <div class="col-auto">
+                                    <a href="#" class="text-14">{{ settings.second_email }}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
