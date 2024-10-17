@@ -301,6 +301,15 @@ def getBlog(request, slug):
 
     return render(request, 'blogs/show.html', context)
 
+def restaurant(request):
+    settings = Setting.objects.first()
+
+    context = {
+        'settings': settings,
+    }
+
+    return render(request, 'restaurant/index.html', context)
+
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
