@@ -32,7 +32,7 @@ class Room(models.Model):
     capacity = models.IntegerField()
     size = models.CharField(max_length=255, null=True, blank=True)
     image = ProcessedImageField(
-        upload_to='room_images/',
+        upload_to=room_image_path,
         format='JPEG',
         options={'quality': 90},
         null=True,
@@ -308,3 +308,46 @@ class Setting(models.Model):
     class Meta:
         verbose_name = "Setting"
         verbose_name_plural = "Settings"
+
+def food_image_path(instance, filename):
+    base_filename, file_extension = os.path.splitext(filename)
+    return f'food/food_{slugify(instance.name)}_{instance.created_at}{file_extension}'
+
+class Food(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, blank=True)
+    description = models.TextField()
+    
+    # Separate fields for price in USD and RWF
+    price_usd = models.IntegerField(null=True, blank=True)
+    price_rwf = models.IntegerField(null=True, blank=True)
+
+    image = ProcessedImageField(
+        upload_to=food_image_path,
+        format='JPEG',
+        options={'quality': 90},
+        null=True,
+        blank=True,
+    )
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = self._generate_unique_slug()
+        super().save(*args, **kwargs)
+
+    def _generate_unique_slug(self):
+        base_slug = slugify(self.name)
+        unique_slug = base_slug
+        num = 1
+        while Food.objects.filter(slug=unique_slug).exists():
+            unique_slug = f"{base_slug}-{num}"
+            num += 1
+        return unique_slug
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Food"
