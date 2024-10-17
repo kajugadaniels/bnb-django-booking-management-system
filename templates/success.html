@@ -22,7 +22,7 @@
                         <div class="layout-pt-lg layout-pb-lg px-50">
                             <div class="row justify-between">
                                 <div class="col-auto">
-                                    <img src="{% static 'img/logo.png' %}" alt="logo icon">
+                                    <img src="{% static 'img/logo.png' %}" alt="logo icon" style="height: 100px;">
                                 </div>
                                 <div class="col-xl-4">
                                     <div class="row justify-between items-center">
@@ -65,8 +65,8 @@
                                                 <th>Room</th>
                                                 <th>Price</th>
                                                 <th>VAT (20%)</th>
-                                                <th>Check In Date</th>
-                                                <th>Check Out Date</th>
+                                                <th>Check In</th>
+                                                <th>Check Out</th>
                                                 <th>Total</th>
                                             </tr>
                                         </thead>
@@ -83,6 +83,8 @@
                                                 <td class="text-18 fw-500">Total Due</td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td class="text-18 fw-500">{{ booking.payment_amount|intcomma }} {{ booking.currency }}</td>
                                             </tr>
                                         </tbody>
@@ -96,10 +98,10 @@
                                     <a href="#" class="text-14">{{ settings.email }}</a>
                                 </div>
                                 <div class="col-auto">
-                                    <a href="#" class="text-14">{{ settings.second_email }}</a>
+                                    <a href="#" class="text-14">{{ settings.second_email || '' }}</a>
                                 </div>
                                 <div class="col-auto">
-                                    <a href="#" class="text-14">{{ settings.second_email }}</a>
+                                    <a href="#" class="text-14">{{ settings.contact_number }}</a>
                                 </div>
                             </div>
                         </div>
