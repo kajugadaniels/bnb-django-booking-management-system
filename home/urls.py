@@ -16,6 +16,7 @@ urlpatterns = [
     path('blog/<slug>', getBlog, name="getBlog"),
     path('contact/', contact, name="contact"),
     path('restaurant/', restaurant, name="restaurant"),
+    path('food/<slug>', getFood, name="getFood"),
     path('not-found/', notFound, name="notFound"),
     
     # Catch-all pattern for 404 errors

@@ -347,6 +347,20 @@ def restaurant(request):
     }
     return render(request, 'restaurant/index.html', context)
 
+def getFood(request, slug):
+    food = get_object_or_404(Food, slug=slug)
+    settings = Setting.objects.first()
+
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    request.session['currency'] = selected_currency
+
+    context = {
+        'food': food,
+        'settings': settings,
+        'selected_currency': selected_currency,
+    }
+    return render(request, 'restaurant/show.html', context)
+
 def notFound(request):
     settings = Setting.objects.first()
 
