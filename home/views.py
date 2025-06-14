@@ -165,8 +165,8 @@ def getRoom(request, slug):
             booking.payment_status = 'pending'  # Set payment status to pending
             booking.save()
 
-            # Redirect to the booking confirmation page
-            return redirect('base:booking', booking_id=booking.id)  # Adjust redirect to your success page
+            messages.error(request, "Thank you for booking with us, We sent you an email with more details")
+            return redirect('base:getRoom', slug=room.slug)
 
     else:
         form = BookingForm()
