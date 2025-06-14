@@ -355,3 +355,17 @@ class Food(models.Model):
 
     class Meta:
         verbose_name_plural = "Food"
+
+class FoodOrder(models.Model):
+    food = models.ForeignKey(Food, on_delete=models.CASCADE, related_name='orders')
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.name} ordered {self.food.name}"
+
+    class Meta:
+        verbose_name = "Food Order"
+        verbose_name_plural = "Food Orders"
+        ordering = ['-created_at']
