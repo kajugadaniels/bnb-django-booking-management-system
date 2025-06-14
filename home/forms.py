@@ -54,6 +54,6 @@ class FoodOrderForm(forms.ModelForm):
         model = FoodOrder
         fields = ['name', 'email']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Full Name', 'required': True}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Your Email Address', 'required': True}),
+            'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Your Full Name', 'required': True}),
+            'email': forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Your Email Address', 'required': True}),
         }

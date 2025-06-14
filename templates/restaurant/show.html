@@ -51,11 +51,24 @@
                         </p>
                     </div>
                 
-                    <div class="col-xl-4">
+                    <form method="POST" class="col-xl-4">
+                        {% csrf_token %}
+                        <div class="row y-gap-20 pt-20 ml-35">
+                            <div class="col-12">
+                                <div class="">
+                                    {{ form.name.label_tag }}{{ form.name }}
+                                </div>
+                            </div>
+                            <div class="mt-20 col-12">
+                                <div class="">
+                                    {{ form.email.label_tag }}{{ form.email }}
+                                </div>
+                            </div>
+                        </div>
                         <div class="relative d-flex ml-35">
                             <img src="{{ food.image.url }}" alt="{{ food.name }}" class="col-12 rounded-4">
                             <div class="absolute d-flex justify-center items-end col-12 h-full z-1 px-35 py-20">
-                                <button class="button h-50 px-25 -blue-1 bg-white text-dark-1 text-14 fw-500 col-12">
+                                <button class="button h-50 px-25 -blue-1 bg-white text-dark-1 text-14 fw-500 col-12" type="submit">
                                     Order Food
                                     {% if selected_currency == 'USD' %}
                                         ${{ food.price_usd|intcomma }}
@@ -65,7 +78,7 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
