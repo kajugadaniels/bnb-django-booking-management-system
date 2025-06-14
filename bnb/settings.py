@@ -77,17 +77,23 @@ WSGI_APPLICATION = 'bnb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES =  {
+# DATABASES =  {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.getenv("MYSQL_DB", "bnb"),
+#         'USER': os.getenv("MYSQL_USER", "bnbuser"),
+#         'PASSWORD': os.getenv("MYSQL_PASSWORD", "S3cur3P@ssw0rd!"),
+#         'HOST': os.getenv("MYSQL_HOST", "vmi2421856.contaboserver.net"),
+#         'PORT': os.getenv("MYSQL_PORT", "3306"),
+#     }
+# }
+
+DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv("MYSQL_DB", "bnb"),
-        'USER': os.getenv("MYSQL_USER", "bnbuser"),
-        'PASSWORD': os.getenv("MYSQL_PASSWORD", "S3cur3P@ssw0rd!"),
-        'HOST': os.getenv("MYSQL_HOST", "vmi2421856.contaboserver.net"),
-        'PORT': os.getenv("MYSQL_PORT", "3306"),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
