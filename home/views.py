@@ -7,6 +7,8 @@ from django.db.models import Avg
 from django.contrib import messages
 from django.http import HttpResponse
 from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.shortcuts import render, redirect, get_object_or_404
 
 def home(request):
@@ -101,7 +103,7 @@ def getRoom(request, slug):
     reviews = RoomReview.objects.filter(room=room).order_by('-created_at')
     total_reviews = reviews.count()
 
-    # Collect average ratings
+    # Aggregate average ratings
     avg_location = reviews.aggregate(Avg('location'))['location__avg'] or 0
     avg_staff = reviews.aggregate(Avg('staff'))['staff__avg'] or 0
     avg_cleanliness = reviews.aggregate(Avg('cleanliness'))['cleanliness__avg'] or 0
@@ -111,13 +113,11 @@ def getRoom(request, slug):
     avg_free_wifi = reviews.aggregate(Avg('free_wifi'))['free_wifi__avg'] or 0
 
     overall_rating = (
-        avg_location + avg_staff + avg_cleanliness + avg_value_for_money + avg_comfort + avg_facilities + avg_free_wifi
+        avg_location + avg_staff + avg_cleanliness + avg_value_for_money +
+        avg_comfort + avg_facilities + avg_free_wifi
     ) / 7
 
-    # Get the selected currency from the query params or session (default to RWF)
     selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
-
-    # Store selected currency in the session
     request.session['currency'] = selected_currency
 
     if request.method == 'POST':
@@ -125,7 +125,6 @@ def getRoom(request, slug):
         check_in_date = request.POST.get('check_in_date')
         check_out_date = request.POST.get('check_out_date')
 
-        # Convert strings to date objects
         try:
             check_in_date = datetime.strptime(check_in_date, '%Y-%m-%d').date()
             check_out_date = datetime.strptime(check_out_date, '%Y-%m-%d').date()
@@ -135,7 +134,6 @@ def getRoom(request, slug):
 
         today = datetime.today().date()
 
-        # Validate the dates
         if check_in_date < today:
             messages.error(request, "Check-in date cannot be in the past.")
             return redirect('base:getRoom', slug=room.slug)
@@ -144,7 +142,6 @@ def getRoom(request, slug):
             messages.error(request, "Check-out date must be after the check-in date.")
             return redirect('base:getRoom', slug=room.slug)
 
-        # Check if the room is already booked for the selected dates
         existing_booking = Booking.objects.filter(
             room=room,
             checkInDate__lte=check_out_date,
@@ -155,17 +152,32 @@ def getRoom(request, slug):
             messages.error(request, "These dates are already booked. Please choose different dates.")
             return redirect('base:getRoom', slug=room.slug)
 
-        # If the form is valid, create the booking
         if form.is_valid():
             booking = form.save(commit=False)
             booking.room = room
             booking.checkInDate = check_in_date
             booking.checkOutDate = check_out_date
-            booking.status = 'pending'  # Set status to pending
-            booking.payment_status = 'pending'  # Set payment status to pending
+            booking.status = 'pending'
+            booking.payment_status = 'pending'
             booking.save()
 
-            messages.error(request, "Thank you for booking with us, We sent you an email with more details")
+            # ✉️ Send confirmation email
+            try:
+                subject = f"Booking Confirmation – {room.name} at B&B Mountain View"
+                message = render_to_string('emails/booking_confirmation.html', {
+                    'booking': booking,
+                    'room': room,
+                    'settings': Setting.objects.first(),
+                })
+                email = EmailMessage(subject, message, to=[booking.email])
+                email.content_subtype = 'html'
+                email.send()
+
+                messages.success(request, "🎉 Your booking has been received! A confirmation email has been sent to your inbox. You're in safe hands.")
+            except Exception as e:
+                logging.error(f"Failed to send confirmation email: {e}")
+                messages.warning(request, "Your booking was received, but we couldn't send a confirmation email at this time.")
+
             return redirect('base:getRoom', slug=room.slug)
 
     else:
@@ -187,7 +199,7 @@ def getRoom(request, slug):
         'avg_free_wifi': avg_free_wifi,
         'form': form,
         'settings': settings,
-        'selected_currency': selected_currency  # Pass selected currency to the template
+        'selected_currency': selected_currency
     }
 
     return render(request, 'rooms/show.html', context)
