@@ -354,11 +354,26 @@ def getFood(request, slug):
     selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
     request.session['currency'] = selected_currency
 
+    if request.method == 'POST':
+        form = FoodOrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.food = food
+            order.save()
+            messages.success(request, f"🎉 Order placed for {food.name}. We'll email you at {order.email}!")
+            return redirect('base:getFood', slug=slug)
+        else:
+            messages.error(request, "❌ Please correct the errors in the form below.")
+    else:
+        form = FoodOrderForm()
+
     context = {
         'food': food,
         'settings': settings,
         'selected_currency': selected_currency,
+        'form': form
     }
+
     return render(request, 'restaurant/show.html', context)
 
 def notFound(request):
