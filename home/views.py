@@ -372,7 +372,24 @@ def getFood(request, slug):
             order = form.save(commit=False)
             order.food = food
             order.save()
-            messages.success(request, f"🎉 Order placed for {food.name}. We'll email you at {order.email}!")
+
+            # ✉️ Send email confirmation
+            try:
+                subject = f"Food Order Confirmation – {food.name} at B&B Mountain View"
+                message = render_to_string('emails/food_order_confirmation.html', {
+                    'order': order,
+                    'food': food,
+                    'settings': settings
+                })
+                email = EmailMessage(subject, message, to=[order.email])
+                email.content_subtype = 'html'
+                email.send()
+
+                messages.success(request, f"🎉 Your order for {food.name} has been received! A confirmation email was sent to {order.email}.")
+            except Exception as e:
+                logging.error(f"Food order email failed: {e}")
+                messages.warning(request, f"Order was received, but we couldn't send an email to {order.email}.")
+
             return redirect('base:getFood', slug=slug)
         else:
             messages.error(request, "❌ Please correct the errors in the form below.")
