@@ -48,3 +48,12 @@ class ContactForm(forms.ModelForm):
             'subject': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Subject'}),
             'message': forms.Textarea(attrs={'class': 'form-input', 'placeholder': 'Your Message', 'rows': 4}),
         }
+
+class FoodOrderForm(forms.ModelForm):
+    class Meta:
+        model = FoodOrder
+        fields = ['name', 'email']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Full Name', 'required': True}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Your Email Address', 'required': True}),
+        }
