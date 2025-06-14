@@ -171,6 +171,9 @@ class Booking(models.Model):
     def __str__(self):
         return f"Booking for {self.room} by {self.name}"
 
+    class Meta:
+        verbose_name_plural = "Room Bookings"
+
 def blog_image_path(instance, filename):
     base_filename, file_extension = os.path.splitext(filename)
     return f'blogs/blog_{slugify(instance.title)}_{instance.created_at}{file_extension}'
