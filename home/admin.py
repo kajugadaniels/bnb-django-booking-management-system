@@ -281,3 +281,14 @@ class FoodAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     list_filter = ('created_at', 'updated_at')
     prepopulated_fields = {'slug': ('name',)}
+
+@admin.register(FoodOrder)
+class FoodOrderAdmin(admin.ModelAdmin):
+    list_display = ('food', 'name', 'email', 'created_at')
+    search_fields = ('name', 'email', 'food__name')
+    list_filter = ('created_at', 'food')
+    ordering = ('-created_at',)
+    readonly_fields = ('created_at',)
+
+    def has_add_permission(self, request):
+        return True  # Allow staff to manually add orders if needed
