@@ -19,7 +19,7 @@ def home(request):
     highestPriceRoom = Room.objects.order_by('-id')[:3]
     
     # Get the selected currency from the query params or session (default to RWF)
-    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
 
     # Store selected currency in session
     request.session['currency'] = selected_currency
@@ -74,7 +74,7 @@ def rooms(request):
     rooms_count = rooms.count()
 
     # Default currency is RWF
-    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
     
     # Store selected currency in the session
     request.session['currency'] = selected_currency
@@ -115,7 +115,7 @@ def getRoom(request, slug):
     ) / 7
 
     # Get the selected currency from the query params or session (default to RWF)
-    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
 
     # Store selected currency in the session
     request.session['currency'] = selected_currency
@@ -215,7 +215,7 @@ def booking(request, booking_id):
     overall_rating = (avg_location + avg_staff + avg_cleanliness + avg_value_for_money + avg_comfort + avg_facilities + avg_free_wifi) / 7
 
     # Get the selected currency from the query params or session (default to RWF)
-    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
 
     # Store selected currency in the session
     request.session['currency'] = selected_currency
@@ -244,7 +244,7 @@ def paymentSuccess(request, booking_id):
 
     # Extract transaction details from Flutterwave's redirect response
     transaction_id = request.GET.get('transaction_id')  # Adjust if Flutterwave uses a different key
-    currency = request.GET.get('currency') or request.session.get('currency', 'RWF')  # Get from GET or session
+    currency = request.GET.get('currency') or request.session.get('currency', 'USD')  # Get from GET or session
     payment_status = request.GET.get('status', '').lower()  # Ensure to match Flutterwave's status value
 
     # Log the received parameters for debugging
@@ -337,7 +337,7 @@ def restaurant(request):
     restaurant = Food.objects.all().order_by('-created_at')
     settings = Setting.objects.first()
 
-    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
     request.session['currency'] = selected_currency
 
     context = {
@@ -351,7 +351,7 @@ def getFood(request, slug):
     food = get_object_or_404(Food, slug=slug)
     settings = Setting.objects.first()
 
-    selected_currency = request.GET.get('currency', request.session.get('currency', 'RWF'))
+    selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
     request.session['currency'] = selected_currency
 
     context = {
