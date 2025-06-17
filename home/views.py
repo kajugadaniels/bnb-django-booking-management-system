@@ -3,6 +3,7 @@ from home.forms import *
 from home.models import *
 from decimal import Decimal
 from datetime import datetime
+from django.conf import settings
 from django.db.models import Avg
 from django.contrib import messages
 from django.http import HttpResponse
@@ -163,7 +164,7 @@ def getRoom(request, slug):
 
             settings_obj = Setting.objects.first()
 
-            # Email to guest (already working)
+            # Email to guest
             try:
                 subject = f"Booking Confirmation – {room.name} at B&B Mountain View"
                 message = render_to_string('emails/booking_confirmation.html', {
@@ -174,48 +175,26 @@ def getRoom(request, slug):
                 email = EmailMessage(subject, message, to=[booking.email])
                 email.content_subtype = 'html'
                 email.send()
-
                 messages.success(request, "🎉 Your booking has been received! A confirmation email has been sent to your inbox.")
             except Exception as e:
                 logging.error(f"Failed to send confirmation email to guest: {e}")
                 messages.warning(request, "Your booking was received, but we couldn't send a confirmation email at this time.")
 
-            # Email to admin (EMAIL_HOST_USER)
+            # Email to admin
             try:
-                admin_subject = f"[B&B Booking Alert] New Booking for {room.name}"
-                admin_message = f"""
-                    Hello Admin,
-
-                    A new booking has just been made on your website:
-
-                    Guest Details:
-                    • Name: {booking.name}
-                    • Email: {booking.email}
-                    • Phone: {booking.phone}
-
-                    Booking Details:
-                    • Room: {room.name}
-                    • Check-in Date: {booking.checkInDate.strftime('%B %d, %Y')}
-                    • Check-out Date: {booking.checkOutDate.strftime('%B %d, %Y')}
-                    • Special Request: {booking.special_request or "None"}
-
-                    Room Info:
-                    • Price (USD): ${room.price_usd or 'N/A'}
-                    • Price (RWF): {room.price_rwf or 'N/A'} RWF
-                    • Capacity: {room.capacity} persons
-                    • Description: {room.description[:150]}...
-
-                    Check the admin dashboard for more details.
-
-                    Warm regards,  
-                    B&B Mountain View
-                """.strip()
+                admin_subject = f"New Booking – {room.name} ({booking.name})"
+                admin_message = render_to_string('emails/admin_booking_alert.html', {
+                    'booking': booking,
+                    'room': room,
+                    'settings': settings_obj,
+                })
 
                 admin_email = EmailMessage(
-                    subject=admin_subject,
-                    body=admin_message,
-                    to=[settings.EMAIL_HOST_USER]  # Admin/Owner email
+                    admin_subject,
+                    admin_message,
+                    to=[settings.EMAIL_HOST_USER]
                 )
+                admin_email.content_subtype = 'html'
                 admin_email.send()
             except Exception as e:
                 logging.error(f"Failed to send admin notification email: {e}")
@@ -225,7 +204,7 @@ def getRoom(request, slug):
     else:
         form = BookingForm()
 
-    settings = Setting.objects.first()
+    settings_obj = Setting.objects.first()
 
     context = {
         'room': room,
@@ -240,7 +219,7 @@ def getRoom(request, slug):
         'avg_facilities': avg_facilities,
         'avg_free_wifi': avg_free_wifi,
         'form': form,
-        'settings': settings,
+        'settings': settings_obj,
         'selected_currency': selected_currency
     }
 
