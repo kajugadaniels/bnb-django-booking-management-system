@@ -407,6 +407,7 @@ def getFood(request, slug):
                 user_email = EmailMessage(
                     subject=user_subject,
                     body=user_message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
                     to=[order.email]
                 )
                 user_email.content_subtype = 'html'
@@ -436,6 +437,7 @@ def getFood(request, slug):
                 admin_email = EmailMessage(
                     subject=admin_subject,
                     body=admin_message,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
                     to=[settings.EMAIL_HOST_USER]
                 )
                 admin_email.content_subtype = 'html'
