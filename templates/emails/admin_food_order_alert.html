@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>New Food Order Alert</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 20px;">
+    <h2 style="color: #333;">🍽️ New Food Order Received</h2>
+
+    <p>Hello Admin,</p>
+
+    <p>A guest has just placed a new food order through the website. Here are the details:</p>
+
+    <h3>👤 Customer Information:</h3>
+    <ul>
+        <li><strong>Name:</strong> {{ order.name }}</li>
+        <li><strong>Email:</strong> {{ order.email }}</li>
+    </ul>
+
+    <h3>🧾 Order Details:</h3>
+    <ul>
+        <li><strong>Food Item:</strong> {{ food.name }}</li>
+        <li><strong>Description:</strong> {{ food.description|truncatechars:150 }}</li>
+        <li><strong>Price (USD):</strong> {{ food.price_usd }}</li>
+        <li><strong>Price (RWF):</strong> {{ food.price_rwf }}</li>
+        <li><strong>Ordered At:</strong> {{ order.created_at }}</li>
+    </ul>
+
+    <p>Check your admin dashboard for more information.</p>
+
+    <p>Best,<br>
+    <strong>B&B Mountain View Bot</strong></p>
+</body>
+</html>
