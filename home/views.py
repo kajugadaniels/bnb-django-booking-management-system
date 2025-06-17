@@ -1,4 +1,5 @@
 import logging
+import traceback
 from home.forms import *
 from home.models import *
 from decimal import Decimal
@@ -373,7 +374,6 @@ def getFood(request, slug):
             order.food = food
             order.save()
 
-            # Prepare email data
             try:
                 # 1. Email to customer
                 subject_customer = f"Food Order Confirmation – {food.name} at B&B Mountain View"
@@ -390,7 +390,7 @@ def getFood(request, slug):
                 email_customer.content_subtype = 'html'
                 email_customer.send()
 
-                # 2. Email to admin (EMAIL_HOST_USER)
+                # 2. Email to admin
                 subject_admin = f"New Food Order Received – {food.name}"
                 message_admin = (
                     f"📦 A new food order has been placed at B&B Mountain View.\n\n"
@@ -411,9 +411,15 @@ def getFood(request, slug):
                     request,
                     f"🎉 Your order for {food.name} has been received! A confirmation email was sent to {order.email}."
                 )
+
             except Exception as e:
-                logging.error(f"Food order email failed: {e}")
-                messages.warning(request, f"Order was received, but we couldn't send emails.")
+                # Log full traceback for debugging
+                detailed_error = traceback.format_exc()
+                logging.error(f"⚠️ Email sending failed:\n{detailed_error}")
+                messages.warning(
+                    request,
+                    f"Order was received, but we couldn't send emails due to a server issue. Please contact support."
+                )
 
             return redirect('base:getFood', slug=slug)
         else:
