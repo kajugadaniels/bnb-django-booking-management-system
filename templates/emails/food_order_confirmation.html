@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Food Order Confirmation</title>
 </head>
-<body style="font-family: sans-serif; line-height: 1.6; color: #333;">
-    <h2 style="color: #1d4ed8;">B&B Mountain View – Food Order Confirmation</h2>
+<body style="font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9;">
+    <h2 style="color: #333;">🍽️ Order Confirmed: {{ food.name }}</h2>
+
     <p>Hi {{ order.name }},</p>
 
-    <p>Your order for <strong>{{ food.name }}</strong> has been successfully received! Here's a summary of your request:</p>
+    <p>Thank you for your order at <strong>B&B Mountain View</strong>! Here’s your order summary:</p>
 
     <ul>
-        <li><strong>Dish:</strong> {{ food.name }}</li>
-        <li><strong>Price:</strong> 
-            {% if order.food.price_usd and request.session.currency == 'USD' %}
-                ${{ order.food.price_usd|floatformat:2 }}
-            {% else %}
-                {{ order.food.price_rwf|intcomma }} RWF
-            {% endif %}
-        </li>
-        <li><strong>Order Date:</strong> {{ order.created_at|date:"F j, Y, g:i a" }}</li>
+        <li><strong>Food Item:</strong> {{ food.name }}</li>
+        <li><strong>Price (USD):</strong> ${{ food.price_usd }}</li>
+        <li><strong>Price (RWF):</strong> {{ food.price_rwf }} RWF</li>
+        <li><strong>Order Time:</strong> {{ order.created_at }}</li>
     </ul>
 
-    <p>We'll get in touch soon to confirm delivery or pickup arrangements.</p>
+    <p>We’ll prepare your order and let you know when it’s ready!</p>
 
-    <p>If you have any questions, feel free to reply to this email or contact us at <strong>bandbmountainview@gmail.com</strong>.</p>
-
-    <p>Thanks for choosing B&B Mountain View – where even the food feels like home.</p>
-
-    <p>Bon appétit!<br>
-    The B&B Mountain View Team</p>
+    <p>With gratitude,<br>
+    <strong>B&B Mountain View</strong></p>
 </body>
 </html>
