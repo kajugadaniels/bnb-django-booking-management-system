@@ -395,23 +395,36 @@ def getFood(request, slug):
             order.food = food
             order.save()
 
-            # ✉️ Send confirmation email to customer
+            # Send confirmation email to user
             try:
-                subject = f"Food Order Confirmation – {food.name} at B&B Mountain View"
-                message = render_to_string('emails/food_order_confirmation.html', {
+                user_subject = f"Order Confirmation – {food.name} at B&B Mountain View"
+                user_message = render_to_string('emails/food_order_confirmation.html', {
                     'order': order,
                     'food': food,
                     'settings': settings_obj,
                 })
-                email = EmailMessage(subject, message, to=[order.email])
-                email.content_subtype = 'html'
-                email.send()
-                messages.success(request, f"🎉 Your order for {food.name} has been received! A confirmation email was sent to {order.email}.")
-            except Exception as e:
-                logging.error(f"Failed to send food confirmation email to customer: {e}")
-                messages.warning(request, f"Order received, but we couldn't email {order.email}.")
 
-            # ✉️ Send alert email to admin
+                user_email = EmailMessage(
+                    subject=user_subject,
+                    body=user_message,
+                    to=[order.email]
+                )
+                user_email.content_subtype = 'html'
+                user_email.send()
+
+                messages.success(
+                    request,
+                    f"🎉 Your order for {food.name} has been received! A confirmation email was sent to {order.email}."
+                )
+
+            except Exception as e:
+                logging.error(f"Failed to send confirmation email to customer: {e}")
+                messages.warning(
+                    request,
+                    f"Order received, but we couldn't email {order.email}."
+                )
+
+            # Send notification email to admin
             try:
                 admin_subject = f"New Food Order – {food.name} ({order.name})"
                 admin_message = render_to_string('emails/admin_food_order_alert.html', {
@@ -419,15 +432,23 @@ def getFood(request, slug):
                     'food': food,
                     'settings': settings_obj,
                 })
-                admin_email = EmailMessage(admin_subject, admin_message, to=[settings.EMAIL_HOST_USER])
+
+                admin_email = EmailMessage(
+                    subject=admin_subject,
+                    body=admin_message,
+                    to=[settings.EMAIL_HOST_USER]
+                )
                 admin_email.content_subtype = 'html'
                 admin_email.send()
+
             except Exception as e:
-                logging.error(f"Failed to send food order alert email to admin: {e}")
+                logging.error(f"Failed to send admin notification email: {e}")
 
             return redirect('base:getFood', slug=slug)
+
         else:
             messages.error(request, "❌ Please correct the errors in the form below.")
+
     else:
         form = FoodOrderForm()
 
