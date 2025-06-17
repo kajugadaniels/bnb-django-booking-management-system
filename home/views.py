@@ -361,7 +361,7 @@ def restaurant(request):
 
 def getFood(request, slug):
     food = get_object_or_404(Food, slug=slug)
-    settings = Setting.objects.first()
+    settings_obj = Setting.objects.first()
 
     selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
     request.session['currency'] = selected_currency
@@ -373,22 +373,47 @@ def getFood(request, slug):
             order.food = food
             order.save()
 
-            # ✉️ Send email confirmation
+            # Prepare email data
             try:
-                subject = f"Food Order Confirmation – {food.name} at B&B Mountain View"
-                message = render_to_string('emails/food_order_confirmation.html', {
+                # 1. Email to customer
+                subject_customer = f"Food Order Confirmation – {food.name} at B&B Mountain View"
+                message_customer = render_to_string('emails/food_order_confirmation.html', {
                     'order': order,
                     'food': food,
-                    'settings': settings
+                    'settings': settings_obj,
                 })
-                email = EmailMessage(subject, message, to=[order.email])
-                email.content_subtype = 'html'
-                email.send()
+                email_customer = EmailMessage(
+                    subject_customer,
+                    message_customer,
+                    to=[order.email]
+                )
+                email_customer.content_subtype = 'html'
+                email_customer.send()
 
-                messages.success(request, f"🎉 Your order for {food.name} has been received! A confirmation email was sent to {order.email}.")
+                # 2. Email to admin (EMAIL_HOST_USER)
+                subject_admin = f"New Food Order Received – {food.name}"
+                message_admin = (
+                    f"📦 A new food order has been placed at B&B Mountain View.\n\n"
+                    f"👤 Customer Name: {order.name}\n"
+                    f"📧 Email: {order.email}\n"
+                    f"🍽️ Ordered Dish: {food.name}\n"
+                    f"🕒 Order Date: {order.created_at.strftime('%B %d, %Y at %I:%M %p')}\n"
+                    f"\nPlease follow up to confirm delivery or pickup."
+                )
+                email_admin = EmailMessage(
+                    subject_admin,
+                    message_admin,
+                    to=[settings.EMAIL_HOST_USER]
+                )
+                email_admin.send()
+
+                messages.success(
+                    request,
+                    f"🎉 Your order for {food.name} has been received! A confirmation email was sent to {order.email}."
+                )
             except Exception as e:
                 logging.error(f"Food order email failed: {e}")
-                messages.warning(request, f"Order was received, but we couldn't send an email to {order.email}.")
+                messages.warning(request, f"Order was received, but we couldn't send emails.")
 
             return redirect('base:getFood', slug=slug)
         else:
@@ -398,7 +423,7 @@ def getFood(request, slug):
 
     context = {
         'food': food,
-        'settings': settings,
+        'settings': settings_obj,
         'selected_currency': selected_currency,
         'form': form
     }
