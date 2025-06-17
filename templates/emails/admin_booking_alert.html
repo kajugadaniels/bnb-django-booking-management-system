@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>New Booking Alert</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+    <h2 style="color: #2c3e50;">📢 New Room Booking Alert</h2>
+
+    <p>Hello Admin,</p>
+
+    <p>A new booking has just been made through your website. Here are the details:</p>
+
+    <h3>👤 Guest Information:</h3>
+    <ul>
+        <li><strong>Name:</strong> {{ booking.name }}</li>
+        <li><strong>Email:</strong> {{ booking.email }}</li>
+        <li><strong>Phone:</strong> {{ booking.phone }}</li>
+    </ul>
+
+    <h3>🛏️ Booking Details:</h3>
+    <ul>
+        <li><strong>Room:</strong> {{ room.name }}</li>
+        <li><strong>Check-in:</strong> {{ booking.checkInDate }}</li>
+        <li><strong>Check-out:</strong> {{ booking.checkOutDate }}</li>
+        <li><strong>Special Request:</strong> {{ booking.special_request|default:"None" }}</li>
+    </ul>
+
+    <h3>ℹ️ Room Info:</h3>
+    <ul>
+        <li><strong>Capacity:</strong> {{ room.capacity }} persons</li>
+        <li><strong>Price (USD):</strong> {{ room.price_usd }}</li>
+        <li><strong>Price (RWF):</strong> {{ room.price_rwf }}</li>
+        <li><strong>Description:</strong> {{ room.description|truncatechars:150 }}</li>
+    </ul>
+
+    <p>Please review the booking in your admin dashboard as soon as possible.</p>
+
+    <p>Warm regards,<br>
+    <strong>B&B Mountain View Booking</strong></p>
+</body>
+</html>
