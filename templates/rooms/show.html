@@ -156,7 +156,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form method="POST">
+                            <form method="POST" action="{% url 'base:book_room' room.slug %}">
                                 {% csrf_token %}
                                 <div class="row y-gap-20 pt-30">
                                     <div class="col-12">
@@ -377,7 +377,7 @@
                             <p class="text-15 text-dark-1 mt-5">Your email address will not be published.</p>
                         </div>
                     </div>
-                    <form method="post">
+                    <form method="POST" action="{% url 'base:post_review' room.slug %}">
                         {% csrf_token %}
                         <div class="row y-gap-30 pt-30">
                             <div class="col-xl-4">
