@@ -102,9 +102,8 @@ def rooms(request):
 def getRoom(request, slug):
     room = get_object_or_404(Room, slug=slug)
     reviews = RoomReview.objects.filter(room=room).order_by('-created_at')
-    total_reviews = reviews.count()
 
-    # Aggregate average ratings
+    total_reviews = reviews.count()
     avg_location = reviews.aggregate(Avg('location'))['location__avg'] or 0
     avg_staff = reviews.aggregate(Avg('staff'))['staff__avg'] or 0
     avg_cleanliness = reviews.aggregate(Avg('cleanliness'))['cleanliness__avg'] or 0
@@ -121,93 +120,8 @@ def getRoom(request, slug):
     selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
     request.session['currency'] = selected_currency
 
-    if request.method == 'POST':
-        form = BookingForm(request.POST)
-        check_in_date = request.POST.get('check_in_date')
-        check_out_date = request.POST.get('check_out_date')
-
-        if not check_in_date or not check_out_date:
-            messages.error(request, "Both check-in and check-out dates are required.")
-            return redirect('base:getRoom', slug=room.slug)
-
-        try:
-            check_in_date = datetime.strptime(check_in_date, '%Y-%m-%d').date()
-            check_out_date = datetime.strptime(check_out_date, '%Y-%m-%d').date()
-        except ValueError:
-            messages.error(request, "Invalid date format. Please select valid dates.")
-            return redirect('base:getRoom', slug=room.slug)
-
-        today = datetime.today().date()
-
-        if check_in_date < today:
-            messages.error(request, "Check-in date cannot be in the past.")
-            return redirect('base:getRoom', slug=room.slug)
-
-        if check_out_date <= check_in_date:
-            messages.error(request, "Check-out date must be after the check-in date.")
-            return redirect('base:getRoom', slug=room.slug)
-
-        existing_booking = Booking.objects.filter(
-            room=room,
-            checkInDate__lte=check_out_date,
-            checkOutDate__gte=check_in_date
-        ).exists()
-
-        if existing_booking:
-            messages.error(request, "These dates are already booked. Please choose different dates.")
-            return redirect('base:getRoom', slug=room.slug)
-
-        if form.is_valid():
-            booking = form.save(commit=False)
-            booking.room = room
-            booking.checkInDate = check_in_date
-            booking.checkOutDate = check_out_date
-            booking.status = 'pending'
-            booking.payment_status = 'pending'
-            booking.save()
-
-            settings_obj = Setting.objects.first()
-
-            # Email to guest
-            try:
-                subject = f"Booking Confirmation – {room.name} at B&B Mountain View"
-                message = render_to_string('emails/booking_confirmation.html', {
-                    'booking': booking,
-                    'room': room,
-                    'settings': settings_obj,
-                })
-                email = EmailMessage(subject, message, to=[booking.email])
-                email.content_subtype = 'html'
-                email.send()
-                messages.success(request, "🎉 Your booking has been received! A confirmation email has been sent to your inbox.")
-            except Exception as e:
-                logging.error(f"Failed to send confirmation email to guest: {e}")
-                messages.warning(request, "Your booking was received, but we couldn't send a confirmation email at this time.")
-
-            # Email to admin
-            try:
-                admin_subject = f"New Booking – {room.name} ({booking.name})"
-                admin_message = render_to_string('emails/admin_booking_alert.html', {
-                    'booking': booking,
-                    'room': room,
-                    'settings': settings_obj,
-                })
-
-                admin_email = EmailMessage(
-                    admin_subject,
-                    admin_message,
-                    to=[settings.EMAIL_HOST_USER]
-                )
-                admin_email.content_subtype = 'html'
-                admin_email.send()
-            except Exception as e:
-                logging.error(f"Failed to send admin notification email: {e}")
-
-            return redirect('base:getRoom', slug=room.slug)
-
-    else:
-        form = BookingForm()
-
+    booking_form = BookingForm()
+    review_form = RoomReviewForm()
     settings_obj = Setting.objects.first()
 
     context = {
@@ -222,7 +136,8 @@ def getRoom(request, slug):
         'avg_comfort': avg_comfort,
         'avg_facilities': avg_facilities,
         'avg_free_wifi': avg_free_wifi,
-        'form': form,
+        'form': booking_form,         # reuse key 'form' for booking
+        'review_form': review_form,   # use 'review_form' separately
         'settings': settings_obj,
         'selected_currency': selected_currency
     }
