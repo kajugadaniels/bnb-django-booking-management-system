@@ -22,7 +22,6 @@
             object-fit: cover; /* fills and crops without stretching */
             object-position: center;
         }
-
     </style>
 
     {% include 'inc/hero.html' %}
@@ -204,7 +203,9 @@
                                         <div class="cardImage-slider rounded-4 overflow-hidden js-cardImage-slider">
                                             <div class="swiper-wrapper">
                                                 <div class="swiper-slide">
-                                                    <img class="col-12" src="{{ room.image.url }}" alt="{{ room.name }}">
+                                                    <div class="image-square-container">
+                                                        <img src="{{ room.image.url }}" alt="{{ room.name }}">
+                                                    </div>
                                                 </div>
 
                                                 {% for image in room.images.all %}

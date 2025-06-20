@@ -5,6 +5,26 @@
 {% block title %} Rooms {% endblock %}
 {% block content %}
 
+    <style>
+        .image-square-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* makes the div square */
+            overflow: hidden;
+            border-radius: 12px; /* optional, for soft corners */
+        }
+
+        .image-square-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* fills and crops without stretching */
+            object-position: center;
+        }
+    </style>
+
     <br>
     <br>
     <br>
@@ -37,11 +57,16 @@
                                                     <div class="cardImage-slider rounded-4 overflow-hidden js-cardImage-slider">
                                                         <div class="swiper-wrapper">
                                                             <div class="swiper-slide">
-                                                                <img class="col-12" src="{{ room.image.url }}" alt="{{ room.name }}">
+                                                                <div class="image-square-container">
+                                                                    <img src="{{ room.image.url }}" alt="{{ room.name }}">
+                                                                </div>
                                                             </div>
+
                                                             {% for image in room.images.all %}
                                                                 <div class="swiper-slide">
-                                                                    <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
+                                                                    <div class="image-square-container">
+                                                                        <img src="{{ image.image.url }}" alt="{{ room.name }}">
+                                                                    </div>
                                                                 </div>
                                                             {% endfor %}
                                                         </div>
