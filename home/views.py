@@ -285,6 +285,28 @@ def bookRoom(request, slug):
             messages.error(request, "Please correct the errors in your booking form.")
             return redirect('base:getRoom', slug=slug)
 
+def postReview(request, slug):
+    room = get_object_or_404(Room, slug=slug)
+
+    if request.method == 'POST':
+        form = RoomReviewForm(request.POST)
+        comment = request.POST.get('comment')
+
+        if not comment:
+            messages.error(request, "Please write a comment before submitting.")
+            return redirect('base:getRoom', slug=slug)
+
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.room = room
+            review.comment = comment
+            review.save()
+            messages.success(request, "✅ Your review has been submitted. Thank you!")
+        else:
+            messages.error(request, "There were errors in your review form. Please correct them.")
+
+    return redirect('base:getRoom', slug=slug)
+
 def booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
