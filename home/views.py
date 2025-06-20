@@ -229,6 +229,62 @@ def getRoom(request, slug):
 
     return render(request, 'rooms/show.html', context)
 
+def bookRoom(request, slug):
+    room = get_object_or_404(Room, slug=slug)
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        check_in_date = request.POST.get('check_in_date')
+        check_out_date = request.POST.get('check_out_date')
+
+        if not check_in_date or not check_out_date:
+            messages.error(request, "Both check-in and check-out dates are required.")
+            return redirect('base:getRoom', slug=slug)
+
+        try:
+            check_in_date = datetime.strptime(check_in_date, '%Y-%m-%d').date()
+            check_out_date = datetime.strptime(check_out_date, '%Y-%m-%d').date()
+        except ValueError:
+            messages.error(request, "Invalid date format. Please select valid dates.")
+            return redirect('base:getRoom', slug=slug)
+
+        today = datetime.today().date()
+
+        if check_in_date < today:
+            messages.error(request, "Check-in date cannot be in the past.")
+            return redirect('base:getRoom', slug=slug)
+
+        if check_out_date <= check_in_date:
+            messages.error(request, "Check-out date must be after the check-in date.")
+            return redirect('base:getRoom', slug=slug)
+
+        existing_booking = Booking.objects.filter(
+            room=room,
+            checkInDate__lte=check_out_date,
+            checkOutDate__gte=check_in_date
+        ).exists()
+
+        if existing_booking:
+            messages.error(request, "These dates are already booked. Please choose different dates.")
+            return redirect('base:getRoom', slug=slug)
+
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.room = room
+            booking.checkInDate = check_in_date
+            booking.checkOutDate = check_out_date
+            booking.status = 'pending'
+            booking.payment_status = 'pending'
+            booking.save()
+
+            # Email logic omitted for brevity...
+
+            messages.success(request, "🎉 Your booking has been received!")
+            return redirect('base:getRoom', slug=slug)
+        else:
+            messages.error(request, "Please correct the errors in your booking form.")
+            return redirect('base:getRoom', slug=slug)
+
 def booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
 
