@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Thank You for Your Review</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 40px;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background-color: #1a73e8;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .footer {
+            font-size: 12px;
+            color: #777;
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <h2>Thank You, {{ review.name }}!</h2>
+        <p>We truly appreciate you taking the time to leave a review for your recent stay at <strong>{{ room.name }}</strong>.</p>
+
+        <p>Your feedback helps us improve our services and continue offering top-notch hospitality.</p>
+
+        <p>If you ever need a place to stay again, B&B Mountain View is always here to welcome you back with open arms!</p>
+
+        <a href="{{ settings.site_url }}" class="btn">Visit Our Website</a>
+
+        <div class="footer">
+            &copy; B&& Mountain View<br>
+            This message was sent from our review system.
+        </div>
+    </div>
+</body>
+</html>
