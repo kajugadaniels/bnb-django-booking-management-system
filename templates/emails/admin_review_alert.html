@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New Room Review Notification</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            padding: 40px;
+        }
+        .container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        h2 {
+            margin-top: 0;
+            color: #1a73e8;
+        }
+        .details {
+            margin: 20px 0;
+        }
+        .details th {
+            text-align: left;
+            padding-right: 15px;
+        }
+        .footer {
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📝 New Room Review Received</h2>
+        <p>A new review has just been submitted for <strong>{{ room.name }}</strong>.</p>
+
+        <table class="details">
+            <tr>
+                <th>Name:</th>
+                <td>{{ review.name }}</td>
+            </tr>
+            <tr>
+                <th>Email:</th>
+                <td>{{ review.email }}</td>
+            </tr>
+            <tr>
+                <th>Comment:</th>
+                <td>{{ review.comment }}</td>
+            </tr>
+            <tr>
+                <th>Ratings:</th>
+                <td>
+                    Location: {{ review.location }} / Staff: {{ review.staff }} /
+                    Cleanliness: {{ review.cleanliness }} / Value: {{ review.value_for_money }} /
+                    Comfort: {{ review.comfort }} / Facilities: {{ review.facilities }} /
+                    WiFi: {{ review.free_wifi }}
+                </td>
+            </tr>
+        </table>
+
+        <p>You can review and moderate this entry in the admin panel.</p>
+
+        <div class="footer">
+            &copy; B&B Mountain View<br>
+            Review notification sent automatically.
+        </div>
+    </div>
+</body>
+</html>
