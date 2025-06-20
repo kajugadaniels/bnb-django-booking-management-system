@@ -164,7 +164,6 @@ def bookRoom(request, slug):
             return redirect('base:getRoom', slug=slug)
 
         today = datetime.today().date()
-
         if check_in_date < today:
             messages.error(request, "Check-in date cannot be in the past.")
             return redirect('base:getRoom', slug=slug)
@@ -192,12 +191,47 @@ def bookRoom(request, slug):
             booking.payment_status = 'pending'
             booking.save()
 
-            # Email logic omitted for brevity...
+            settings_obj = Setting.objects.first()
 
-            messages.success(request, "🎉 Your booking has been received!")
+            # ✅ Email to Guest
+            try:
+                subject = f"Booking Confirmation – {room.name} at B&B Mountain View"
+                message = render_to_string('emails/booking_confirmation.html', {
+                    'booking': booking,
+                    'room': room,
+                    'settings': settings_obj,
+                })
+                email = EmailMessage(subject, message, to=[booking.email])
+                email.content_subtype = 'html'
+                email.send()
+                messages.success(request, "🎉 Booking successful! A confirmation email has been sent.")
+            except Exception as e:
+                logging.error(f"[BOOKING] Failed to send confirmation email: {e}")
+                messages.warning(request, "Booking saved, but email could not be sent.")
+
+            # ✅ Email to Admin
+            try:
+                admin_subject = f"New Booking – {room.name} ({booking.name})"
+                admin_message = render_to_string('emails/admin_booking_alert.html', {
+                    'booking': booking,
+                    'room': room,
+                    'settings': settings_obj,
+                })
+                admin_email = EmailMessage(
+                    admin_subject,
+                    admin_message,
+                    to=[settings.EMAIL_HOST_USER]
+                )
+                admin_email.content_subtype = 'html'
+                admin_email.send()
+            except Exception as e:
+                logging.error(f"[BOOKING] Failed to notify admin: {e}")
+
             return redirect('base:getRoom', slug=slug)
+
         else:
-            messages.error(request, "Please correct the errors in your booking form.")
+            messages.error(request, "There were errors in your form.")
+
             return redirect('base:getRoom', slug=slug)
 
 def postReview(request, slug):
