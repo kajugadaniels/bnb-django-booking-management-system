@@ -126,6 +126,10 @@ def getRoom(request, slug):
         check_in_date = request.POST.get('check_in_date')
         check_out_date = request.POST.get('check_out_date')
 
+        if not check_in_date or not check_out_date:
+            messages.error(request, "Both check-in and check-out dates are required.")
+            return redirect('base:getRoom', slug=room.slug)
+
         try:
             check_in_date = datetime.strptime(check_in_date, '%Y-%m-%d').date()
             check_out_date = datetime.strptime(check_out_date, '%Y-%m-%d').date()

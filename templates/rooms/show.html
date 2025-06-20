@@ -422,9 +422,15 @@
                                     <label class="lh-1 text-16 text-light-1">Email</label>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <div class="form-input ">
                                     {{ form.comment }}
+                                    <label class="lh-1 text-16 text-light-1">Write Your Comment</label>
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <div class="form-input ">
+                                    <textarea required name="comment" rows="4"></textarea>
                                     <label class="lh-1 text-16 text-light-1">Write Your Comment</label>
                                 </div>
                             </div>
@@ -451,6 +457,16 @@
         document.getElementById('check-in-date').addEventListener('change', function() {
             const checkInDate = this.value;
             document.getElementById('check-out-date').setAttribute('min', checkInDate);
+        });
+
+        document.querySelector("form").addEventListener("submit", function(e) {
+            const checkIn = document.getElementById("check-in-date").value;
+            const checkOut = document.getElementById("check-out-date").value;
+
+            if (!checkIn || !checkOut) {
+                e.preventDefault();
+                alert("Please select both check-in and check-out dates.");
+            }
         });
     </script>
 
