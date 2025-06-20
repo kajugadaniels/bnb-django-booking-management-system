@@ -240,6 +240,7 @@ def postReview(request, slug):
     if request.method == 'POST':
         form = RoomReviewForm(request.POST)
         comment = request.POST.get('comment')
+        settings_obj = Setting.objects.first()
 
         if not comment:
             messages.error(request, "Please write a comment before submitting.")
@@ -250,9 +251,43 @@ def postReview(request, slug):
             review.room = room
             review.comment = comment
             review.save()
-            messages.success(request, "✅ Your review has been submitted. Thank you!")
+
+            # ✅ Email to Reviewer
+            try:
+                subject = f"Thanks for your review – {room.name} at B&B Mountain View"
+                message = render_to_string('emails/review_thank_you.html', {
+                    'review': review,
+                    'room': room,
+                    'settings': settings_obj,
+                })
+                email = EmailMessage(subject, message, to=[review.email])
+                email.content_subtype = 'html'
+                email.send()
+                messages.success(request, "✅ Thank you for your review! We've emailed you a confirmation.")
+            except Exception as e:
+                logging.error(f"[REVIEW] Failed to send confirmation email: {e}")
+                messages.warning(request, "Review saved, but email could not be sent.")
+
+            # ✅ Optional: Email to Admin
+            try:
+                admin_subject = f"New Room Review – {room.name} ({review.name})"
+                admin_message = render_to_string('emails/admin_review_alert.html', {
+                    'review': review,
+                    'room': room,
+                    'settings': settings_obj,
+                })
+                admin_email = EmailMessage(
+                    admin_subject,
+                    admin_message,
+                    to=[settings.EMAIL_HOST_USER]
+                )
+                admin_email.content_subtype = 'html'
+                admin_email.send()
+            except Exception as e:
+                logging.error(f"[REVIEW] Failed to notify admin: {e}")
+
         else:
-            messages.error(request, "There were errors in your review form. Please correct them.")
+            messages.error(request, "There were errors in your review form.")
 
     return redirect('base:getRoom', slug=slug)
 
