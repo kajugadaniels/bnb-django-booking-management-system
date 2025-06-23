@@ -268,12 +268,20 @@ class ContactAdmin(admin.ModelAdmin):
 
 @admin.register(Setting)
 class SettingAdmin(admin.ModelAdmin):
+    list_display = ('email', 'contact_number', 'whatsapp_number', 'address', 'about_title', 'edit_link')
+
     def has_add_permission(self, request):
-        # Allow adding only if there is no existing Setting instance
+        # Only allow adding if there is no instance yet
         return not Setting.objects.exists()
 
-    list_display = ('email', 'contact_number', 'whatsapp_number', 'address', 'about_title')
-
+    def edit_link(self, obj):
+        from django.utils.html import format_html
+        return format_html(
+            '<a class="button" href="{}">Edit</a>',
+            f'/admin/home/setting/{obj.pk}/change/'
+        )
+    edit_link.short_description = 'Edit'
+    edit_link.allow_tags = True
 
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
