@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import inch, cm
 from reportlab.pdfbase import pdfmetrics
+from django.utils.html import format_html
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import (SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image)
@@ -291,6 +292,10 @@ class SettingAdmin(admin.ModelAdmin):
         }),
         ('Hero Section', {
             'fields': ('hero_image', 'hero_title', 'hero_desc'),
+            'classes': ('collapse',),
+        }),
+        ('Service Section', {
+            'fields': ('service_title', 'service_desc'),
             'classes': ('collapse',),
         }),
         ('Social Media', {
