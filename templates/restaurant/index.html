@@ -2,22 +2,50 @@
 {% load static %}
 {% load humanize %}
 {% load custom_filters %}
-{% block title %} Rooms {% endblock %}
+{% block title %} Our Food {% endblock %}
 {% block content %}
 
     <br>
     <br>
     <br>
 
+    <!-- Hero Section with Custom Category Filter -->
     <section class="layout-pt-md layout-pb-lg">
         <div class="container">
             <div class="row justify-center text-center">
                 <div class="col-auto">
                     <div class="sectionTitle -md">
                         <h2 class="sectionTitle__title">Our Food</h2>
+                        <p class="sectionTitle__text mt-5">Discover your favorite food or drink</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Category Filter -->
+            <div class="row justify-center text-center pt-20">
+                <div class="col-auto">
+                    <form method="get" class="filter-form">
+                        <div class="input-group input-group-lg">
+                            <select name="category" onchange="this.form.submit()" class="form-select form-select-lg">
+                                <option value="">All Categories</option>
+                                <option value="food" {% if selected_category == 'food' %}selected{% endif %}>Food</option>
+                                <option value="drinks" {% if selected_category == 'drinks' %}selected{% endif %}>Drinks</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notification: No items found for selected category -->
+            <div class="row justify-center text-center pt-20" id="no-items-message" style="display: {% if restaurant.count == 0 %}block{% else %}none{% endif %};">
+                <div class="col-auto">
+                    <div class="alert alert-warning">
+                        No items found in this category. Please try a different one.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display Food or Drinks Cards -->
             <div class="row y-gap-30 pt-40 sm:pt-20">
                 {% for food in restaurant %}
                     <div class="col-lg-3 col-sm-6">
@@ -67,3 +95,15 @@
     </section>
 
 {% endblock %}
+
+<script>
+    // JavaScript to show the "No Items Found" message when there are no food items in the selected category
+    const noItemsMessage = document.getElementById('no-items-message');
+    const restaurantCount = {{ restaurant.count }};
+    if (restaurantCount === 0) {
+        noItemsMessage.style.display = 'block';
+    } else {
+        noItemsMessage.style.display = 'none';
+    }
+</script>
+
