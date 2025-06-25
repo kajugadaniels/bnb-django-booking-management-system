@@ -80,13 +80,13 @@
                                             <div class="swiper-wrapper">
                                                 <div class="swiper-slide">
                                                     <div class="image-square-container">
-                                                        <img src="{{ room.image.url }}" alt="{{ room.name }}">
+                                                        <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ room.name }}">
                                                     </div>
                                                 </div>
 
                                                 {% for image in room.images.all %}
                                                     <div class="swiper-slide">
-                                                        <img class="col-12" src="{{ image.image.url }}" alt="{{ room.name }}">
+                                                        <img class="col-12" src="{% if image.image %}{{ image.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ room.name }}">
                                                     </div>
                                                 {% endfor %}
                                             </div>
@@ -159,7 +159,7 @@
             <div class="section-bg__item -video-left">
                 <div class="row y-gap-30">
                     <div class="col-sm-11">
-                        <img src="{{ settings.about_image.url }}" alt="image">
+                        <img src="{% if settings.about_image %}{{ settings.about_image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="image">
                     </div>
                 </div>
             </div>
@@ -203,14 +203,14 @@
                                             <div class="swiper-wrapper">
                                                 <div class="swiper-slide">
                                                     <div class="image-square-container">
-                                                        <img src="{{ room.image.url }}" alt="{{ room.name }}">
+                                                        <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ room.name }}">
                                                     </div>
                                                 </div>
 
                                                 {% for image in room.images.all %}
                                                     <div class="swiper-slide">
                                                         <div class="image-square-container">
-                                                            <img src="{{ image.image.url }}" alt="{{ room.name }}">
+                                                            <img src="{% if image.image %}{{ image.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ room.name }}">
                                                         </div>
                                                     </div>
                                                 {% endfor %}
