@@ -337,6 +337,11 @@ def food_image_path(instance, filename):
     return f'food/food_{slugify(instance.name)}_{instance.created_at}{file_extension}'
 
 class Food(models.Model):
+    CATEGORY_CHOICES = [
+        ('drinks', 'Drinks'),
+        ('food', 'Food'),
+    ]
+    
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True)
     description = models.TextField()
@@ -344,6 +349,13 @@ class Food(models.Model):
     # Separate fields for price in USD and RWF
     price_usd = models.IntegerField(null=True, blank=True)
     price_rwf = models.IntegerField(null=True, blank=True)
+
+    # Category field
+    category = models.CharField(
+        max_length=10, 
+        choices=CATEGORY_CHOICES, 
+        default='food',  # Default is 'Food' if not specified
+    )
 
     image = ProcessedImageField(
         upload_to=food_image_path,
