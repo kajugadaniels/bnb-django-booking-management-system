@@ -267,6 +267,10 @@ class ContactAdmin(admin.ModelAdmin):
     # Optional: Make the fields read-only except for the message field if needed
     readonly_fields = ('name', 'email', 'subject', 'message', 'created_at')
 
+class ServiceInline(admin.TabularInline):
+    model = Service
+    extra = 1
+
 @admin.register(Setting)
 class SettingAdmin(admin.ModelAdmin):
     list_display = ('email', 'contact_number', 'whatsapp_number', 'address', 'about_title', 'edit_link')
@@ -307,6 +311,8 @@ class SettingAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
     )
+
+    inlines = [ServiceInline]
 
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
