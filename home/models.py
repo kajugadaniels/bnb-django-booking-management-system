@@ -327,6 +327,14 @@ class Setting(models.Model):
         verbose_name = "Setting"
         verbose_name_plural = "Settings"
 
+class Service(models.Model):
+    setting = models.ForeignKey(Setting, on_delete=models.CASCADE, related_name='services')
+    service_title = models.CharField(max_length=255)
+    service_desc = models.TextField()
+
+    def __str__(self):
+        return self.service_title
+
 def food_image_path(instance, filename):
     base_filename, file_extension = os.path.splitext(filename)
     return f'food/food_{slugify(instance.name)}_{instance.created_at}{file_extension}'
