@@ -17,7 +17,7 @@
                     <div class="text-15 text-light-1 mt-10">{{ blog.created_at|date }}</div>
                 </div>
                 <div class="col-12">
-                    <img src="{{ blog.image.url }}" alt="image" class="col-12 rounded-8">
+                    <img src="{% if blog.image %}{{ blog.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="image" class="col-12 rounded-8">
                 </div>
             </div>
         </div>
