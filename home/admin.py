@@ -312,9 +312,9 @@ class SettingAdmin(admin.ModelAdmin):
 
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'price_usd', 'price_rwf', 'created_at', 'updated_at')
+    list_display = ('name', 'category', 'slug', 'price_usd', 'price_rwf', 'created_at', 'updated_at')
     search_fields = ('name', 'description')
-    list_filter = ('created_at', 'updated_at')
+    list_filter = ('category', 'created_at', 'updated_at')
     prepopulated_fields = {'slug': ('name',)}
 
 @admin.register(FoodOrder)
