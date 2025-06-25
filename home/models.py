@@ -298,7 +298,18 @@ class Setting(models.Model):
         blank=True,
     )
     about_title = models.CharField(max_length=255, null=True, blank=True)
-    about_description = models.TextField(max_length=500, null=True, blank=True)
+    about_description = models.TextField(null=True, blank=True)
+
+    hero_image = ProcessedImageField(
+        upload_to='settings/hero_images/', 
+        processors=[ResizeToFill(1920, 1080)], 
+        format='JPEG',
+        options={'quality': 90},
+        null=True,
+        blank=True,
+    )
+    hero_title = models.CharField(max_length=255, null=True, blank=True)
+    hero_desc = models.TextField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Ensure only one instance of settings can exist
