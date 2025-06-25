@@ -63,11 +63,11 @@
                             <div class="d-flex js-cruise-slider">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <img src="{{ room.image.url }}" alt="{{ room.name }}" class="rounded-4">
+                                        <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}"" alt="{{ room.name }}" class="rounded-4">
                                     </div>
                                     {% for image in room.images.all %}
                                         <div class="swiper-slide">
-                                            <img src="{{ image.image.url }}" alt="image" class="rounded-4">
+                                            <img src="{% if image.image %}{{ image.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="image" class="rounded-4">
                                         </div>
                                     {% endfor %}
                                 </div>
@@ -82,11 +82,11 @@
                                     </button>
                                 </div>
                                 <div class="absolute h-full col-12 px-20 py-20 d-flex justify-end items-end">
-                                    <a href="{{ room.image.url }}" alt="{{ room.name }}" class="button px-24 py-15 -blue-1 bg-white z-2 js-gallery" data-gallery="gallery2">
+                                    <a href="{% if room.image %}{{ room.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ room.name }}" alt="{{ room.name }}" class="button px-24 py-15 -blue-1 bg-white z-2 js-gallery" data-gallery="gallery2">
                                         See All Photos
                                     </a>
                                     {% for image in room.images.all %}
-                                        <a href="{{ image.image.url }}" class="js-gallery" data-gallery="gallery2"></a>
+                                        <a href="{% if image.image %}{{ image.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ room.name }}" class="js-gallery" data-gallery="gallery2"></a>
                                     {% endfor %}
                                 </div>
                             </div>
@@ -95,13 +95,13 @@
                         <div class="cruiseSlider-slides row x-gap-10 y-gap-10 pt-10 js-cruise-slides">
                             <div class="col-auto w-max-120">
                                 <div class="cruiseSlider-slides__item h-full rounded-4 -is-active js-item">
-                                    <img src="{{ room.image.url }}" alt="{{ room.name }}" class="h-full object-cover">
+                                    <img src="{% if room.image %}{{ room.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ room.name }}" alt="{{ room.name }}" class="h-full object-cover">
                                 </div>
                             </div>
                             {% for image in room.images.all %}
                                 <div class="col-auto w-max-120">
                                     <div class="cruiseSlider-slides__item h-full rounded-4  js-item">
-                                        <img src="{{ image.image.url }}" alt="{{ room.name }}" class="h-full object-cover">
+                                        <img src="{% if image.image %}{{ image.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ room.name }}" alt="{{ room.name }}" class="h-full object-cover">
                                     </div>
                                 </div>
                             {% endfor %}
