@@ -28,7 +28,7 @@
                                         <div class="cardImage-slider rounded-4 overflow-hidden js-cardImage-slider">
                                             <div class="swiper-wrapper">
                                                 <div class="swiper-slide">
-                                                    <img class="col-12" src="{{ food.image.url }}" alt="{{ food.name }}">
+                                                    <img class="col-12" src="{% if food.image %}{{ food.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="{{ food.name }}">
                                                 </div>
                                             </div>
                                         </div>
