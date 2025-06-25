@@ -311,9 +311,6 @@ class Setting(models.Model):
     hero_title = models.CharField(max_length=255, null=True, blank=True)
     hero_desc = models.TextField(null=True, blank=True)
 
-    service_title = models.CharField(max_length=255, null=True, blank=True)
-    service_desc = models.TextField(null=True, blank=True)
-
     def save(self, *args, **kwargs):
         # Ensure only one instance of settings can exist
         if not self.pk and Setting.objects.exists():
