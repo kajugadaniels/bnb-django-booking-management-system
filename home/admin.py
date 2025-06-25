@@ -298,10 +298,6 @@ class SettingAdmin(admin.ModelAdmin):
             'fields': ('hero_image', 'hero_title', 'hero_desc'),
             'classes': ('collapse',),
         }),
-        ('Service Section', {
-            'fields': ('service_title', 'service_desc'),
-            'classes': ('collapse',),
-        }),
         ('Social Media', {
             'fields': ('website', 'instagram', 'twitter', 'facebook', 'whatsapp_number'),
             'classes': ('collapse',),
