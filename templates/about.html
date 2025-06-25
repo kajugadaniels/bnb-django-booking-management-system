@@ -35,33 +35,16 @@
                 </div>
             </div>
             <div class="row y-gap-40 justify-between pt-50">
-                <div class="col-lg-4 col-md-6">
-                <div class="d-flex pr-30">
-                    <img class="size-50" src="{% static 'img/featureIcons/1.svg' %}" alt="image">
-                    <div class="ml-15">
-                        <h4 class="text-18 fw-500">Best Price Guarantee</h4>
-                        <p class="text-15 mt-10">We match or beat prices—no hidden fees, no surprises. Sleep sound, save smart.</p>
+                {% for service in settings.services.all %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="d-flex pr-30">
+                            <div class="ml-15">
+                                <h4 class="text-18 fw-500">{{ service.service_title }}</h4>
+                                <p class="text-15 mt-10">{{ service.service_desc }}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                <div class="d-flex pr-30">
-                    <img class="size-50" src="{% static 'img/featureIcons/2.svg' %}" alt="image">
-                    <div class="ml-15">
-                        <h4 class="text-18 fw-500">Easy & Quick Booking</h4>
-                        <p class="text-15 mt-10">Book your stay in seconds. No hassle, just clicks and comfort.</p>
-                    </div>
-                </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                <div class="d-flex pr-30">
-                    <img class="size-50" src="{% static 'img/featureIcons/3.svg' %}" alt="image">
-                    <div class="ml-15">
-                        <h4 class="text-18 fw-500">Customer Care 24/7</h4>
-                        <p class="text-15 mt-10">Day or night, rain or shine—our support team is always just a call or click away.</p>
-                    </div>
-                </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
