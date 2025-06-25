@@ -270,18 +270,38 @@ class ContactAdmin(admin.ModelAdmin):
 class SettingAdmin(admin.ModelAdmin):
     list_display = ('email', 'contact_number', 'whatsapp_number', 'address', 'about_title', 'edit_link')
 
+    # Restricting the ability to add multiple settings
     def has_add_permission(self, request):
         # Only allow adding if there is no instance yet
         return not Setting.objects.exists()
 
     def edit_link(self, obj):
-        from django.utils.html import format_html
         return format_html(
             '<a class="button" href="{}">Edit</a>',
             f'/admin/home/setting/{obj.pk}/change/'
         )
     edit_link.short_description = 'Edit'
     edit_link.allow_tags = True
+
+    # Organizing settings into tabs
+    fieldsets = (
+        ('About', {
+            'fields': ('about_title', 'about_description', 'about_image'),
+            'classes': ('collapse',),  # Collapse to make the UI cleaner
+        }),
+        ('Hero Section', {
+            'fields': ('hero_image', 'hero_title', 'hero_desc'),
+            'classes': ('collapse',),
+        }),
+        ('Social Media', {
+            'fields': ('website', 'instagram', 'twitter', 'facebook', 'whatsapp_number'),
+            'classes': ('collapse',),
+        }),
+        ('Contact', {
+            'fields': ('email', 'second_email', 'contact_number', 'address'),
+            'classes': ('collapse',),
+        }),
+    )
 
 @admin.register(Food)
 class FoodAdmin(admin.ModelAdmin):
