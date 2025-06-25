@@ -433,9 +433,17 @@ def contact(request):
     return render(request, 'contact.html', context)
 
 def restaurant(request):
+    # Retrieve all food items, ordered by creation date
     restaurant = Food.objects.all().order_by('-created_at')
+    
+    # Check if the user has selected a category filter (either 'food' or 'drinks')
+    selected_category = request.GET.get('category', None)
+    if selected_category and selected_category in ['food', 'drinks']:
+        restaurant = restaurant.filter(category=selected_category)
+
     settings = Setting.objects.first()
 
+    # Handle currency selection
     selected_currency = request.GET.get('currency', request.session.get('currency', 'USD'))
     request.session['currency'] = selected_currency
 
@@ -443,7 +451,9 @@ def restaurant(request):
         'restaurant': restaurant,
         'settings': settings,
         'selected_currency': selected_currency,
+        'selected_category': selected_category,
     }
+
     return render(request, 'restaurant/index.html', context)
 
 def getFood(request, slug):
