@@ -76,7 +76,7 @@
                     </p>
                 </div>
                 <div class="col-lg-6">
-                    <img src="{{ settings.about_image.url }}" alt="image" class="rounded-4">
+                    <img src="{% if settings.about_image %}{{ settings.about_image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="image" class="rounded-4">
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
                     {% for person in team %}
                         <div class="swiper-slide">
                             <div class="">
-                                <img src="{{ person.image.url }}" alt="image" class="rounded-4 col-12" style="">
+                                <img src="{% if person.image %}{{ person.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="image" class="rounded-4 col-12" style="">
                                 <div class="mt-10">
                                     <div class="text-18 lh-15 fw-500">{{ person.name }}</div>
                                     <div class="text-14 lh-15">{{ person.position }}</div>
@@ -148,7 +148,7 @@
                                 <div class="pt-20 mt-28 border-top-light">
                                     <div class="row x-gap-20 y-gap-20 items-center">
                                         <div class="col-auto">
-                                            <img class="size-60" src="{{ testimony.image.url }}" alt="image">
+                                            <img class="size-60" src="{% if testimony.image %}{{ testimony.image.url }}{% else %}{% static 'img/default.png' %}{% endif %}" alt="image">
                                         </div>
                                         <div class="col-auto">
                                             <div class="text-15 fw-500 lh-14">{{ testimony.name }}</div>
